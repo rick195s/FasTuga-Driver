@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import com.example.fastugadriver.databinding.ActivityRegisterBinding
 
@@ -42,8 +39,8 @@ class RegisterActivity : AppCompatActivity() {
             val registerState = it ?: return@Observer
 
             errorsList.clear()
-            if (registerState.usernameError != null && !errorsList.contains(registerState.usernameError)) {
-                errorsList.add(registerState.usernameError)
+            if (registerState.emailError != null && !errorsList.contains(registerState.emailError)) {
+                errorsList.add(registerState.emailError)
             }
             if (registerState.passwordError != null && !errorsList.contains(registerState.passwordError)) {
                 errorsList.add(registerState.passwordError)
@@ -74,7 +71,7 @@ class RegisterActivity : AppCompatActivity() {
 
         login.setOnClickListener {
             registerViewModel.validateRegister(
-                username = email.text.toString(),
+                email = email.text.toString(),
                 password = password.text.toString()
             )
 

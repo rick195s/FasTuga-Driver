@@ -17,9 +17,9 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
     private val _registerResult = MutableLiveData<RegisterResult>()
     val registerResult: LiveData<RegisterResult> = _registerResult
 
-    fun register(username: String, password: String) {
+    fun register(email: String, password: String) {
         // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
+        val result = loginRepository.login(email, password)
 
         if (result is Result.Success) {
             _registerResult.value =
@@ -29,25 +29,27 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
         }
     }
 
-    fun validateRegister(username: String, password: String){
+    fun validateRegister(email: String, password: String){
         _registerForm.value =  RegisterFormState()
 
-        if (!isUserNameValid(username)) {
-            _registerForm.value =  RegisterFormState(R.string.invalid_username,_registerForm.value?.passwordError)
+        var invalidEmail: Int? = null;
+        var invalidPassword: Int? = null;
+
+        if (!isEmailValid(email)) {
+            invalidEmail = R.string.invalid_email
         }
 
         if (!isPasswordValid(password)) {
-            _registerForm.value = RegisterFormState(_registerForm.value?.usernameError, R.string.invalid_password)
+            invalidPassword = R.string.invalid_password
         }
+
+        _registerForm.value =  RegisterFormState(invalidEmail,invalidPassword)
+
     }
 
-    // A placeholder username validation check
-    private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else {
-            username.isNotBlank()
-        }
+    // email validation check
+    private fun isEmailValid(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     // A placeholder password validation check
