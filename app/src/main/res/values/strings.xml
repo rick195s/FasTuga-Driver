@@ -9,6 +9,7 @@
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_email">Invalid Email</string>
     <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_phone">Invalid Phone</string>
     <string name="register_failed">"Register failed"</string>
     <string name="register_text">Register Driver</string>
     <string name="prompt_phone">Phone</string>

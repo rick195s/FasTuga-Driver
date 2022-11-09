@@ -29,9 +29,10 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
         }
     }
 
-    fun validateRegister(email: String, password: String){
+    fun validateRegister(email: String, password: String, phone: String){
         _registerForm.value =  RegisterFormState()
 
+        var invalidPhone: Int? = null;
         var invalidEmail: Int? = null;
         var invalidPassword: Int? = null;
 
@@ -43,13 +44,24 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
             invalidPassword = R.string.invalid_password
         }
 
-        _registerForm.value =  RegisterFormState(invalidEmail,invalidPassword)
+        if (!isValidPhone(phone)) {
+            invalidPhone = R.string.invalid_phone
+        }
+
+        _registerForm.value =  RegisterFormState(invalidEmail,invalidPassword,invalidPhone)
 
     }
 
     // email validation check
     private fun isEmailValid(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+
+    private fun isValidPhone(phone: String): Boolean {
+        val pattern1 = Regex("(9[0-9])\\w{0,8}")
+        return pattern1.matches(phone)
+        //(9[0-9])\w{0,8}
     }
 
     // A placeholder password validation check

@@ -26,9 +26,11 @@ class RegisterActivity : AppCompatActivity() {
 
         val email = binding.email
         val password = binding.password
+        val phone = binding.phone
         val login = binding.login
         val loading = binding.loading
         val errorMSGs = binding.errorMsgs;
+        val register = binding.register;
 
         val errorsList: LinkedList<Int> = LinkedList()
 
@@ -44,6 +46,9 @@ class RegisterActivity : AppCompatActivity() {
             }
             if (registerState.passwordError != null && !errorsList.contains(registerState.passwordError)) {
                 errorsList.add(registerState.passwordError)
+            }
+            if (registerState.phoneError != null && !errorsList.contains(registerState.phoneError)) {
+                errorsList.add(registerState.phoneError)
             }
 
             errorMSGs.text = ""
@@ -72,11 +77,25 @@ class RegisterActivity : AppCompatActivity() {
         login.setOnClickListener {
             registerViewModel.validateRegister(
                 email = email.text.toString(),
-                password = password.text.toString()
+                password = password.text.toString(),
+                phone = phone.text.toString()
             )
 
             if (registerViewModel.registerFormState.value!!.isDataValid){
                 registerViewModel.register(email.text.toString(), password.text.toString())
+                loading.visibility = View.VISIBLE
+            }
+        }
+
+        register.setOnClickListener {
+            registerViewModel.validateRegister(
+                email = email.text.toString(),
+                password = password.text.toString(),
+                phone = phone.text.toString()
+            )
+
+            if (registerViewModel.registerFormState.value!!.isDataValid){
+                registerViewModel.register(email.text.toString(),password.text.toString())
                 loading.visibility = View.VISIBLE
             }
         }
