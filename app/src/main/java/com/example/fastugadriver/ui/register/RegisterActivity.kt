@@ -1,6 +1,7 @@
 package com.example.fastugadriver.ui.register
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.widget.Toast
 import com.example.fastugadriver.databinding.ActivityRegisterBinding
 
 import com.example.fastugadriver.R
+import com.example.fastugadriver.ui.login.LoginActivity
 import java.util.LinkedList
 
 class RegisterActivity : AppCompatActivity() {
@@ -85,6 +87,9 @@ class RegisterActivity : AppCompatActivity() {
                 registerViewModel.register(email.text.toString(), password.text.toString())
                 loading.visibility = View.VISIBLE
             }
+            val intent = Intent(this, LoginActivity::class.java)
+            //intent.putExtra("key", value)
+            startActivity(intent)
         }
 
         register.setOnClickListener {
