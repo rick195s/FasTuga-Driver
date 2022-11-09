@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.example.fastugadriver.databinding.ActivityRegisterBinding
 
 import com.example.fastugadriver.R
+import com.example.fastugadriver.ui.login.LoggedInUserView
 import com.example.fastugadriver.ui.login.LoginActivity
 import java.util.LinkedList
 
@@ -31,8 +32,8 @@ class RegisterActivity : AppCompatActivity() {
         val phone = binding.phone
         val login = binding.login
         val loading = binding.loading
-        val errorMSGs = binding.errorMsgs;
-        val register = binding.register;
+        val errorMSGs = binding.errorMsgs
+        val register = binding.register
 
         val errorsList: LinkedList<Int> = LinkedList()
 
@@ -76,7 +77,7 @@ class RegisterActivity : AppCompatActivity() {
         })
 
 
-        login.setOnClickListener {
+        register.setOnClickListener {
             registerViewModel.validateRegister(
                 email = email.text.toString(),
                 password = password.text.toString(),
@@ -87,6 +88,9 @@ class RegisterActivity : AppCompatActivity() {
                 registerViewModel.register(email.text.toString(), password.text.toString())
                 loading.visibility = View.VISIBLE
             }
+        }
+
+        login.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             //intent.putExtra("key", value)
             startActivity(intent)

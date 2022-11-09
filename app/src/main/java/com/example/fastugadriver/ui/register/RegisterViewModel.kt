@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.Result
+import com.example.fastugadriver.ui.login.LoggedInUserView
 
 import com.example.fastugadriver.R
 
