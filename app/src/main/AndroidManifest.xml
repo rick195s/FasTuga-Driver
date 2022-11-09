@@ -13,11 +13,11 @@
         android:theme="@style/Theme.FasTugaDriver"
         tools:targetApi="31">
         <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
-        <activity
             android:name=".ui.register.RegisterActivity"
+            android:exported="false"
+            android:label="@string/title_activity_register" />
+        <activity
+            android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,6 +1,7 @@
 package com.example.fastugadriver.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.widget.Toast
 import com.example.fastugadriver.databinding.ActivityLoginBinding
 
 import com.example.fastugadriver.R
+import com.example.fastugadriver.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -31,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.password
         val login = binding.login
         val loading = binding.loading
+        val register = binding.navigateRegister
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -95,6 +98,12 @@ class LoginActivity : AppCompatActivity() {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
+        }
+
+        register?.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            //intent.putExtra("key", value)
+            startActivity(intent)
         }
     }
 
