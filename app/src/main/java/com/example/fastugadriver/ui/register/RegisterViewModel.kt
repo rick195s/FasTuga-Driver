@@ -32,9 +32,9 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
     fun validateRegister(email: String, password: String, phone: String){
         _registerForm.value =  RegisterFormState()
 
-        var invalidPhone: Int? = null;
         var invalidEmail: Int? = null;
         var invalidPassword: Int? = null;
+        var invalidPhone: Int? = null;
 
         if (!isEmailValid(email)) {
             invalidEmail = R.string.invalid_email
@@ -49,7 +49,6 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
         }
 
         _registerForm.value =  RegisterFormState(invalidEmail,invalidPassword,invalidPhone)
-
     }
 
     // email validation check
