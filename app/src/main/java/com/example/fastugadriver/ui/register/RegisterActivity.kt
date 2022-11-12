@@ -9,13 +9,11 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.fastugadriver.R
 import com.example.fastugadriver.data.api.FasTugaFormErrorResponse
 
 import com.example.fastugadriver.data.model.Driver
 import com.example.fastugadriver.databinding.ActivityRegisterBinding
 import com.example.fastugadriver.gateway.FasTugaAPI
-import com.example.fastugadriver.ui.login.LoggedInUserView
 import com.example.fastugadriver.ui.login.LoginActivity
 import java.util.*
 
@@ -67,7 +65,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val fasTugaAPI : FasTugaAPI = FasTugaAPI()
 
-        fasTugaAPI.fasTugaResponse?.observe(this@RegisterActivity, Observer {
+        fasTugaAPI.fasTugaResponse.observe(this@RegisterActivity, Observer {
             val fasTugaResponse = it ?: return@Observer
 
             if (fasTugaResponse is FasTugaFormErrorResponse){
@@ -80,7 +78,9 @@ class RegisterActivity : AppCompatActivity() {
         login.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             //intent.putExtra("key", value)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
+            finish()
         }
 
         register.setOnClickListener {
@@ -96,20 +96,5 @@ class RegisterActivity : AppCompatActivity() {
                 loading.visibility = View.VISIBLE
             }
         }
-    }
-
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }
