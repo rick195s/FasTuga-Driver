@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class FasTugaAPI {
 
 
-        val BASE_URI = "https://5cfa-2-80-254-68.ngrok.io/api/"
+        val BASE_URI = "https://3b90-2-80-254-68.ngrok.io/api/"
 
         private val _fasTugaResponse  =  MutableLiveData<FasTugaResponse>()
         val fasTugaResponse: LiveData<FasTugaResponse> = _fasTugaResponse

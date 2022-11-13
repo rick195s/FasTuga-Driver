@@ -6,7 +6,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.data.api.FasTugaFormErrorResponse
+import com.example.fastugadriver.data.api.FasTugaResponse
+import com.example.fastugadriver.data.api.FasTugaSuccessResponse
 
 import com.example.fastugadriver.data.model.Driver
 import com.example.fastugadriver.databinding.ActivityRegisterBinding
@@ -29,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         val name = binding.name
         val email = binding.email
         val password = binding.password
+        val passwordConfirmation = binding.passwordConfirmation
         val phone = binding.phone
         val licensePlate = binding.licensePlate
         val login = binding.login
@@ -46,6 +50,8 @@ class RegisterActivity : AppCompatActivity() {
         fasTugaAPI.fasTugaResponse.observe(this@RegisterActivity, Observer {
             val fasTugaResponse = it ?: return@Observer
 
+            loading.visibility = View.GONE
+
             if (fasTugaResponse is FasTugaFormErrorResponse){
                 if (fasTugaResponse.errors?.email != null){
                     for (error in fasTugaResponse.errors.email){
@@ -58,10 +64,14 @@ class RegisterActivity : AppCompatActivity() {
                         errorMSGs.text = errorMSGs.text.toString() + "- " + error + "\n"
                     }
                 }
-
+            }else if (fasTugaResponse is FasTugaSuccessResponse){
+                val intent = Intent(this, MainActivity::class.java)
+                //intent.putExtra("key", value)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                startActivity(intent)
+                finish()
             }
 
-            loading.visibility = View.GONE
 
         })
 
@@ -79,7 +89,7 @@ class RegisterActivity : AppCompatActivity() {
                 loading.visibility = View.VISIBLE
 
                 fasTugaAPI.registerDriver(Driver(name.text.toString(), email.text.toString(),
-                    phone.text.toString(), licensePlate.text.toString()));
+                    phone.text.toString(), licensePlate.text.toString(), password.text.toString(), passwordConfirmation.text.toString()));
 
             }else{
 

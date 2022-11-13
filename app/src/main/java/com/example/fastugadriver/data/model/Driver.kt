@@ -5,5 +5,7 @@ data class Driver(
     val name: String,
     val email: String,
     val phone: String,
-    val license_plate: String
+    val license_plate: String,
+    val password: String,
+    val password_confirmation: String
 )
