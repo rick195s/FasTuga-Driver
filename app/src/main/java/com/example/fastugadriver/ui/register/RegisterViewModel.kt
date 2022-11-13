@@ -31,8 +31,6 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
     }
 
     fun validateRegister(email: String, password: String, phone: String){
-        _registerForm.value =  RegisterFormState()
-
         var invalidEmail: Int? = null;
         var invalidPassword: Int? = null;
         var invalidPhone: Int? = null;
