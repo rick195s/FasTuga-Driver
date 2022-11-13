@@ -1,11 +1,8 @@
 package com.example.fastugadriver.ui.register
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,7 +30,7 @@ class RegisterActivity : AppCompatActivity() {
         val email = binding.email
         val password = binding.password
         val phone = binding.phone
-        val license_plate = binding.licensePlate
+        val licensePlate = binding.licensePlate
         val login = binding.login
         val loading = binding.loading
         val errorMSGs = binding.errorMsgs
@@ -82,7 +79,7 @@ class RegisterActivity : AppCompatActivity() {
                 loading.visibility = View.VISIBLE
 
                 fasTugaAPI.registerDriver(Driver(name.text.toString(), email.text.toString(),
-                    phone.text.toString(), license_plate.text.toString()));
+                    phone.text.toString(), licensePlate.text.toString()));
 
             }else{
 
@@ -95,6 +92,9 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 if (registerState.phoneError != null && !errorsList.contains(registerState.phoneError)) {
                     errorsList.add(registerState.phoneError)
+                }
+                if (registerState.licensePlateError != null && !errorsList.contains(registerState.licensePlateError)) {
+                    errorsList.add(registerState.licensePlateError)
                 }
 
                 for (error in errorsList) {
@@ -114,9 +114,10 @@ class RegisterActivity : AppCompatActivity() {
         register.setOnClickListener {
             // verify if fields are valid
             registerViewModel.validateRegister(
-                email = email.text.toString(),
-                password = password.text.toString(),
-                phone = phone.text.toString()
+                email.text.toString(),
+                password.text.toString(),
+                phone.text.toString(),
+                licensePlate.text.toString()
             )
 
 

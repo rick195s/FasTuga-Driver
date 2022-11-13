@@ -30,10 +30,11 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
         }
     }
 
-    fun validateRegister(email: String, password: String, phone: String){
+    fun validateRegister(email: String, password: String, phone: String, licensePlate: String){
         var invalidEmail: Int? = null;
         var invalidPassword: Int? = null;
         var invalidPhone: Int? = null;
+        var invalidLicensePlate: Int? = null;
 
         if (!isEmailValid(email)) {
             invalidEmail = R.string.invalid_email
@@ -47,7 +48,12 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
             invalidPhone = R.string.invalid_phone
         }
 
-        _registerForm.value =  RegisterFormState(invalidEmail,invalidPassword,invalidPhone)
+        if (!isLicensePlateValid(licensePlate)) {
+            invalidLicensePlate = R.string.invalid_license_plate
+        }
+
+
+        _registerForm.value =  RegisterFormState(invalidEmail,invalidPassword,invalidPhone, invalidLicensePlate)
     }
 
     // email validation check
@@ -65,5 +71,9 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
+    }
+
+    private fun isLicensePlateValid(licensePlate: String): Boolean{
+        return licensePlate.matches(Regex("[\\d\\w]{2}[-][\\d\\w]{2}[-][\\d\\w]{2}|[\\d\\w]{2}[ ][\\d\\w]{2}[ ][\\d\\w]{2}"))
     }
 }

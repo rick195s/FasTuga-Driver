@@ -20,4 +20,5 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="invalid_license_plate">"License Plate Valid formats: XX-XX-XX or XX XX XX"</string>
 </resources>
