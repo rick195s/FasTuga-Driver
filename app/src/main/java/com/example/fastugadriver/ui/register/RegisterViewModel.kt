@@ -70,7 +70,7 @@ class RegisterViewModel(private val loginRepository: LoginRepository) : ViewMode
 
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 5
+        return password.length >= 8
     }
 
     private fun isLicensePlateValid(licensePlate: String): Boolean{
