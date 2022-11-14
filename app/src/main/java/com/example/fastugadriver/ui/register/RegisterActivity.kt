@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.data.api.FasTugaFormErrorResponse
-import com.example.fastugadriver.data.api.FasTugaResponse
 import com.example.fastugadriver.data.api.FasTugaSuccessResponse
 
 import com.example.fastugadriver.data.model.Driver
@@ -100,6 +99,9 @@ class RegisterActivity : AppCompatActivity() {
                 if (registerState.passwordError != null && !errorsList.contains(registerState.passwordError)) {
                     errorsList.add(registerState.passwordError)
                 }
+                if (registerState.passwordConfirmationError != null && !errorsList.contains(registerState.passwordConfirmationError)) {
+                    errorsList.add(registerState.passwordConfirmationError)
+                }
                 if (registerState.phoneError != null && !errorsList.contains(registerState.phoneError)) {
                     errorsList.add(registerState.phoneError)
                 }
@@ -126,6 +128,7 @@ class RegisterActivity : AppCompatActivity() {
             registerViewModel.validateRegister(
                 email.text.toString(),
                 password.text.toString(),
+                passwordConfirmation.text.toString(),
                 phone.text.toString(),
                 licensePlate.text.toString()
             )
