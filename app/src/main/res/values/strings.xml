@@ -23,4 +23,5 @@
     <string name="login_failed">"Login failed"</string>
     <string name="invalid_license_plate">"License Plate Valid formats: XX-XX-XX or XX XX XX"</string>
     <string name="title_activity_main">Landing Page</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
