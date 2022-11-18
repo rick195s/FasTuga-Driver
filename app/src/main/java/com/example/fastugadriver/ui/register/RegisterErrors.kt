@@ -1,4 +1,4 @@
-package com.example.fastugadriver.ui.auth.register
+package com.example.fastugadriver.ui.register
 
  class RegisterErrors (
     var emailError: Int? = null,

@@ -1,4 +1,4 @@
-package com.example.fastugadriver.ui.auth.register
+package com.example.fastugadriver.ui.register
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +14,8 @@ import com.example.fastugadriver.data.api.FasTugaLoginSuccessResponse
 import com.example.fastugadriver.data.model.Driver
 import com.example.fastugadriver.databinding.ActivityRegisterBinding
 import com.example.fastugadriver.gateway.FasTugaAPI
-import com.example.fastugadriver.ui.auth.login.LoginActivity
+import com.example.fastugadriver.ui.MapsActivity
+import com.example.fastugadriver.ui.login.LoginActivity
 import java.util.*
 
 
@@ -102,7 +103,7 @@ class RegisterActivity : AppCompatActivity() {
                     registerViewModel.login(fasTugaResponse.driver!!, fasTugaResponse.token!!)
 
                     println()
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, MapsActivity::class.java)
                     //intent.putExtra("key", value)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                     startActivity(intent)

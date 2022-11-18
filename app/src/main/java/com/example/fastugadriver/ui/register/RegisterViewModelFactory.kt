@@ -1,4 +1,4 @@
-package com.example.fastugadriver.ui.auth.register
+package com.example.fastugadriver.ui.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

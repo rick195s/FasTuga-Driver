@@ -39,27 +39,27 @@
         </activity>
 
         <activity
-            android:name=".ui.auth.register.RegisterActivity"
+            android:name=".ui.register.RegisterActivity"
             android:exported="true"
             android:label="@string/title_activity_register" >
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main" />
         <activity
-            android:name=".ui.auth.login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true">
-           <!-- <intent-filter>
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
 
             <meta-data
                 android:name="android.app.lib_name"
