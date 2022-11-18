@@ -19,12 +19,8 @@ class FasTugaAPI {
 
     private val BASE_URI = "http://10.0.2.2/api/"
 
-<<<<<<< Updated upstream
-        val BASE_URI = "https://de99-2-80-254-68.ngrok.io/api/"
-=======
     private val _fasTugaResponse  =  MutableLiveData<FasTugaResponse>()
     val fasTugaResponse: LiveData<FasTugaResponse> = _fasTugaResponse
->>>>>>> Stashed changes
 
     private var fasTugaAPIInterface: FasTugaAPIInterface = getInterface()
 

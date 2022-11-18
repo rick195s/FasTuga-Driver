@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,13 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FasTugaDriver"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
-<<<<<<< Updated upstream
-        <activity
-            android:name=".ui.register.RegisterActivity"
-            android:exported="false"
-            android:label="@string/title_activity_register" />
-=======
 
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -52,7 +48,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
->>>>>>> Stashed changes
         <activity
             android:name=".MainActivity"
             android:exported="false"
@@ -60,11 +55,11 @@
         <activity
             android:name=".ui.auth.login.LoginActivity"
             android:exported="true">
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
 
             <meta-data
                 android:name="android.app.lib_name"
