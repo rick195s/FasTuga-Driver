@@ -1,4 +1,4 @@
-package com.example.fastugadriver.ui.auth.login
+package com.example.fastugadriver.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

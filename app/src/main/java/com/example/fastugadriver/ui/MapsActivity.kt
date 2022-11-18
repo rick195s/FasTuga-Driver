@@ -3,7 +3,6 @@ package com.example.fastugadriver.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.fastugadriver.R
-import com.example.fastugadriver.databinding.ActivityMapsBinding
 import com.google.android.gms.maps.*
 
 import com.google.android.gms.maps.model.LatLng
