@@ -60,6 +60,8 @@ class RegisterActivity : AppCompatActivity() {
             // to check for uniqueness errors
             if (registerResult.error != null) {
                 showRegisterErrors(registerResult.error)
+                register.isEnabled = true
+                login.isEnabled = true
 
             }else{
                 loading.visibility = View.VISIBLE
@@ -74,6 +76,8 @@ class RegisterActivity : AppCompatActivity() {
                     showRegisterErrors( errors = error)
                 }
 
+
+
             }
         })
 
@@ -81,6 +85,8 @@ class RegisterActivity : AppCompatActivity() {
             val fasTugaResponse = it ?: return@Observer
 
             loading.visibility = View.GONE
+            register.isEnabled = true
+            login.isEnabled = true
 
             // handling API response
             when (fasTugaResponse){
@@ -115,6 +121,9 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         register.setOnClickListener {
+            register.isEnabled = false
+            login.isEnabled = false
+
             // verify if fields are valid
             registerViewModel.validateRegister(
                 email.text.toString(),
