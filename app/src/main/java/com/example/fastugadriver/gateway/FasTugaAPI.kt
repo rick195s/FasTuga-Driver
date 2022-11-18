@@ -25,47 +25,73 @@ class FasTugaAPI {
     private var fasTugaAPIInterface: FasTugaAPIInterface = getInterface()
 
     private fun getInterface(): FasTugaAPIInterface {
-            val clientBuilder : OkHttpClient.Builder= OkHttpClient.Builder()
+        val clientBuilder : OkHttpClient.Builder= OkHttpClient.Builder()
 
-            clientBuilder.addInterceptor(Interceptor { chain ->
-                val request = chain.request()
-                val newRequest = request.newBuilder().header("Accept", "application/json").build()
-                chain.proceed(newRequest)
-            })
+        clientBuilder.addInterceptor(Interceptor { chain ->
+            val request = chain.request()
+            val newRequest = request.newBuilder().header("Accept", "application/json").build()
+            chain.proceed(newRequest)
+        })
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URI)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(clientBuilder.build())
-                .build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URI)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(clientBuilder.build())
+            .build()
 
-            // below line is to create an instance for our retrofit api class.
-          return retrofit.create(FasTugaAPIInterface::class.java)
-        }
+        // below line is to create an instance for our retrofit api class.
+        return retrofit.create(FasTugaAPIInterface::class.java)
+    }
 
-        fun registerDriver(driver :Driver) {
-            // calling the method from API to register a Driver
-            val call: Call<ResponseBody> = fasTugaAPIInterface.registerDriver(driver)
+    fun loginDriver(driver :Driver) {
+        // calling the method from API to register a Driver
+        val call: Call<ResponseBody> = fasTugaAPIInterface.loginDriver(driver)
 
-            // on below line we are executing our method.
-            call.enqueue(object : Callback<ResponseBody?> {
-                override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
 
-                    if (!response.isSuccessful){
-                            _fasTugaResponse.value = convertToClass( response.errorBody()!!.charStream(),
-                                FasTugaFormErrorResponse::class.java) as FasTugaFormErrorResponse
-                        return
-                    }
-
-                    _fasTugaResponse.value = convertToClass(response.body()!!.charStream(),
-                        FasTugaLoginSuccessResponse::class.java) as FasTugaLoginSuccessResponse?
+                if (!response.isSuccessful){
+                    _fasTugaResponse.value = convertToClass( response.errorBody()!!.charStream(),
+                        FasTugaFormErrorResponse::class.java) as FasTugaFormErrorResponse
+                    return
                 }
 
-                override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                    t.printStackTrace()
+                _fasTugaResponse.value = convertToClass(response.body()!!.charStream(),
+                    FasTugaLoginSuccessResponse::class.java) as FasTugaLoginSuccessResponse?
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
+
+    fun registerDriver(driver :Driver) {
+        // calling the method from API to register a Driver
+        val call: Call<ResponseBody> = fasTugaAPIInterface.registerDriver(driver)
+
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
+
+                if (!response.isSuccessful){
+                    _fasTugaResponse.value = convertToClass( response.errorBody()!!.charStream(),
+                        FasTugaFormErrorResponse::class.java) as FasTugaFormErrorResponse
+                    return
                 }
-            })
-        }
+
+                _fasTugaResponse.value = convertToClass(response.body()!!.charStream(),
+                    FasTugaLoginSuccessResponse::class.java) as FasTugaLoginSuccessResponse?
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
 
     private fun convertToClass(json: Reader, convertTo: Class<*>): Any? {
         val gson = Gson()
