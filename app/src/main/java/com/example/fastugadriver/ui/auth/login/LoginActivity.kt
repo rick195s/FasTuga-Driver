@@ -1,4 +1,4 @@
-package com.example.fastugadriver.ui.login
+package com.example.fastugadriver.ui.auth.login
 
 import android.app.Activity
 import android.content.Intent
@@ -16,7 +16,7 @@ import android.widget.Toast
 import com.example.fastugadriver.databinding.ActivityLoginBinding
 
 import com.example.fastugadriver.R
-import com.example.fastugadriver.ui.register.RegisterActivity
+import com.example.fastugadriver.ui.auth.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 

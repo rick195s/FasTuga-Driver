@@ -3,28 +3,32 @@ package com.example.fastugadriver.gateway
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fastugadriver.data.api.FasTugaFormErrorResponse
+import com.example.fastugadriver.data.api.FasTugaLoginSuccessResponse
 import com.example.fastugadriver.data.api.FasTugaResponse
-import com.example.fastugadriver.data.api.FasTugaSuccessResponse
 import com.example.fastugadriver.data.model.Driver
-import com.example.fastugadriver.ui.register.RegisterResult
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.Reader
 
 
 class FasTugaAPI {
 
+    private val BASE_URI = "http://10.0.2.2/api/"
 
+<<<<<<< Updated upstream
         val BASE_URI = "https://de99-2-80-254-68.ngrok.io/api/"
+=======
+    private val _fasTugaResponse  =  MutableLiveData<FasTugaResponse>()
+    val fasTugaResponse: LiveData<FasTugaResponse> = _fasTugaResponse
+>>>>>>> Stashed changes
 
-        private val _fasTugaResponse  =  MutableLiveData<FasTugaResponse>()
-        val fasTugaResponse: LiveData<FasTugaResponse> = _fasTugaResponse
+    private var fasTugaAPIInterface: FasTugaAPIInterface = getInterface()
 
-
-    fun getInterface(): FasTugaAPIInterface {
+    private fun getInterface(): FasTugaAPIInterface {
             val clientBuilder : OkHttpClient.Builder= OkHttpClient.Builder()
 
             clientBuilder.addInterceptor(Interceptor { chain ->
@@ -39,50 +43,46 @@ class FasTugaAPI {
                 .client(clientBuilder.build())
                 .build()
 
-
             // below line is to create an instance for our retrofit api class.
-             val fastTugaDriverAPI: FasTugaAPIInterface =
-                retrofit.create(FasTugaAPIInterface::class.java)
-
-            return fastTugaDriverAPI;
-
-
+          return retrofit.create(FasTugaAPIInterface::class.java)
         }
 
         fun registerDriver(driver :Driver) {
-            val fasTugaAPI: FasTugaAPIInterface = getInterface()
-
             // calling the method from API to register a Driver
-            val call: Call<ResponseBody> = fasTugaAPI.registerDriver(driver)
+            val call: Call<ResponseBody> = fasTugaAPIInterface.registerDriver(driver)
 
             // on below line we are executing our method.
             call.enqueue(object : Callback<ResponseBody?> {
                 override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
 
                     if (!response.isSuccessful){
-                        val responseFromAPI: ResponseBody? = response.errorBody()
-                        val gson = Gson()
-
-                        try {
-                            _fasTugaResponse.value = gson.fromJson(response.errorBody()!!.charStream(),
-                                FasTugaFormErrorResponse::class.java)
-
-                        }catch (e: Throwable){
-                            println(e.message)
-                        }
-
-
+                            _fasTugaResponse.value = convertToClass( response.errorBody()!!.charStream(),
+                                FasTugaFormErrorResponse::class.java) as FasTugaFormErrorResponse
                         return
                     }
 
-                    _fasTugaResponse.value = FasTugaSuccessResponse()
+                    _fasTugaResponse.value = convertToClass(response.body()!!.charStream(),
+                        FasTugaLoginSuccessResponse::class.java) as FasTugaLoginSuccessResponse?
                 }
+
                 override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                     t.printStackTrace()
                 }
             })
         }
 
+    private fun convertToClass(json: Reader, convertTo: Class<*>): Any? {
+        val gson = Gson()
+
+        try {
+            return gson.fromJson(json,
+                convertTo)
+
+        }catch (e: Throwable){
+            println(e.message)
+        }
+        return null
+    }
 
 }
 

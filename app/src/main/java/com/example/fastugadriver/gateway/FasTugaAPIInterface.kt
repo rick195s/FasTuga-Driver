@@ -10,6 +10,9 @@ import retrofit2.http.POST
 
 interface FasTugaAPIInterface {
 
+    @POST("login/driver")
+    fun loginDriver(@Body driver: Driver?): Call<ResponseBody>
+
     @POST("register/driver")
     fun registerDriver(@Body driver: Driver?): Call<ResponseBody>
 

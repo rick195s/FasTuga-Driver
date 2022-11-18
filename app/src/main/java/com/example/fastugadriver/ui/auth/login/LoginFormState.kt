@@ -1,4 +1,4 @@
-package com.example.fastugadriver.ui.login
+package com.example.fastugadriver.ui.auth.login
 
 /**
  * Data validation state of the login form.

@@ -1,4 +1,4 @@
-package com.example.fastugadriver.ui.login
+package com.example.fastugadriver.ui.auth.login
 
 /**
  * Authentication result : success (user details) or error message.
