@@ -3,7 +3,11 @@
     <item
         android:id="@+id/ordersList"
         android:icon="@drawable/ic_baseline_format_list_bulleted_24"
-        android:title="Orders List"/>
+        android:title="Orders List"
+        android:onClick="onOptionsItemSelected"/>
+    <item
+        android:icon="@drawable/ic_outline_location_on_24"
+        android:title="@string/bottom_nav_map" />
     <item
         android:id="@+id/user"
         android:icon="@drawable/ic_baseline_supervised_user_circle_24"

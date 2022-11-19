@@ -24,4 +24,5 @@
     <string name="invalid_license_plate">"License Plate Valid formats: XX-XX-XX or XX XX XX"</string>
     <string name="title_activity_main">Landing Page</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="bottom_nav_map">Map</string>
 </resources>
