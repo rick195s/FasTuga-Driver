@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/ordersList"
+        android:id="@+id/bottom_navbar_orders"
         android:icon="@drawable/ic_baseline_format_list_bulleted_24"
         android:onClick="onOptionsItemSelected"
         android:title="@string/bottom_nav_orders" />
     <item
+        android:id="@+id/bottom_navbar_map"
         android:icon="@drawable/ic_outline_navigation_24"
         android:title="@string/bottom_nav_map" />
     <item
-        android:id="@+id/user"
+        android:id="@+id/bottom_navbar_profile"
         android:icon="@drawable/ic_outline_account_circle_24"
         android:onClick="onOptionsItemSelected"
         android:title="@string/bottom_nav_profile" />

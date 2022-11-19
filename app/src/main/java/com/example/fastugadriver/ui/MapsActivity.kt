@@ -10,6 +10,7 @@ import com.google.android.gms.maps.*
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -28,6 +29,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapView.onCreate(mapViewBundle)
         mapView.getMapAsync(this)
 
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        // Set Home selected
+        bottomNavigationView.selectedItemId = R.id.bottom_navbar_map
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -37,12 +41,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
-            R.id.ordersList -> {
+            R.id.bottom_navbar_orders -> {
                 val intent = Intent(this, OrdersActivity::class.java)
                 startActivity(intent)
                 println("ordersList pressed")
                 true
-            } R.id.user -> {
+            }R.id.bottom_navbar_map -> {
+                println("map pressed")
+                true
+            }
+            R.id.bottom_navbar_profile -> {
                 println("user pressed")
                 true
             }else -> {
