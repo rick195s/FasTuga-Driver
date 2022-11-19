@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         // Set Maps Fragment as initial
         replaceFragment(MapsFragment())
+        binding.bottomNavigationView.selectedItemId = R.id.bottom_navbar_map
 
 
         binding.bottomNavigationView.setOnItemSelectedListener {
