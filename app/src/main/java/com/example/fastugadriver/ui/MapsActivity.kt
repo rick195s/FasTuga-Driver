@@ -3,10 +3,8 @@ package com.example.fastugadriver.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
-import com.example.fastugadriver.OrdersActivity
 import com.example.fastugadriver.R
 import com.google.android.gms.maps.*
 
@@ -40,7 +38,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.ordersList -> {
-                val intent = Intent(this,OrdersActivity::class.java)
+                val intent = Intent(this, OrdersActivity::class.java)
                 startActivity(intent)
                 println("ordersList pressed")
                 true
