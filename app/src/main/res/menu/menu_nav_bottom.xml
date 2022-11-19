@@ -6,7 +6,7 @@
         android:onClick="onOptionsItemSelected"
         android:title="@string/bottom_nav_orders" />
     <item
-        android:icon="@drawable/ic_outline_location_on_24"
+        android:icon="@drawable/ic_outline_navigation_24"
         android:title="@string/bottom_nav_map" />
     <item
         android:id="@+id/user"
