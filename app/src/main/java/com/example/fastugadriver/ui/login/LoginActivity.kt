@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                     loginViewModel.login(fasTugaResponse.driver!!, fasTugaResponse.token!!)
 
                     println()
-                    val intent = Intent(this, MapsActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     //intent.putExtra("key", value)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                     startActivity(intent)
