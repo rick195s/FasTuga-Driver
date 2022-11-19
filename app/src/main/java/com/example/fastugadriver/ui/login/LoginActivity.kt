@@ -14,7 +14,6 @@ import com.example.fastugadriver.data.api.FasTugaLoginSuccessResponse
 import com.example.fastugadriver.data.model.Driver
 import com.example.fastugadriver.databinding.ActivityLoginBinding
 import com.example.fastugadriver.gateway.FasTugaAPI
-import com.example.fastugadriver.ui.MapsActivity
 import com.example.fastugadriver.ui.register.RegisterActivity
 
 
