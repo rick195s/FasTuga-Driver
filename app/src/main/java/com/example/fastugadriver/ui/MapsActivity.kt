@@ -1,7 +1,12 @@
 package com.example.fastugadriver.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
+import com.example.fastugadriver.OrdersActivity
 import com.example.fastugadriver.R
 import com.google.android.gms.maps.*
 
@@ -16,6 +21,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
+
         // *** IMPORTANT ***
         // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
         // objects or sub-Bundles.
@@ -24,6 +30,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapView.onCreate(mapViewBundle)
         mapView.getMapAsync(this)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_nav_bottom,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.ordersList -> {
+                val intent = Intent(this,OrdersActivity::class.java)
+                startActivity(intent)
+                println("ordersList pressed")
+                true
+            } R.id.user -> {
+                println("user pressed")
+                true
+            }else -> {
+                false
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
