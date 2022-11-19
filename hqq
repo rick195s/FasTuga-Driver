@@ -1,0 +1,36 @@
+[33m39988c5[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m Bottom Nav strings defined in strings.xml
+[33mc04c94e[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge AT2 with master
+[33m63aa420[m Map icon in bottom navigation bar
+[33m8ea2ee2[m[33m ([m[1;31morigin/AT2---check-the-orders-text-inside[m[33m, [m[1;32mAT2---check-the-orders-text-inside[m[33m)[m TG-3 AT-2 - Check the Orders text inside Orders Page
+[33md165db5[m[33m ([m[1;31morigin/AT1---check-the-pin-exists[m[33m)[m Merged in feature/TG-2-us2---check-the-user-can-login (pull request #8)
+[33m6f4b1d3[m[33m ([m[1;31morigin/feature/TG-2-us2---check-the-user-can-login[m[33m, [m[1;32mfeature/TG-2-us2---check-the-user-can-login[m[33m)[m TG-1 after register user redirected to MapsActivity
+[33m723482c[m TG-1 after login user redirected to MapsActivity
+[33m3b5a387[m moved packages outside auth package
+[33m2ce6469[m TG-2 Driver login implemented
+[33mb5704a2[m TG-1 disable register page buttons
+[33m37b4491[m solved conflicts while merging register with token
+[33m5cebaa0[m TG-1 register storing token
+[33m9f1e8d7[m Merged in feature/TG-3-us3---check-the-user-can-see-map (pull request #7)
+[33mb0ae8a7[m[33m ([m[1;31morigin/feature/TG-3-us3---check-the-user-can-see-map[m[33m, [m[1;32mfeature/TG-3-us3---check-the-user-can-see-map[m[33m)[m TG-3 initial map view
+[33meb3f70f[m ScrollView implemented in register page
+[33mb192aa6[m solved conflicts
+[33m6f4f00e[m[33m ([m[1;32mAT8---check-password-and-password-confirmation-match[m[33m)[m TG-11 AT-8 Check Password and Password Confirmation match (corrected v2.0)
+[33m5c3303b[m TG-11 AT-8 Check Password and Password Confirmation match (corrected)
+[33m4ba1382[m Merged in AT7---check-password-is-at-least-8 (pull request #5)
+[33m4fd5cb1[m TG-11 AT-8 Check Password and Password Confirmation match
+[33mfe6c8d1[m TG-10 AT-7 Check Password is at least 8 characters
+[33mf5b6d53[m TG-1 Check Driver can Register implemented
+[33mb1a7198[m TG-1 invalid license plate verification implemented
+[33ma0ffa39[m TG-1 Errors returned from FasTuga API displayed in register page
+[33md55ccc6[m TG-1 catching GSON parsing error
+[33m8f8d412[m[33m ([m[1;33mtag: v.1-FasTugaAPI[m[33m)[m TG-1 FasTugaAPI implemented
+[33m97796ae[m set LoginActivity as startup activity
+[33mb6a8454[m solved conflicts
+[33m7301454[m TG-1 check login text in the login
+[33ma6ea9e5[m solved conflits
+[33mf83e929[m TG-1 AT5-Check Phone number is invalid
+[33md36bc6c[m TG-1 AT-3 check if email is invalid
+[33m7845cf6[m Merged in createRegisterPage (pull request #1)
+[33mdf5accc[m Base for the Register Page
+[33m9e43290[m init
+[33macc9bf5[m Initial commit
