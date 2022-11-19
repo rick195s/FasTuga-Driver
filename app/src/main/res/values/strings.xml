@@ -25,4 +25,6 @@
     <string name="title_activity_main">Landing Page</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="bottom_nav_map">Map</string>
+    <string name="bottom_nav_profile">Profile</string>
+    <string name="bottom_nav_orders">Orders</string>
 </resources>
