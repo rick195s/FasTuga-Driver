@@ -31,13 +31,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDPg8CXKUBOT3nbd-RdLb91YFDh70GAjJE" />
 
-        <activity
-            android:name=".ui.OrdersActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
 
         <activity
             android:name=".ui.register.RegisterActivity"
