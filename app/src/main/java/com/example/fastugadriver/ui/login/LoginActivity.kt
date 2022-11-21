@@ -30,12 +30,12 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val email = binding.email
-        val password = binding.password
+        val email = binding.loginEmail
+        val password = binding.loginPassword
         val login = binding.login
         val loading = binding.loading
         val navigateRegister = binding.navigateRegister
-        errorMSGs = binding.errorMsgs
+        errorMSGs = binding.loginErrorMsgs
 
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())

@@ -33,16 +33,16 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val name = binding.name
-        val email = binding.email
-        val password = binding.password
-        val passwordConfirmation = binding.passwordConfirmation
-        val phone = binding.phone
-        val licensePlate = binding.licensePlate
-        val login = binding.login
+        val name = binding.registerName
+        val email = binding.registerEmail
+        val password = binding.registerPassword
+        val passwordConfirmation = binding.registerPasswordConfirmation
+        val phone = binding.registerPhone
+        val licensePlate = binding.registerLicensePlate
+        val login = binding.navigateLogin
         val loading = binding.loading
         val register = binding.register
-        errorMSGs = binding.errorMsgs
+        errorMSGs = binding.registerErrorMsgs
 
 
         registerViewModel = ViewModelProvider(this, RegisterViewModelFactory())
