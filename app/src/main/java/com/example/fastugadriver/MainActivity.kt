@@ -8,6 +8,7 @@ import com.example.fastugadriver.databinding.ActivityMainBinding
 import com.example.fastugadriver.databinding.ActivityRegisterBinding
 import com.example.fastugadriver.ui.MapsFragment
 import com.example.fastugadriver.ui.OrdersFragment
+import com.example.fastugadriver.ui.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId){
                 R.id.bottom_navbar_orders -> replaceFragment(OrdersFragment())
                 R.id.bottom_navbar_map -> replaceFragment(MapsFragment())
-
+                R.id.bottom_navbar_profile -> replaceFragment(ProfileFragment())
                 else -> {
 
                 }
