@@ -13,6 +13,7 @@ import com.example.fastugadriver.data.api.FasTugaLoginSuccessResponse
 
 import com.example.fastugadriver.data.model.Driver
 import com.example.fastugadriver.databinding.ActivityLoginBinding
+import com.example.fastugadriver.gateway.DriverGateway
 import com.example.fastugadriver.gateway.FasTugaAPI
 import com.example.fastugadriver.ui.register.RegisterActivity
 
@@ -41,10 +42,10 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
-        val fasTugaAPI : FasTugaAPI = FasTugaAPI()
+        val driverGateway : DriverGateway = DriverGateway()
 
 
-        fasTugaAPI.fasTugaResponse.observe(this@LoginActivity, Observer {
+        driverGateway.fasTugaResponse.observe(this@LoginActivity, Observer {
             val fasTugaResponse = it ?: return@Observer
 
             loading.visibility = View.GONE
@@ -76,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
             login.isEnabled = false
             loading.visibility = View.VISIBLE
 
-            login(email.text.toString(), password.text.toString(), fasTugaAPI)
+            login(email.text.toString(), password.text.toString(), driverGateway)
 
         }
 
@@ -90,10 +91,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    private fun login(email: String, password: String, fasTugaAPI: FasTugaAPI){
+    private fun login(email: String, password: String, driverGateway: DriverGateway){
 
         try {
-            fasTugaAPI.loginDriver(Driver(email = email, password = password));
+            driverGateway.loginDriver(Driver(email = email, password = password));
 
         }catch (e: Exception ){
             errorMSGs!!.text = "- ${e.message}"

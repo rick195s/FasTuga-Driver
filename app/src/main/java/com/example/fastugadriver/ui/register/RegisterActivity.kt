@@ -13,6 +13,7 @@ import com.example.fastugadriver.data.api.FasTugaLoginSuccessResponse
 
 import com.example.fastugadriver.data.model.Driver
 import com.example.fastugadriver.databinding.ActivityRegisterBinding
+import com.example.fastugadriver.gateway.DriverGateway
 import com.example.fastugadriver.gateway.FasTugaAPI
 import com.example.fastugadriver.ui.login.LoginActivity
 import java.util.*
@@ -48,7 +49,7 @@ class RegisterActivity : AppCompatActivity() {
         registerViewModel = ViewModelProvider(this, RegisterViewModelFactory())
             .get(RegisterViewModel::class.java)
 
-        val fasTugaAPI : FasTugaAPI = FasTugaAPI()
+        val driverGateway : DriverGateway = DriverGateway()
 
         registerViewModel.registerResult.observe(this@RegisterActivity, Observer {
             val registerResult = it ?: return@Observer
@@ -67,7 +68,7 @@ class RegisterActivity : AppCompatActivity() {
                 loading.visibility = View.VISIBLE
 
                 try {
-                    fasTugaAPI.registerDriver(Driver(name.text.toString(), email.text.toString(),
+                    driverGateway.registerDriver(Driver(name.text.toString(), email.text.toString(),
                         phone.text.toString(), licensePlate.text.toString(), password.text.toString(), passwordConfirmation.text.toString()));
 
                 }catch (e: Exception ){
@@ -81,7 +82,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
-        fasTugaAPI.fasTugaResponse.observe(this@RegisterActivity, Observer {
+        driverGateway.fasTugaResponse.observe(this@RegisterActivity, Observer {
             val fasTugaResponse = it ?: return@Observer
 
             loading.visibility = View.GONE
