@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.Reader
+import java.util.concurrent.TimeUnit
 
 
 class FasTugaAPI {
@@ -17,6 +18,11 @@ class FasTugaAPI {
 
         fun getInterface(): FasTugaAPIInterface {
             val clientBuilder : OkHttpClient.Builder= OkHttpClient.Builder()
+
+            clientBuilder
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
 
             clientBuilder.addInterceptor(Interceptor { chain ->
                 val request = chain.request()

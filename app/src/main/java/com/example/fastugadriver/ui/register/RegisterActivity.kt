@@ -74,6 +74,9 @@ class RegisterActivity : AppCompatActivity() {
                     val error : LinkedList<String> = LinkedList<String>()
                     error.add(e.message.toString())
                     showRegisterErrors( errors = error)
+                    register.isEnabled = true
+                    login.isEnabled = true
+                    loading.visibility = View.GONE
                 }
 
 
@@ -99,9 +102,6 @@ class RegisterActivity : AppCompatActivity() {
                 }
 
                 is LoginSuccessResponse -> {
-                    registerViewModel.login(fasTugaResponse.driver!!, fasTugaResponse.token!!)
-
-                    println()
                     val intent = Intent(this, MainActivity::class.java)
                     //intent.putExtra("key", value)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)

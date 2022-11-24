@@ -58,12 +58,15 @@ class DriverGateway {
                     return
                 }
 
-                _fasTugaResponse.value = FasTugaAPI.convertToClass(response.body()!!.charStream(),
-                    LoginSuccessResponse::class.java) as LoginSuccessResponse?
+                val token: Token = FasTugaAPI.convertToClass(response.body()!!.charStream(),
+                    Token::class.java) as Token
+
+                LoginRepository.setToken(token)
+                getDriver()
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                t.printStackTrace()
+                throw t
             }
         })
     }

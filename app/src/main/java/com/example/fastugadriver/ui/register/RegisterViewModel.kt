@@ -14,10 +14,6 @@ class RegisterViewModel() : ViewModel() {
     private val _registerResult = MutableLiveData<RegisterResult>()
     val registerResult: LiveData<RegisterResult> = _registerResult
 
-    fun login(driver: LoggedInDriver, token: Token) {
-        val loginRepository: LoginRepository = LoginRepository
-    }
-
     fun validateRegister(email: String, password: String, passwordConfirmation: String, phone: String, licensePlate: String){
         val registerErrors: RegisterErrors = RegisterErrors()
 
