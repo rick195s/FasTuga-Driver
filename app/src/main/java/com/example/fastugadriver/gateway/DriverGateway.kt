@@ -2,9 +2,9 @@ package com.example.fastugadriver.gateway
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.fastugadriver.data.api.FasTugaFormErrorResponse
-import com.example.fastugadriver.data.api.FasTugaLoginSuccessResponse
-import com.example.fastugadriver.data.api.FasTugaResponse
+import com.example.fastugadriver.data.pojos.FasTugaFormErrorResponse
+import com.example.fastugadriver.data.pojos.FasTugaLoginSuccessResponse
+import com.example.fastugadriver.data.pojos.FasTugaResponse
 import com.example.fastugadriver.data.model.Driver
 import okhttp3.ResponseBody
 import retrofit2.Call

@@ -1,4 +1,4 @@
-package com.example.fastugadriver.data.api
+package com.example.fastugadriver.data.pojos
 
 import com.example.fastugadriver.data.model.LoggedInDriver
 import com.google.gson.annotations.Expose

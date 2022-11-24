@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fastugadriver.MainActivity
-import com.example.fastugadriver.data.api.FasTugaFormErrorResponse
-import com.example.fastugadriver.data.api.FasTugaLoginSuccessResponse
+import com.example.fastugadriver.data.pojos.FasTugaFormErrorResponse
+import com.example.fastugadriver.data.pojos.FasTugaLoginSuccessResponse
 
 import com.example.fastugadriver.data.model.Driver
 import com.example.fastugadriver.databinding.ActivityRegisterBinding

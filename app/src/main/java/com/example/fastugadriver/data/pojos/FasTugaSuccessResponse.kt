@@ -1,4 +1,4 @@
-package com.example.fastugadriver.data.api
+package com.example.fastugadriver.data.pojos
 
 class FasTugaSuccessResponse : FasTugaResponse {
 }
