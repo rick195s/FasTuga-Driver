@@ -8,14 +8,14 @@ import com.example.fastugadriver.data.LoginRepository
 
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.pojos.LoggedInDriver
+import com.example.fastugadriver.data.pojos.Token
 
 class RegisterViewModel() : ViewModel() {
     private val _registerResult = MutableLiveData<RegisterResult>()
     val registerResult: LiveData<RegisterResult> = _registerResult
 
-    fun login(driver: LoggedInDriver, token: String) {
+    fun login(driver: LoggedInDriver, token: Token) {
         val loginRepository: LoginRepository = LoginRepository
-        loginRepository.login(driver, token)
     }
 
     fun validateRegister(email: String, password: String, passwordConfirmation: String, phone: String, licensePlate: String){

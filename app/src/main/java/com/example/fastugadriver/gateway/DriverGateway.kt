@@ -2,10 +2,10 @@ package com.example.fastugadriver.gateway
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.fastugadriver.data.pojos.FormErrorResponse
-import com.example.fastugadriver.data.pojos.LoginSuccessResponse
-import com.example.fastugadriver.data.pojos.FasTugaResponse
-import com.example.fastugadriver.data.pojos.Driver
+import com.example.fastugadriver.data.LoginRepository
+import com.example.fastugadriver.data.pojos.*
+import kotlinx.coroutines.*
+import okhttp3.Dispatcher
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,8 +30,11 @@ class DriverGateway {
                     return
                 }
 
-                _fasTugaResponse.value = FasTugaAPI.convertToClass(response.body()!!.charStream(),
-                    LoginSuccessResponse::class.java) as LoginSuccessResponse?
+                val token: Token = FasTugaAPI.convertToClass(response.body()!!.charStream(),
+                    Token::class.java) as Token
+
+                LoginRepository.setToken(token)
+                getDriver()
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
@@ -57,6 +60,34 @@ class DriverGateway {
 
                 _fasTugaResponse.value = FasTugaAPI.convertToClass(response.body()!!.charStream(),
                     LoginSuccessResponse::class.java) as LoginSuccessResponse?
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
+    fun getDriver(){
+
+        // calling the method from API to get the Driver logged in
+        val call: Call<ResponseBody> = FasTugaAPI.getInterface().getDriver()
+
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
+
+                if (!response.isSuccessful){
+                    _fasTugaResponse.value = FasTugaAPI.convertToClass( response.errorBody()!!.charStream(),
+                        FormErrorResponse::class.java) as FormErrorResponse
+                    return
+                }
+
+                // Storing logged in driver inside repository
+                LoginRepository.driver = FasTugaAPI.convertToClass(response.body()!!.charStream(),
+                    LoggedInDriver::class.java) as LoggedInDriver?
+
+                _fasTugaResponse.value = LoginSuccessResponse()
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
