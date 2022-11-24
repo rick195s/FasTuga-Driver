@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fastugadriver.MainActivity
-import com.example.fastugadriver.data.pojos.FasTugaFormErrorResponse
-import com.example.fastugadriver.data.pojos.FasTugaLoginSuccessResponse
+import com.example.fastugadriver.data.pojos.FormErrorResponse
+import com.example.fastugadriver.data.pojos.LoginSuccessResponse
 
 import com.example.fastugadriver.data.pojos.Driver
 import com.example.fastugadriver.databinding.ActivityRegisterBinding
@@ -90,7 +90,7 @@ class RegisterActivity : AppCompatActivity() {
 
             // handling API response
             when (fasTugaResponse){
-                is FasTugaFormErrorResponse -> {
+                is FormErrorResponse -> {
                     val errors : LinkedList<String> = LinkedList()
                     fasTugaResponse.errors?.email?.let { it1 -> errors.addAll(it1) }
                     fasTugaResponse.errors?.phone?.let { it1 -> errors.addAll(it1) }
@@ -98,7 +98,7 @@ class RegisterActivity : AppCompatActivity() {
                     showRegisterErrors(errors = errors)
                 }
 
-                is FasTugaLoginSuccessResponse -> {
+                is LoginSuccessResponse -> {
                     registerViewModel.login(fasTugaResponse.driver!!, fasTugaResponse.token!!)
 
                     println()

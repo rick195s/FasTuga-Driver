@@ -2,8 +2,8 @@ package com.example.fastugadriver.gateway
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.fastugadriver.data.pojos.FasTugaFormErrorResponse
-import com.example.fastugadriver.data.pojos.FasTugaLoginSuccessResponse
+import com.example.fastugadriver.data.pojos.FormErrorResponse
+import com.example.fastugadriver.data.pojos.LoginSuccessResponse
 import com.example.fastugadriver.data.pojos.FasTugaResponse
 import com.example.fastugadriver.data.pojos.Driver
 import okhttp3.ResponseBody
@@ -26,12 +26,12 @@ class DriverGateway {
 
                 if (!response.isSuccessful){
                     _fasTugaResponse.value = FasTugaAPI.convertToClass( response.errorBody()!!.charStream(),
-                        FasTugaFormErrorResponse::class.java) as FasTugaFormErrorResponse
+                        FormErrorResponse::class.java) as FormErrorResponse
                     return
                 }
 
                 _fasTugaResponse.value = FasTugaAPI.convertToClass(response.body()!!.charStream(),
-                    FasTugaLoginSuccessResponse::class.java) as FasTugaLoginSuccessResponse?
+                    LoginSuccessResponse::class.java) as LoginSuccessResponse?
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
@@ -51,12 +51,12 @@ class DriverGateway {
 
                 if (!response.isSuccessful){
                     _fasTugaResponse.value = FasTugaAPI.convertToClass( response.errorBody()!!.charStream(),
-                        FasTugaFormErrorResponse::class.java) as FasTugaFormErrorResponse
+                        FormErrorResponse::class.java) as FormErrorResponse
                     return
                 }
 
                 _fasTugaResponse.value = FasTugaAPI.convertToClass(response.body()!!.charStream(),
-                    FasTugaLoginSuccessResponse::class.java) as FasTugaLoginSuccessResponse?
+                    LoginSuccessResponse::class.java) as LoginSuccessResponse?
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
