@@ -1,6 +1,7 @@
 package com.example.fastugadriver.data
 
-import com.example.fastugadriver.data.model.LoggedInDriver
+import com.example.fastugadriver.data.pojos.LoggedInDriver
+import com.example.fastugadriver.data.pojos.Token
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -9,16 +10,10 @@ import com.example.fastugadriver.data.model.LoggedInDriver
 
 object LoginRepository {
 
-    fun  login(driver: LoggedInDriver, token: String)  {
-        setLoggedInDriver(driver)
-        setToken(token)
-    }
-
     // in-memory cache of the loggedInUser object
     var driver: LoggedInDriver? = null
-        private set
 
-    var token: String = ""
+    var token: Token? = null
         private set
 
     val isLoggedIn: Boolean
@@ -34,15 +29,9 @@ object LoginRepository {
         driver = null
     }
 
-
-
-    private fun setLoggedInDriver(loggedInDriver: LoggedInDriver) {
-        this.driver = loggedInDriver
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
+    fun setToken(newToken: Token){
+        newToken.accessToken = "Bearer ${newToken.accessToken}"
+        token = newToken
     }
 
-    private fun setToken(token: String){
-        this.token = "Bearer $token"
-    }
 }

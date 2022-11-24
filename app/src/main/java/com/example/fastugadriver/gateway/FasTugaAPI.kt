@@ -1,11 +1,13 @@
 package com.example.fastugadriver.gateway
 
+import com.example.fastugadriver.data.LoginRepository
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.Reader
+import java.util.concurrent.TimeUnit
 
 
 class FasTugaAPI {
@@ -17,10 +19,22 @@ class FasTugaAPI {
         fun getInterface(): FasTugaAPIInterface {
             val clientBuilder : OkHttpClient.Builder= OkHttpClient.Builder()
 
+            clientBuilder
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+
             clientBuilder.addInterceptor(Interceptor { chain ->
                 val request = chain.request()
-                val newRequest = request.newBuilder().header("Accept", "application/json").build()
-                chain.proceed(newRequest)
+                val newRequest = request
+                    .newBuilder()
+                    .header("Accept", "application/json");
+
+                if (LoginRepository.token != null){
+                    newRequest.header("Authorization", LoginRepository.token?.accessToken.toString())
+                }
+
+                chain.proceed(newRequest.build())
             })
 
             val retrofit = Retrofit.Builder()

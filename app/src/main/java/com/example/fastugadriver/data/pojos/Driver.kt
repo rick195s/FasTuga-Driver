@@ -1,4 +1,4 @@
-package com.example.fastugadriver.data.model
+package com.example.fastugadriver.data.pojos
 
 
 data class Driver(

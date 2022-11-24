@@ -8,13 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fastugadriver.MainActivity
-import com.example.fastugadriver.data.api.FasTugaFormErrorResponse
-import com.example.fastugadriver.data.api.FasTugaLoginSuccessResponse
+import com.example.fastugadriver.data.pojos.FormErrorResponse
+import com.example.fastugadriver.data.pojos.LoginSuccessResponse
 
-import com.example.fastugadriver.data.model.Driver
+import com.example.fastugadriver.data.pojos.Driver
 import com.example.fastugadriver.databinding.ActivityRegisterBinding
 import com.example.fastugadriver.gateway.DriverGateway
-import com.example.fastugadriver.gateway.FasTugaAPI
 import com.example.fastugadriver.ui.login.LoginActivity
 import java.util.*
 
@@ -75,6 +74,9 @@ class RegisterActivity : AppCompatActivity() {
                     val error : LinkedList<String> = LinkedList<String>()
                     error.add(e.message.toString())
                     showRegisterErrors( errors = error)
+                    register.isEnabled = true
+                    login.isEnabled = true
+                    loading.visibility = View.GONE
                 }
 
 
@@ -91,7 +93,7 @@ class RegisterActivity : AppCompatActivity() {
 
             // handling API response
             when (fasTugaResponse){
-                is FasTugaFormErrorResponse -> {
+                is FormErrorResponse -> {
                     val errors : LinkedList<String> = LinkedList()
                     fasTugaResponse.errors?.email?.let { it1 -> errors.addAll(it1) }
                     fasTugaResponse.errors?.phone?.let { it1 -> errors.addAll(it1) }
@@ -99,10 +101,7 @@ class RegisterActivity : AppCompatActivity() {
                     showRegisterErrors(errors = errors)
                 }
 
-                is FasTugaLoginSuccessResponse -> {
-                    registerViewModel.login(fasTugaResponse.driver!!, fasTugaResponse.token!!)
-
-                    println()
+                is LoginSuccessResponse -> {
                     val intent = Intent(this, MainActivity::class.java)
                     //intent.putExtra("key", value)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)

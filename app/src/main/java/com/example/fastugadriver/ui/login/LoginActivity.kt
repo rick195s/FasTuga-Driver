@@ -8,19 +8,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fastugadriver.MainActivity
-import com.example.fastugadriver.data.api.FasTugaFormErrorResponse
-import com.example.fastugadriver.data.api.FasTugaLoginSuccessResponse
+import com.example.fastugadriver.data.pojos.FormErrorResponse
+import com.example.fastugadriver.data.pojos.LoginSuccessResponse
 
-import com.example.fastugadriver.data.model.Driver
+import com.example.fastugadriver.data.pojos.Driver
 import com.example.fastugadriver.databinding.ActivityLoginBinding
 import com.example.fastugadriver.gateway.DriverGateway
-import com.example.fastugadriver.gateway.FasTugaAPI
 import com.example.fastugadriver.ui.register.RegisterActivity
 
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
 
     private var errorMSGs: TextView? = null
@@ -39,9 +37,6 @@ class LoginActivity : AppCompatActivity() {
         errorMSGs = binding.loginErrorMsgs
 
 
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
-
         val driverGateway : DriverGateway = DriverGateway()
 
 
@@ -54,14 +49,11 @@ class LoginActivity : AppCompatActivity() {
 
             // handling API response
             when (fasTugaResponse){
-                is FasTugaFormErrorResponse -> {
-                    errorMSGs!!.text = "- ${fasTugaResponse.message}"
+                is FormErrorResponse -> {
+                    errorMSGs!!.text = "- Invalid Credentials."
                 }
 
-                is FasTugaLoginSuccessResponse -> {
-                    loginViewModel.login(fasTugaResponse.driver!!, fasTugaResponse.token!!)
-
-                    println()
+                is LoginSuccessResponse -> {
                     val intent = Intent(this, MainActivity::class.java)
                     //intent.putExtra("key", value)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)

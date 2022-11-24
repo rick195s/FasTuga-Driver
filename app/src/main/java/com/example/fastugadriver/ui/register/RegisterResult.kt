@@ -1,6 +1,6 @@
 package com.example.fastugadriver.ui.register
 
-import com.example.fastugadriver.data.model.LoggedInDriver
+import com.example.fastugadriver.data.pojos.LoggedInDriver
 
 /**
  * Authentication result : success (user details) or error message.
