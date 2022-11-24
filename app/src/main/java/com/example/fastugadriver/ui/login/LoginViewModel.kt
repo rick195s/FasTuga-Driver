@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fastugadriver.data.LoginRepository
 
-import com.example.fastugadriver.data.model.LoggedInDriver
+import com.example.fastugadriver.data.pojos.LoggedInDriver
 
 class LoginViewModel() : ViewModel() {
 

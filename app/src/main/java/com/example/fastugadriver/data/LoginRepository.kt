@@ -1,6 +1,6 @@
 package com.example.fastugadriver.data
 
-import com.example.fastugadriver.data.model.LoggedInDriver
+import com.example.fastugadriver.data.pojos.LoggedInDriver
 
 /**
  * Class that requests authentication and user information from the remote data source and

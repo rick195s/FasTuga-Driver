@@ -1,4 +1,4 @@
-package com.example.fastugadriver.data.model
+package com.example.fastugadriver.data.pojos
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

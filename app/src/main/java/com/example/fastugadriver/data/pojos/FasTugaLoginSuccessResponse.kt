@@ -1,6 +1,6 @@
 package com.example.fastugadriver.data.pojos
 
-import com.example.fastugadriver.data.model.LoggedInDriver
+import com.example.fastugadriver.data.pojos.LoggedInDriver
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

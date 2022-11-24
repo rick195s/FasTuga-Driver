@@ -7,7 +7,7 @@ import android.util.Patterns
 import com.example.fastugadriver.data.LoginRepository
 
 import com.example.fastugadriver.R
-import com.example.fastugadriver.data.model.LoggedInDriver
+import com.example.fastugadriver.data.pojos.LoggedInDriver
 
 class RegisterViewModel() : ViewModel() {
     private val _registerResult = MutableLiveData<RegisterResult>()

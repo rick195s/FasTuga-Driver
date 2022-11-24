@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.fastugadriver.data.pojos.FasTugaFormErrorResponse
 import com.example.fastugadriver.data.pojos.FasTugaLoginSuccessResponse
 import com.example.fastugadriver.data.pojos.FasTugaResponse
-import com.example.fastugadriver.data.model.Driver
+import com.example.fastugadriver.data.pojos.Driver
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,7 +16,7 @@ class DriverGateway {
     private val _fasTugaResponse  =  MutableLiveData<FasTugaResponse>()
     val fasTugaResponse: LiveData<FasTugaResponse> = _fasTugaResponse
 
-    fun loginDriver(driver :Driver) {
+    fun loginDriver(driver : Driver) {
         // calling the method from API to register a Driver
         val call: Call<ResponseBody> = FasTugaAPI.getInterface().loginDriver(driver)
 

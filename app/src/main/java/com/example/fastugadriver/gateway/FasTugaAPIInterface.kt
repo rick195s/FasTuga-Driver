@@ -1,6 +1,6 @@
 package com.example.fastugadriver.gateway
 
-import com.example.fastugadriver.data.model.Driver
+import com.example.fastugadriver.data.pojos.Driver
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body

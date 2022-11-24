@@ -11,10 +11,9 @@ import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.data.pojos.FasTugaFormErrorResponse
 import com.example.fastugadriver.data.pojos.FasTugaLoginSuccessResponse
 
-import com.example.fastugadriver.data.model.Driver
+import com.example.fastugadriver.data.pojos.Driver
 import com.example.fastugadriver.databinding.ActivityLoginBinding
 import com.example.fastugadriver.gateway.DriverGateway
-import com.example.fastugadriver.gateway.FasTugaAPI
 import com.example.fastugadriver.ui.register.RegisterActivity
 
 
