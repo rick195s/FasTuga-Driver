@@ -16,7 +16,7 @@ interface FasTugaAPIInterface {
     @GET("me")
     fun getDriver(): Call<ResponseBody>
 
-    @POST("login")
+    @POST("login/driver")
     fun loginDriver(@Body driver: Driver?): Call<ResponseBody>
 
     @POST("register/driver")
