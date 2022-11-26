@@ -31,7 +31,7 @@ class DriverGateway {
                     return
                 }
 
-                login(response.body())
+                login(token = response.body())
             }
 
             override fun onFailure(call: Call<Token?>, t: Throwable) {
@@ -68,10 +68,14 @@ class DriverGateway {
         })
     }
 
-    private fun login(token: Token?){
+    private fun login(token: Token? = null, driver: LoggedInDriver? = null){
         if (token != null) {
             LoginRepository.setToken(token)
             getDriver()
+        }
+
+        if (driver != null ){
+            LoginRepository.setDriver(driver)
         }
     }
 
@@ -91,8 +95,7 @@ class DriverGateway {
                 }
 
                 // Storing logged in driver inside repository
-                LoginRepository.driver = response.body()
-
+                login(driver = response.body())
                 _fasTugaResponse.value = LoginSuccessResponse()
             }
 
