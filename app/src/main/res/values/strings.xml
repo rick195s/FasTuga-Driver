@@ -29,5 +29,6 @@
     <string name="bottom_nav_orders">Orders</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="orders_title">Orders</string>
+    <string name="title_fragment_orders">Orders</string>
+    <string name="title_fragment_profile">Profile</string>
 </resources>
