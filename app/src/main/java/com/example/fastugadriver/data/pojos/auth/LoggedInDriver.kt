@@ -1,9 +1,10 @@
-package com.example.fastugadriver.data.pojos
+package com.example.fastugadriver.data.pojos.auth
 
+import com.example.fastugadriver.data.pojos.FasTugaResponse
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class LoggedInDriver : FasTugaResponse{
+class LoggedInDriver : FasTugaResponse {
 
     @SerializedName("id")
     @Expose

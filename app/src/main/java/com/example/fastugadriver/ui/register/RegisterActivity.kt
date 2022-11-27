@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.data.pojos.FormErrorResponse
-import com.example.fastugadriver.data.pojos.LoginSuccessResponse
+import com.example.fastugadriver.data.pojos.auth.LoginSuccessResponse
 
 import com.example.fastugadriver.data.pojos.Driver
 import com.example.fastugadriver.databinding.ActivityRegisterBinding

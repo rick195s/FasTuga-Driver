@@ -1,8 +1,8 @@
 package com.example.fastugadriver.gateway
 
 import com.example.fastugadriver.data.pojos.Driver
-import com.example.fastugadriver.data.pojos.LoggedInDriver
-import com.example.fastugadriver.data.pojos.Token
+import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
+import com.example.fastugadriver.data.pojos.auth.Token
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body

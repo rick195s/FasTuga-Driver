@@ -1,5 +1,7 @@
-package com.example.fastugadriver.data.pojos
+package com.example.fastugadriver.data.pojos.auth
 
+import com.example.fastugadriver.data.pojos.FasTugaResponse
+import com.example.fastugadriver.data.pojos.auth.Token
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

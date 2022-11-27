@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.example.fastugadriver.data.LoginRepository
-import com.example.fastugadriver.data.pojos.LogoutSuccessResponse
+import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import com.example.fastugadriver.databinding.FragmentProfileBinding
 import com.example.fastugadriver.gateway.DriverGateway
 import com.example.fastugadriver.ui.login.LoginActivity

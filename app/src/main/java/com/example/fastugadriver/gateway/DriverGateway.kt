@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.*
-import com.example.fastugadriver.data.pojos.LoggedInDriver
-import com.example.fastugadriver.data.pojos.LoginSuccessResponse
-import com.example.fastugadriver.data.pojos.Token
+import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
+import com.example.fastugadriver.data.pojos.auth.LoginSuccessResponse
+import com.example.fastugadriver.data.pojos.auth.Token
+import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
