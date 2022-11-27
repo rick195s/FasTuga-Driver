@@ -33,7 +33,7 @@
     <string name="title_fragment_profile">Profile</string>
     <string name="action_profile_logout">Logout</string>
     <string name="action_profile_edit">Edit Profile</string>
-    <string name="title_activity_edit_profile">EditProfile</string>
+    <string name="title_activity_edit_profile">Edit Profile</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -42,4 +42,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="action_edit_profile_select_photo">Select Photo</string>
+    <string name="prompt_old_password">Old Password</string>
+    <string name="prompt_new_password">New Password</string>
+    <string name="prompt_confirm_new_password">Confirm new Password</string>
+    <string name="action_edit_profile_update">Update</string>
 </resources>
