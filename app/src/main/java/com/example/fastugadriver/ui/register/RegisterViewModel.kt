@@ -35,7 +35,7 @@ class RegisterViewModel() : ViewModel() {
         }
 
         if (registerErrors.hasErrors()){
-            _registerResult.value = RegisterResult(error = registerErrors)
+            _registerResult.value = RegisterResult(errors = registerErrors)
         }else{
             _registerResult.value = RegisterResult(success = null )
         }

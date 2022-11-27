@@ -4,5 +4,5 @@ import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 
 data class EditProfileResult(
     val success: LoggedInDriver? = null,
-    val error: EditProfileErrors? = null
+    val errors: EditProfileErrors? = null
 )

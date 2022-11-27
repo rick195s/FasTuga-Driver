@@ -10,27 +10,27 @@ class EditProfileViewModel() : ViewModel() {
     private val _editProfileResult = MutableLiveData<EditProfileResult>()
     val editProfileResult: LiveData<EditProfileResult> = _editProfileResult
 
-    fun validateRegister(email: String, newPassword: String, newPasswordConfirmation: String, phone: String, licensePlate: String){
+    fun validateEdit(newPassword: String? = null, newPasswordConfirmation: String? = null, phone: String?=null, licensePlate: String?=null){
         val editProfileErrors: EditProfileErrors = EditProfileErrors()
 
-        if (!isPasswordValid(newPassword)) {
+        if (newPassword!= null && !isPasswordValid(newPassword)) {
             editProfileErrors.newPasswordError = R.string.invalid_password
         }
 
-        if (!isPasswordConfirmationValid(newPassword, newPasswordConfirmation)) {
+        if (newPassword!= null && newPasswordConfirmation!= null &&!isPasswordConfirmationValid(newPassword, newPasswordConfirmation)) {
             editProfileErrors.newPasswordConfirmationError = R.string.invalid_confirmation_password
         }
 
-        if (!isValidPhone(phone)) {
+        if (phone!= null && !isValidPhone(phone)) {
             editProfileErrors.phoneError = R.string.invalid_phone
         }
 
-        if (!isLicensePlateValid(licensePlate)) {
+        if (licensePlate!= null && !isLicensePlateValid(licensePlate)) {
             editProfileErrors.licensePlateError = R.string.invalid_license_plate
         }
 
         if (editProfileErrors.hasErrors()){
-            _editProfileResult.value = EditProfileResult(error = editProfileErrors)
+            _editProfileResult.value = EditProfileResult(errors = editProfileErrors)
         }else{
             _editProfileResult.value = EditProfileResult(success = null )
         }

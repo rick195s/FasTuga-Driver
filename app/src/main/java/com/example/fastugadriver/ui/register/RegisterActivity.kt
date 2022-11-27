@@ -58,8 +58,8 @@ class RegisterActivity : AppCompatActivity() {
 
             // when there are no primary errors in the fields we call the API
             // to check for uniqueness errors
-            if (registerResult.error != null) {
-                showRegisterErrors(registerResult.error)
+            if (registerResult.errors != null) {
+                showRegisterErrors(registerResult.errors)
                 register.isEnabled = true
                 login.isEnabled = true
 
