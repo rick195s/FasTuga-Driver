@@ -36,7 +36,7 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<Token?>, t: Throwable) {
-                t.printStackTrace()
+                _fasTugaResponse.value = FormErrorResponse()
                 call.cancel()
             }
         })
@@ -62,9 +62,8 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<Token>, t: Throwable) {
+                _fasTugaResponse.value = FormErrorResponse()
                 call.cancel()
-                throw t
-
             }
         })
     }
@@ -100,7 +99,7 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                t.printStackTrace()
+                _fasTugaResponse.value = FormErrorResponse()
                 call.cancel()
             }
         })
@@ -128,7 +127,7 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<LoggedInDriver>, t: Throwable) {
-                t.printStackTrace()
+                _fasTugaResponse.value = FormErrorResponse()
                 call.cancel()
             }
         })
