@@ -6,7 +6,7 @@
     <string name="action_login">Login</string>
     <string name="action_register">Register</string>
     <string name="action_sign_in_short">Login</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">"Welcome!"</string>
     <string name="invalid_email">Invalid Email</string>
     <string name="invalid_password">Password must be at least 8 characters</string>
     <string name="invalid_confirmation_password">Password and Confirmation Password don’t match</string>
@@ -27,7 +27,8 @@
     <string name="bottom_nav_map">Map</string>
     <string name="bottom_nav_profile">Profile</string>
     <string name="bottom_nav_orders">Orders</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="allow_location_auth">Allow</string>
+    <string name="text_location_auth">To use this application you have to allow the access to your PRIVATE location</string>
+    <string name="accept_location_auth">Accept</string>
     <string name="orders_title">Orders</string>
 </resources>
