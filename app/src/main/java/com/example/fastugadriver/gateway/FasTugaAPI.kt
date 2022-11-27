@@ -20,9 +20,9 @@ class FasTugaAPI {
             val clientBuilder : OkHttpClient.Builder= OkHttpClient.Builder()
 
             clientBuilder
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS)
 
             clientBuilder.addInterceptor(Interceptor { chain ->
                 val request = chain.request()
