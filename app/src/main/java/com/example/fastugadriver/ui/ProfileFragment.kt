@@ -11,7 +11,7 @@ import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import com.example.fastugadriver.databinding.FragmentProfileBinding
 import com.example.fastugadriver.gateway.DriverGateway
-import com.example.fastugadriver.ui.edit_profile.EditProfile
+import com.example.fastugadriver.ui.edit_profile.EditProfileActivity
 import com.example.fastugadriver.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {
@@ -65,7 +65,7 @@ class ProfileFragment : Fragment() {
         }
 
         editButton.setOnClickListener {
-            val intent = Intent(activity, EditProfile::class.java)
+            val intent = Intent(activity, EditProfileActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
