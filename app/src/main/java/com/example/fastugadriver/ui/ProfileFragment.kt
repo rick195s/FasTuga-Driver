@@ -11,6 +11,7 @@ import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import com.example.fastugadriver.databinding.FragmentProfileBinding
 import com.example.fastugadriver.gateway.DriverGateway
+import com.example.fastugadriver.ui.edit_profile.EditProfile
 import com.example.fastugadriver.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {

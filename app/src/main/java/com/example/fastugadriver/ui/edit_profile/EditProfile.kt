@@ -1,4 +1,4 @@
-package com.example.fastugadriver.ui
+package com.example.fastugadriver.ui.edit_profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
