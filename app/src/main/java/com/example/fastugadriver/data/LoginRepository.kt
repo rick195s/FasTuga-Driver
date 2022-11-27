@@ -36,6 +36,13 @@ object LoginRepository {
 
     fun logout() {
         driver = null
+        token = null
+
+        with (sp.edit()) {
+            remove("token")
+            remove("driver")
+            apply()
+        }
     }
 
     fun setToken(newToken: Token){

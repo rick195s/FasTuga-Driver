@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.*
-import kotlinx.coroutines.*
-import okhttp3.Dispatcher
+import com.example.fastugadriver.data.pojos.LoggedInDriver
+import com.example.fastugadriver.data.pojos.LoginSuccessResponse
+import com.example.fastugadriver.data.pojos.Token
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -78,6 +79,33 @@ class DriverGateway {
             LoginRepository.setDriver(driver)
         }
     }
+
+    fun logoutDriver(){
+        // calling the method from API to get the Driver logged in
+        val call: Call<ResponseBody> = FasTugaAPI.getInterface().logoutDriver()
+
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                if (!response.isSuccessful){
+                    _fasTugaResponse.value = FasTugaAPI.convertToClass( response.errorBody()!!.charStream(),
+                        FormErrorResponse::class.java) as FormErrorResponse
+                    return
+                }
+
+                // Logging out driver inside repository
+                LoginRepository.logout()
+                _fasTugaResponse.value = LogoutSuccessResponse()
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.printStackTrace()
+                call.cancel()
+            }
+        })
+    }
+
 
     fun getDriver(){
 
