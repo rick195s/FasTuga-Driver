@@ -35,6 +35,7 @@ class ProfileFragment : Fragment() {
         val phoneDetail = binding.profileDetailsPhone
         val licensePlateDetail = binding.profileDetailLicensePlate
         val logoutButton = binding.profileButtonLogout
+        val editButton  = binding.profileButtonEdit
 
         nameDetail.text = LoginRepository.driver?.name ?: ""
         emailDetail.text = LoginRepository.driver?.email ?: ""
@@ -60,6 +61,12 @@ class ProfileFragment : Fragment() {
 
         logoutButton.setOnClickListener {
             driverGateway.logoutDriver()
+        }
+
+        editButton.setOnClickListener {
+            val intent = Intent(activity, Edit::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
         }
 
         return view
