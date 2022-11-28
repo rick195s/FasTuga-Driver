@@ -30,5 +30,6 @@
     <string name="allow_location_auth">Allow</string>
     <string name="text_location_auth">To use this application you have to allow the access to your PRIVATE location</string>
     <string name="accept_location_auth">Accept</string>
+    <string name="no_location_auth">Dont Accept</string>
     <string name="orders_title">Orders</string>
 </resources>

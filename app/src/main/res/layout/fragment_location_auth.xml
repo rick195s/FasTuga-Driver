@@ -42,14 +42,14 @@
         android:gravity="center|start|center_horizontal|end"
         android:text="@string/text_location_auth"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btnAllow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAllow"
         android:layout_width="139dp"
         android:layout_height="68dp"
         android:layout_gravity="start"

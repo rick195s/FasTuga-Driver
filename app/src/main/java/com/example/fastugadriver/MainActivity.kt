@@ -35,15 +35,15 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(LocationAuthFragment())
         }else{
             replaceFragment(MapsFragment())
-            binding.bottomNavigationView.selectedItemId = R.id.bottom_navbar_map
         }
+        binding.bottomNavigationView.selectedItemId = R.id.bottom_navbar_map
 
 
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId){
-                R.id.bottom_navbar_orders -> replaceFragment(OrdersFragment())
                 R.id.bottom_navbar_map -> replaceFragment(MapsFragment())
+                R.id.bottom_navbar_orders -> replaceFragment(OrdersFragment())
                 R.id.bottom_navbar_profile -> replaceFragment(ProfileFragment())
                 else -> {
 
