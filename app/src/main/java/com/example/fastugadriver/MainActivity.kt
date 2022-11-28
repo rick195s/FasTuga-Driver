@@ -1,11 +1,16 @@
 package com.example.fastugadriver
 
 import android.content.Intent
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.databinding.ActivityMainBinding
+import com.example.fastugadriver.ui.LocationAuthFragment
 import com.example.fastugadriver.ui.MapsFragment
 import com.example.fastugadriver.ui.OrdersFragment
 import com.example.fastugadriver.ui.ProfileFragment
@@ -31,14 +36,21 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        // Set Maps Fragment as initial
-        replaceFragment(MapsFragment())
+        // Set default fragment
+        if(ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            binding.bottomNavigationView.setVisibility(View.GONE);
+            replaceFragment(LocationAuthFragment())
+        }else{
+            replaceFragment(MapsFragment())
+        }
         binding.bottomNavigationView.selectedItemId = R.id.bottom_navbar_map
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId){
-                R.id.bottom_navbar_orders -> replaceFragment(OrdersFragment())
                 R.id.bottom_navbar_map -> replaceFragment(MapsFragment())
+                R.id.bottom_navbar_orders -> replaceFragment(OrdersFragment())
                 R.id.bottom_navbar_profile -> replaceFragment(ProfileFragment())
                 else -> {
 
