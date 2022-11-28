@@ -1,5 +1,6 @@
-package com.example.fastugadriver.data.pojos
+package com.example.fastugadriver.data.pojos.paginate
 
+import com.example.fastugadriver.data.pojos.FasTugaResponse
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

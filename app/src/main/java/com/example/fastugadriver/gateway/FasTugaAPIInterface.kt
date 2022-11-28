@@ -4,7 +4,7 @@ import com.example.fastugadriver.data.pojos.Driver
 import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 import com.example.fastugadriver.data.pojos.auth.Token
 import okhttp3.ResponseBody
-import com.example.fastugadriver.data.pojos.OrderResponse
+import com.example.fastugadriver.data.pojos.orders.OrderResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

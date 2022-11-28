@@ -1,11 +1,8 @@
 package com.example.fastugadriver.gateway
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.*
-import com.example.fastugadriver.ui.OrdersFragment
-import okhttp3.ResponseBody
+import com.example.fastugadriver.data.pojos.orders.OrderResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

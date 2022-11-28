@@ -5,13 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.pojos.*
+import com.example.fastugadriver.data.pojos.orders.Order
+import com.example.fastugadriver.data.pojos.orders.OrderResponse
 import com.example.fastugadriver.databinding.FragmentOrdersBinding
 import com.example.fastugadriver.gateway.OrderGateway
 import com.example.fastugadriver.ui.list.CustomAdapter
@@ -50,7 +51,7 @@ class OrdersFragment : Fragment() {
                 is OrderResponse -> {
                     data = arrayListOf<ItemsViewModel>()
                     orderResponse.data?.forEach {
-                        val item = ItemsViewModel(R.drawable.ic_baseline_add_box_24, " Id: "+it.id.toString(),"Payment type: "+it.payment_type)
+                        val item = ItemsViewModel(R.drawable.ic_baseline_add_box_24, " Id: "+it.id.toString(),"Ticket number: "+it.ticket_number," Destination: "+it.delivery_location)
                         data.add(item)
                     }
                     val layoutManager = LinearLayoutManager(context)
@@ -63,6 +64,14 @@ class OrdersFragment : Fragment() {
             }
         })
     }
+
+    /*fun strBuilder(order:Order) : String {
+        var productTypes = StringBuilder(" Product Types: ");
+        order.products?.forEach {
+            productTypes.append(it.type)
+        }
+        return productTypes.toString();
+    }*/
 
 
     override fun onCreateView(
