@@ -1,22 +1,21 @@
 package com.example.fastugadriver.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
+import android.widget.ArrayAdapter
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.example.fastugadriver.MainActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.pojos.*
-import com.example.fastugadriver.gateway.DriverGateway
-import com.example.fastugadriver.gateway.FasTugaAPI
+import com.example.fastugadriver.databinding.FragmentOrdersBinding
 import com.example.fastugadriver.gateway.OrderGateway
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.fastugadriver.ui.list.CustomAdapter
+import com.example.fastugadriver.ui.list.ItemsViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,16 +32,34 @@ class OrdersFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
+    private lateinit var adapter : CustomAdapter
+    private lateinit var recycleView: RecyclerView
+    private lateinit var data : ArrayList<ItemsViewModel>
+
+    lateinit var image : Array<Int>
+    lateinit var text : Array<String>
+
     val orderGateway : OrderGateway = OrderGateway()
+    private lateinit var binding: FragmentOrdersBinding
+    val ownerFragment: LifecycleOwner = this@OrdersFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = FragmentOrdersBinding.inflate(layoutInflater)
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        
-        orderGateway.fasTugaResponse.observe(this@OrdersFragment, Observer {
+
+        orderGateway.getOrders()
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        orderGateway.fasTugaResponse.observe(ownerFragment, Observer {
             val orderResponse = it ?: return@Observer
 
             // handling API response
@@ -52,33 +69,22 @@ class OrdersFragment : Fragment() {
                 }
 
                 is OrderResponse -> {
+                    data = arrayListOf<ItemsViewModel>()
                     orderResponse.data?.forEach {
-                        print("Id: ")
-                        print(it.id)
-                        print(" Payment type: ")
-                        print(it.payment_type)
-                        print(" Delivered by: ")
-                        println(it.delivered_by)
+                        val item = ItemsViewModel(R.drawable.ic_baseline_add_box_24, " Id: "+it.id.toString(),"Payment type: "+it.payment_type)
+                        data.add(item)
                     }
-
-                    //Feel list view
+                    val layoutManager = LinearLayoutManager(context)
+                    recycleView = view.findViewById(R.id.ordersList)
+                    recycleView.layoutManager = layoutManager
+                    recycleView.setHasFixedSize(true)
+                    adapter = CustomAdapter(data)
+                    recycleView.adapter = adapter
                 }
             }
-
         })
-
-        orderGateway.getOrders()
-
-        /*try {
-            println("ORDERS-> "+orderGateway.getOrders())
-            println("--> "+orderGateway.fasTugaResponse.value)
-
-        }catch (e: Exception ){
-            println("ERROR")
-        }*/
-
-
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
