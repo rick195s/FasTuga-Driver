@@ -5,20 +5,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 import com.example.fastugadriver.R
+import com.example.fastugadriver.data.LoginRepository
 
 class EditProfileViewModel() : ViewModel() {
     private val _editProfileResult = MutableLiveData<EditProfileResult>()
     val editProfileResult: LiveData<EditProfileResult> = _editProfileResult
 
-    fun validateEdit(newPassword: String? = null, newPasswordConfirmation: String? = null, phone: String?=null, licensePlate: String?=null){
+    fun validateEdit(newPassword: String? = null, newPasswordConfirmation: String? = null, phone: String?=null,
+                     licensePlate: String?=null){
+
         val editProfileErrors: EditProfileErrors = EditProfileErrors()
 
-        if (newPassword!= null && !isPasswordValid(newPassword)) {
-            editProfileErrors.newPasswordError = R.string.invalid_password
-        }
+        if (newPassword != null && newPassword != "" && newPasswordConfirmation != null){
 
-        if (newPassword!= null && newPasswordConfirmation!= null &&!isPasswordConfirmationValid(newPassword, newPasswordConfirmation)) {
-            editProfileErrors.newPasswordConfirmationError = R.string.invalid_confirmation_password
+            if (!isPasswordValid(newPassword)){
+                editProfileErrors.newPasswordError = R.string.invalid_password
+            }
+
+            if (!isPasswordConfirmationValid(newPassword, newPasswordConfirmation)) {
+                editProfileErrors.newPasswordConfirmationError = R.string.invalid_confirmation_password
+            }
         }
 
         if (phone!= null && !isValidPhone(phone)) {
@@ -28,6 +34,7 @@ class EditProfileViewModel() : ViewModel() {
         if (licensePlate!= null && !isLicensePlateValid(licensePlate)) {
             editProfileErrors.licensePlateError = R.string.invalid_license_plate
         }
+
 
         if (editProfileErrors.hasErrors()){
             _editProfileResult.value = EditProfileResult(errors = editProfileErrors)

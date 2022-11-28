@@ -37,7 +37,7 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<Token?>, t: Throwable) {
-                _fasTugaResponse.value = FormErrorResponse()
+                _fasTugaResponse.value = FormErrorResponse("")
                 call.cancel()
             }
         })
@@ -63,7 +63,7 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<Token>, t: Throwable) {
-                _fasTugaResponse.value = FormErrorResponse()
+                _fasTugaResponse.value = FormErrorResponse("")
                 call.cancel()
             }
         })
@@ -100,7 +100,7 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                _fasTugaResponse.value = FormErrorResponse()
+                _fasTugaResponse.value = FormErrorResponse("")
                 call.cancel()
             }
         })
@@ -128,8 +128,38 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<LoggedInDriver>, t: Throwable) {
-                _fasTugaResponse.value = FormErrorResponse()
+                _fasTugaResponse.value = FormErrorResponse("")
                 call.cancel()
+            }
+        })
+    }
+
+    fun updateDriver(driverId: Int?,driver: Driver?){
+        if (driver == null && driverId == null){
+            return
+        }
+        // calling the method from API to get the Driver logged in
+        val call: Call<LoggedInDriver> = FasTugaAPI.getInterface().updateDriver(driverId, driver)
+
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<LoggedInDriver> {
+            override fun onResponse(call: Call<LoggedInDriver>, response: Response<LoggedInDriver>) {
+
+                if (!response.isSuccessful){
+                    _fasTugaResponse.value = FasTugaAPI.convertToClass( response.errorBody()!!.charStream(),
+                        FormErrorResponse::class.java) as FormErrorResponse
+                    return
+                }
+
+                // Storing logged in driver inside repository
+                response.body()?.let { LoginRepository.setDriver(it) }
+                    _fasTugaResponse.value = SuccessResponse()
+            }
+
+            override fun onFailure(call: Call<LoggedInDriver>, t: Throwable) {
+                _fasTugaResponse.value = FormErrorResponse(t.message.toString())
+                call.cancel()
+
             }
         })
     }
