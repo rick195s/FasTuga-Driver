@@ -1,5 +1,6 @@
 package com.example.fastugadriver.ui.edit_profile
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -7,6 +8,9 @@ import com.example.fastugadriver.R
 import com.example.fastugadriver.databinding.ActivityEditProfileBinding
 import com.example.fastugadriver.gateway.DriverGateway
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.example.fastugadriver.data.LoginRepository
+import java.net.URI
 import java.util.*
 
 class EditProfileActivity : AppCompatActivity() {
@@ -27,6 +31,8 @@ class EditProfileActivity : AppCompatActivity() {
 
         val driverGateway : DriverGateway = DriverGateway()
 
+        setDefaultFields()
+
         editProfileViewModel.editProfileResult.observe(this@EditProfileActivity, Observer {
             val editProfileResult = it  ?: return@Observer
 
@@ -34,7 +40,6 @@ class EditProfileActivity : AppCompatActivity() {
                 showEditErrors(editProfileResult.errors)
             }
         })
-
 
         binding.editProfileUpdate.setOnClickListener {
             editProfileViewModel.validateEdit(
@@ -44,6 +49,22 @@ class EditProfileActivity : AppCompatActivity() {
                 binding.editProfileLicensePlate.text.toString(),
             )
         }
+
+    }
+
+    private fun setDefaultFields() {
+        binding.editProfilePhone.setText(LoginRepository.driver?.phone)
+        binding.editProfileLicensePlate.setText(LoginRepository.driver?.licensePlate)
+
+        if (LoginRepository.driver?.photoUrl != null){
+            Glide
+                .with(this)
+                .load(LoginRepository.driver?.photoUrl)
+                .circleCrop()
+                .placeholder(R.drawable.account_circle)
+                .into(binding.editProfileSelectedPhoto);
+        }
+
 
     }
 
