@@ -1,4 +1,5 @@
 package com.example.fastugadriver.ui.list
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,9 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
+import okhttp3.Cookie
 
 class CustomAdapter(private val mList: ArrayList<ItemsViewModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
+    var selectedItem: View? = null
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -28,6 +31,9 @@ class CustomAdapter(private val mList: ArrayList<ItemsViewModel>) : RecyclerView
         holder.itemView.setOnClickListener {
 
             LoginRepository.setOrder(ItemsViewModel.order)
+            selectedItem?.setBackgroundColor(Color.WHITE)
+            holder.itemView.setBackgroundColor(Color.parseColor("#8BC34A"))
+            selectedItem = holder.itemView
             println(LoginRepository.selectedOrder);
         }
         // sets the image to the imageview from our itemHolder class
