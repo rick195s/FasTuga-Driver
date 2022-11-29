@@ -1,5 +1,6 @@
 package com.example.fastugadriver.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -51,7 +52,7 @@ class OrdersFragment : Fragment() {
                 is OrderResponse -> {
                     data = arrayListOf<ItemsViewModel>()
                     orderResponse.data?.forEach {
-                        val item = ItemsViewModel(R.drawable.ic_baseline_add_box_24, " Id: "+it.id.toString(),"Ticket number: "+it.ticket_number," Destination: "+it.delivery_location)
+                        val item = ItemsViewModel(R.drawable.ic_baseline_add_box_24, it)
                         data.add(item)
                     }
                     val layoutManager = LinearLayoutManager(context)
