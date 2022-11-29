@@ -17,6 +17,10 @@ class Errors {
     @Expose
     val password: List<String>? = null
 
+    @SerializedName("old_password")
+    @Expose
+    val oldPassword: List<String>? = null
+
     @SerializedName("phone")
     @Expose
      val phone: List<String>? = null
