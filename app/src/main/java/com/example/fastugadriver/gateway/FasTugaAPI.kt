@@ -4,6 +4,7 @@ import com.example.fastugadriver.data.LoginRepository
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.Reader
@@ -33,14 +34,19 @@ class FasTugaAPI {
                 if (LoginRepository.token != null){
                     newRequest.header("Authorization", LoginRepository.token?.accessToken.toString())
                 }
-
                 chain.proceed(newRequest.build())
             })
+
+            val loggerInterceptor = HttpLoggingInterceptor()
+            loggerInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            clientBuilder.addInterceptor(loggerInterceptor)
 
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URI)
                 .addConverterFactory(GsonConverterFactory.create())
+
                 .client(clientBuilder.build())
+
                 .build()
 
             // below line is to create an instance for our retrofit api class.

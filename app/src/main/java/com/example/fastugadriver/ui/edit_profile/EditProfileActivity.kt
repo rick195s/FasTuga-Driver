@@ -1,24 +1,49 @@
 package com.example.fastugadriver.ui.edit_profile
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
-import com.example.fastugadriver.R
-import com.example.fastugadriver.databinding.ActivityEditProfileBinding
-import com.example.fastugadriver.gateway.DriverGateway
+import androidx.activity.result.contract.ActivityResultContracts.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.Driver
 import com.example.fastugadriver.data.pojos.FormErrorResponse
 import com.example.fastugadriver.data.pojos.SuccessResponse
+import com.example.fastugadriver.databinding.ActivityEditProfileBinding
+import com.example.fastugadriver.gateway.DriverGateway
+import java.io.File
 import java.util.*
+
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var editProfileViewModel: EditProfileViewModel
     private lateinit var binding: ActivityEditProfileBinding
 
     private val errorsList: LinkedList<Int> = LinkedList()
+
+    private var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            // There are no request codes
+            //newPhoto = FileUtils.(this, fileUri);
+
+            val uri: Uri = result.data?.data as Uri
+            newPhoto = createFileFromUri("photo", uri)
+            Glide
+                .with(this)
+                .load(newPhoto)
+                .circleCrop()
+                .placeholder(R.drawable.account_circle)
+                .into(binding.editProfileSelectedPhoto);
+        }
+    }
+
+
+    private var newPhoto: File? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
@@ -39,7 +64,7 @@ class EditProfileActivity : AppCompatActivity() {
             if (editProfileResult.errors != null){
                 showEditErrors(editProfileResult.errors)
             }else{
-                driverGateway.updateDriver(LoginRepository.driver?.driverId, preparedDriver())
+                driverGateway.updateDriver(LoginRepository.driver?.driverId, preparedDriver(), newPhoto)
             }
         })
 
@@ -77,6 +102,25 @@ class EditProfileActivity : AppCompatActivity() {
             )
         }
 
+        binding.editProfileSelectPhotoButton.setOnClickListener {
+            selectPhotoFromGallery()
+        }
+
+    }
+
+
+    private fun selectPhotoFromGallery() {
+
+
+        val getIntent = Intent(Intent.ACTION_GET_CONTENT)
+        getIntent.type = "image/*"
+
+        val pickIntent = Intent(Intent.ACTION_PICK)
+        pickIntent.type = "image/*"
+
+        val chooserIntent = Intent.createChooser(getIntent, "Select Image")
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
+        resultLauncher.launch(chooserIntent)
     }
 
     private fun preparedDriver(): Driver {
@@ -136,4 +180,22 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun createFileFromUri(name: String, uri: Uri): File? {
+        return try {
+            val stream = contentResolver.openInputStream(uri)
+            val file =
+                File.createTempFile(
+                    "${name}_${System.currentTimeMillis()}",
+                    ".png",
+                    cacheDir
+                )
+
+            stream?.copyTo(file.outputStream())
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }

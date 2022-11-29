@@ -3,6 +3,8 @@ package com.example.fastugadriver.gateway
 import com.example.fastugadriver.data.pojos.Driver
 import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 import com.example.fastugadriver.data.pojos.auth.Token
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -24,6 +26,8 @@ interface FasTugaAPIInterface {
     @POST("register/driver")
     fun registerDriver(@Body driver: Driver?): Call<Token>
 
-    @PUT("drivers/{driver}")
-    fun updateDriver(@Path(value="driver") driver_id: Int?, @Body driver: Driver?): Call<LoggedInDriver>
+    @Multipart
+    @POST("drivers/{driver}")
+    fun updateDriver(@Path(value="driver") driver_id: Int?, @PartMap  partMap: Map<String, @JvmSuppressWildcards RequestBody>,
+                     @Part photo: MultipartBody.Part?, @Part method: MultipartBody.Part): Call<LoggedInDriver>
 }
