@@ -18,7 +18,7 @@ interface FasTugaAPIInterface {
     @GET("me")
     fun getDriver(): Call<LoggedInDriver>
 
-    @GET("orders")
+    @GET("orders/driver")
     fun getOrders(): Call<OrderResponse>
 
     @POST("login/driver")
