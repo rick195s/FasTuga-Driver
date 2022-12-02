@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import com.example.fastugadriver.databinding.FragmentProfileBinding
@@ -42,6 +44,13 @@ class ProfileFragment : Fragment() {
         emailDetail.text = LoginRepository.driver?.email ?: ""
         phoneDetail.text = LoginRepository.driver?.phone ?: ""
         licensePlateDetail.text = LoginRepository.driver?.licensePlate ?: ""
+
+        Glide
+            .with(this)
+            .load(LoginRepository.driver?.photoUrl)
+            .circleCrop()
+            .placeholder(R.drawable.account_circle)
+            .into(binding.profileUserImage)
 
         val driverGateway : DriverGateway = DriverGateway()
 
