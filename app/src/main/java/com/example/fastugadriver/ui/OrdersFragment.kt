@@ -66,15 +66,6 @@ class OrdersFragment : Fragment() {
         })
     }
 
-    /*fun strBuilder(order:Order) : String {
-        var productTypes = StringBuilder(" Product Types: ");
-        order.products?.forEach {
-            productTypes.append(it.type)
-        }
-        return productTypes.toString();
-    }*/
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

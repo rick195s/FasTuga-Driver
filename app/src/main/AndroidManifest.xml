@@ -18,7 +18,13 @@
         android:theme="@style/Theme.FasTugaDriver"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".SelectedOrderDetails"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -34,17 +40,19 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDPg8CXKUBOT3nbd-RdLb91YFDh70GAjJE" />
 
-
         <activity
             android:name=".ui.register.RegisterActivity"
             android:exported="true"
-            android:label="@string/title_activity_register">
-        </activity>
+            android:label="@string/title_activity_register"></activity>
+
+        <activity
+            android:name=".SelectedOrderDetailsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_selected_order_details"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/title_activity_main" >
-
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

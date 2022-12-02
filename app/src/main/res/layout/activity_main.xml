@@ -39,6 +39,7 @@
             app:menu="@menu/menu_nav_bottom" />
         />
 
+
     </com.google.android.material.bottomappbar.BottomAppBar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
