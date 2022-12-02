@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import com.example.fastugadriver.databinding.FragmentProfileBinding
 import com.example.fastugadriver.gateway.DriverGateway
+import com.example.fastugadriver.ui.edit_profile.EditProfileActivity
 import com.example.fastugadriver.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {
@@ -35,11 +38,19 @@ class ProfileFragment : Fragment() {
         val phoneDetail = binding.profileDetailsPhone
         val licensePlateDetail = binding.profileDetailLicensePlate
         val logoutButton = binding.profileButtonLogout
+        val editButton  = binding.profileButtonEdit
 
         nameDetail.text = LoginRepository.driver?.name ?: ""
         emailDetail.text = LoginRepository.driver?.email ?: ""
         phoneDetail.text = LoginRepository.driver?.phone ?: ""
         licensePlateDetail.text = LoginRepository.driver?.licensePlate ?: ""
+
+        Glide
+            .with(this)
+            .load(LoginRepository.driver?.photoUrl)
+            .circleCrop()
+            .placeholder(R.drawable.account_circle)
+            .into(binding.profileUserImage)
 
         val driverGateway : DriverGateway = DriverGateway()
 
@@ -60,6 +71,12 @@ class ProfileFragment : Fragment() {
 
         logoutButton.setOnClickListener {
             driverGateway.logoutDriver()
+        }
+
+        editButton.setOnClickListener {
+            val intent = Intent(activity, EditProfileActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
         }
 
         return view

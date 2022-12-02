@@ -7,5 +7,5 @@ import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
  */
 data class RegisterResult(
     val success: LoggedInDriver? = null,
-    val error: RegisterErrors? = null
+    val errors: RegisterErrors? = null
 )

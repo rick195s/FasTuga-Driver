@@ -6,12 +6,18 @@ import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.*
 import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 import com.example.fastugadriver.data.pojos.auth.LoginSuccessResponse
-import com.example.fastugadriver.data.pojos.auth.Token
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
+import com.example.fastugadriver.data.pojos.auth.Token
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
+
 
 class DriverGateway {
 
@@ -37,7 +43,7 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<Token?>, t: Throwable) {
-                _fasTugaResponse.value = FormErrorResponse()
+                _fasTugaResponse.value = FormErrorResponse("")
                 call.cancel()
             }
         })
@@ -63,7 +69,7 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<Token>, t: Throwable) {
-                _fasTugaResponse.value = FormErrorResponse()
+                _fasTugaResponse.value = FormErrorResponse("")
                 call.cancel()
             }
         })
@@ -100,7 +106,7 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                _fasTugaResponse.value = FormErrorResponse()
+                _fasTugaResponse.value = FormErrorResponse("")
                 call.cancel()
             }
         })
@@ -128,8 +134,49 @@ class DriverGateway {
             }
 
             override fun onFailure(call: Call<LoggedInDriver>, t: Throwable) {
-                _fasTugaResponse.value = FormErrorResponse()
+                _fasTugaResponse.value = FormErrorResponse("")
                 call.cancel()
+            }
+        })
+    }
+
+    fun updateDriver(driverId: Int?, driver: Driver?, photo: File?){
+        if (driver == null || driverId == null){
+            return
+        }
+
+        var newPhotoPart : MultipartBody.Part? = null
+        if (photo != null){
+
+            val requestFile: RequestBody = photo.asRequestBody("image/*".toMediaTypeOrNull())
+            // MultipartBody.Part is used to send also the actual file name
+            newPhotoPart = MultipartBody.Part.createFormData("photo", photo.name, requestFile)
+        }
+
+        val method = MultipartBody.Part.createFormData("_method", "PUT")
+
+        // calling the method from API to get the Driver logged in
+        val call: Call<LoggedInDriver> = FasTugaAPI.getInterface().updateDriver(driverId, driver.toMap(), newPhotoPart, method)
+
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<LoggedInDriver> {
+            override fun onResponse(call: Call<LoggedInDriver>, response: Response<LoggedInDriver>) {
+
+                if (!response.isSuccessful){
+                    _fasTugaResponse.value = FasTugaAPI.convertToClass( response.errorBody()!!.charStream(),
+                        FormErrorResponse::class.java) as FormErrorResponse
+                    return
+                }
+
+                // Storing logged in driver inside repository
+                response.body()?.let { LoginRepository.setDriver(it) }
+                _fasTugaResponse.value = SuccessResponse()
+            }
+
+            override fun onFailure(call: Call<LoggedInDriver>, t: Throwable) {
+                _fasTugaResponse.value = FormErrorResponse(t.message.toString())
+                call.cancel()
+
             }
         })
     }
