@@ -1,27 +1,16 @@
 package com.example.fastugadriver.ui
 
-import android.content.Intent
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.drawerlayout.widget.DrawerLayout
-import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.R
-import com.example.fastugadriver.SelectedOrderDetailsActivity
-import com.example.fastugadriver.databinding.ActivityMainBinding
-import com.example.fastugadriver.databinding.FragmentMapsBinding
-import com.example.fastugadriver.ui.login.LoginActivity
 
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.navigation.NavigationView
 
 @Suppress("UNREACHABLE_CODE")
 class MapsFragment : Fragment() {

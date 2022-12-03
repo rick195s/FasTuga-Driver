@@ -1,12 +1,12 @@
-package com.example.fastugadriver
+package com.example.fastugadriver.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.orders.Order
-import com.example.fastugadriver.databinding.ActivityMainBinding
 import com.example.fastugadriver.databinding.ActivitySelectedOrderDetailsBinding
 
 class SelectedOrderDetailsActivity : AppCompatActivity() {

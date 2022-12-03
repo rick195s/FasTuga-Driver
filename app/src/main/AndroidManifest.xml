@@ -46,7 +46,7 @@
             android:label="@string/title_activity_register"></activity>
 
         <activity
-            android:name=".SelectedOrderDetailsActivity"
+            android:name=".ui.SelectedOrderDetailsActivity"
             android:exported="true"
             android:label="@string/title_activity_selected_order_details"></activity>
         <activity

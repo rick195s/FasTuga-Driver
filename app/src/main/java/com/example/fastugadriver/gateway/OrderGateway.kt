@@ -15,9 +15,9 @@ class OrderGateway {
     val orderBody: OrderResponse? = _orderBody*/
 
 
-    fun getOrders () {
+    fun getOrders (page:Int? = 0) {
         // calling the method from API to get the Driver logged in
-        val call: Call<OrderResponse> = FasTugaAPI.getInterface().getOrders()
+        val call: Call<OrderResponse> = FasTugaAPI.getInterface().getOrders(page)
         val orderBody = null
 
         // on below line we are executing our method.

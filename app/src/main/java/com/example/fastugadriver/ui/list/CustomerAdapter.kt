@@ -1,6 +1,4 @@
 package com.example.fastugadriver.ui.list
-import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fastugadriver.R
-import com.example.fastugadriver.SelectedOrderDetailsActivity
 import com.example.fastugadriver.data.LoginRepository
-import okhttp3.Cookie
 
 class CustomAdapter(private val mList: ArrayList<ItemsViewModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 

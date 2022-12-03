@@ -52,9 +52,9 @@ object LoginRepository {
     }
 
     private fun loadOrder(gson: Gson){
-        val driverJSON = LoginRepository.sp.getString("order", null)
-        if (driverJSON != null){
-            selectedOrder =  gson.fromJson(driverJSON, Order::class.java)
+        val orderJSON = LoginRepository.sp.getString("order", null)
+        if (orderJSON != null){
+            selectedOrder =  gson.fromJson(orderJSON, Order::class.java)
         }
     }
 

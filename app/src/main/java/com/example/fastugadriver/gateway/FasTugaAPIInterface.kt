@@ -10,6 +10,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 
 interface FasTugaAPIInterface {
@@ -19,7 +20,7 @@ interface FasTugaAPIInterface {
     fun getDriver(): Call<LoggedInDriver>
 
     @GET("orders/driver")
-    fun getOrders(): Call<OrderResponse>
+    fun getOrders(@Query("page") page: Int? ): Call<OrderResponse>
 
     @POST("login/driver")
     fun loginDriver(@Body driver: Driver?): Call<Token>
