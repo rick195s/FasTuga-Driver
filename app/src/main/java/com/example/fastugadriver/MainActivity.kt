@@ -12,7 +12,7 @@ import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.databinding.ActivityMainBinding
 import com.example.fastugadriver.ui.*
 import com.example.fastugadriver.ui.login.LoginActivity
-import com.example.fastugadriver.SelectedOrderDetailsActivity
+import com.example.fastugadriver.ui.SelectedOrderDetailsActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun btnClick(view:View){
-        val intent = Intent(this, SelectedOrderDetailsActivity::class.java)
+        val intent = Intent(this,  SelectedOrderDetailsActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
     }
