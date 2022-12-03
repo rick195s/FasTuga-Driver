@@ -52,4 +52,7 @@
     <string name="prompt_new_password">New Password</string>
     <string name="prompt_confirm_new_password">Confirm new Password</string>
     <string name="action_edit_profile_update">Update</string>
+    <string name="action_profile_history">Orders History</string>
+    <string name="title_activity_orders_history">OrdersHistory</string>
+    <string name="history_orders_title">Orders Completed History</string>
 </resources>
