@@ -1,11 +1,8 @@
 package com.example.fastugadriver.gateway
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.*
-import com.example.fastugadriver.ui.OrdersFragment
-import okhttp3.ResponseBody
+import com.example.fastugadriver.data.pojos.orders.OrderResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,9 +15,9 @@ class OrderGateway {
     val orderBody: OrderResponse? = _orderBody*/
 
 
-    fun getOrders () {
+    fun getOrders (page:Int? = 0) {
         // calling the method from API to get the Driver logged in
-        val call: Call<OrderResponse> = FasTugaAPI.getInterface().getOrders()
+        val call: Call<OrderResponse> = FasTugaAPI.getInterface().getOrders(page)
         val orderBody = null
 
         // on below line we are executing our method.

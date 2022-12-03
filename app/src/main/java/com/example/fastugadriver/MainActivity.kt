@@ -10,11 +10,9 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.databinding.ActivityMainBinding
-import com.example.fastugadriver.ui.LocationAuthFragment
-import com.example.fastugadriver.ui.MapsFragment
-import com.example.fastugadriver.ui.OrdersFragment
-import com.example.fastugadriver.ui.ProfileFragment
+import com.example.fastugadriver.ui.*
 import com.example.fastugadriver.ui.login.LoginActivity
+import com.example.fastugadriver.ui.SelectedOrderDetailsActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -45,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         }else{
             replaceFragment(MapsFragment())
         }
+
         binding.bottomNavigationView.selectedItemId = R.id.bottom_navbar_map
 
         binding.bottomNavigationView.setOnItemSelectedListener {
@@ -70,4 +69,9 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
+    fun btnClick(view:View){
+        val intent = Intent(this,  SelectedOrderDetailsActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(intent)
+    }
 }

@@ -1,8 +1,10 @@
 package com.example.fastugadriver.ui.list
 
+import com.example.fastugadriver.data.pojos.orders.Order
+
 
 data class ItemsViewModel(
     val image: Int,
-    val id: String,
-    val paymentType: String) {
+    val order: Order
+) {
 }

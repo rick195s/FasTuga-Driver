@@ -6,7 +6,7 @@ import com.example.fastugadriver.data.pojos.auth.Token
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import com.example.fastugadriver.data.pojos.OrderResponse
+import com.example.fastugadriver.data.pojos.orders.OrderResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -17,8 +17,8 @@ interface FasTugaAPIInterface {
     @GET("me")
     fun getDriver(): Call<LoggedInDriver>
 
-    @GET("orders")
-    fun getOrders(): Call<OrderResponse>
+    @GET("orders/driver")
+    fun getOrders(@Query("page") page: Int? ): Call<OrderResponse>
 
     @POST("login/driver")
     fun loginDriver(@Body driver: Driver?): Call<Token>
