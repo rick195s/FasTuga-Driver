@@ -8,6 +8,7 @@ import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 import com.example.fastugadriver.data.pojos.auth.LoginSuccessResponse
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import com.example.fastugadriver.data.pojos.auth.Token
+import com.example.fastugadriver.data.pojos.orders.OrderResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -180,4 +181,34 @@ class DriverGateway {
             }
         })
     }
+
+    fun getDriverOrders (driver: Int?, page:Int? = 0) {
+        // calling the method from API to get the Driver logged in
+        val call: Call<OrderResponse> = FasTugaAPI.getInterface().getDriverOrders(driver, page)
+
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<OrderResponse?> {
+            override fun onResponse(
+                call: Call<OrderResponse?>,
+                response: Response<OrderResponse?>
+
+            ) {
+
+                if (!response.isSuccessful){
+                    _fasTugaResponse.value = FasTugaAPI.convertToClass( response.errorBody()!!.charStream(),
+                        FormErrorResponse::class.java) as FormErrorResponse
+                    return
+                }
+
+
+                _fasTugaResponse.value = response.body()
+                //_orderBody = response.body()!!
+            }
+
+            override fun onFailure(call: Call<OrderResponse?>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
 }

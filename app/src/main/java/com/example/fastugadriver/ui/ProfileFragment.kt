@@ -28,7 +28,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -75,6 +75,12 @@ class ProfileFragment : Fragment() {
 
         editButton.setOnClickListener {
             val intent = Intent(activity, EditProfileActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+        }
+
+        binding.profileButtonHistory.setOnClickListener {
+            val intent = Intent(activity, OrdersHistoryActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
