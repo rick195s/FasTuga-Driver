@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 import com.example.fastugadriver.data.pojos.auth.Token
+import com.example.fastugadriver.data.pojos.orders.Order
 import com.google.gson.Gson
 
 /**
@@ -22,6 +23,7 @@ object LoginRepository {
         val gson = Gson()
         loadToken(gson)
         loadDriver(gson)
+        loadOrder(gson)
     }
 
     // in-memory cache of the loggedInUser object
@@ -33,6 +35,28 @@ object LoginRepository {
 
     val isLoggedIn: Boolean
         get() = driver != null && token != null
+
+    var selectedOrder: Order? = null
+        private set
+
+    fun setOrder(selectedOrder: Order){
+        this.selectedOrder = selectedOrder
+
+        val gson = Gson()
+        val json:String = gson.toJson(this.selectedOrder)
+
+        with (LoginRepository.sp.edit()) {
+            putString("order", json)
+            apply()
+        }
+    }
+
+    private fun loadOrder(gson: Gson){
+        val orderJSON = LoginRepository.sp.getString("order", null)
+        if (orderJSON != null){
+            selectedOrder =  gson.fromJson(orderJSON, Order::class.java)
+        }
+    }
 
     fun logout() {
         driver = null

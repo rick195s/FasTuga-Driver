@@ -6,9 +6,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fastugadriver.R
+import com.example.fastugadriver.data.LoginRepository
 
 class CustomAdapter(private val mList: ArrayList<ItemsViewModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
+    //var selectedItem: View? = null
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -24,15 +26,22 @@ class CustomAdapter(private val mList: ArrayList<ItemsViewModel>) : RecyclerView
 
         val ItemsViewModel = mList[position]
 
+        holder.itemView.setOnClickListener {
+
+            LoginRepository.setOrder(ItemsViewModel.order)
+            /*selectedItem?.setBackgroundColor(Color.WHITE)
+            holder.itemView.setBackgroundColor(Color.parseColor("#8BC34A"))
+            selectedItem = holder.itemView*/
+        }
         // sets the image to the imageview from our itemHolder class
         holder.imageView.setImageResource(ItemsViewModel.image)
 
         // sets the text to the textview from our itemHolder class
-        holder.textView.text = ItemsViewModel.id
+        holder.textView.text = "Id: "+ItemsViewModel.order.id
 
-        holder.textViewTicketNumber.text = ItemsViewModel.tNumber
+        holder.textViewTicketNumber.text = "Ticket Number: "+ItemsViewModel.order.ticket_number
 
-        holder.textViewDeliveryLocation.text = ItemsViewModel.delivery_location
+        holder.textViewDeliveryLocation.text = "Location: "+ItemsViewModel.order.delivery_location
 
     }
 
