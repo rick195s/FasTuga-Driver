@@ -1,6 +1,5 @@
 package com.example.fastugadriver.ui
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.pojos.*
-import com.example.fastugadriver.data.pojos.orders.Order
 import com.example.fastugadriver.data.pojos.orders.OrderResponse
 import com.example.fastugadriver.databinding.FragmentOrdersBinding
 import com.example.fastugadriver.gateway.OrderGateway
@@ -56,7 +54,7 @@ class OrdersFragment : Fragment() {
                         data.add(item)
                     }
                     val layoutManager = LinearLayoutManager(context)
-                    recycleView = view.findViewById(R.id.ordersList)
+                    recycleView = view.findViewById(R.id.orders_list)
                     recycleView.layoutManager = layoutManager
                     recycleView.setHasFixedSize(true)
                     adapter = CustomAdapter(data)
