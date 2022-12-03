@@ -27,17 +27,17 @@ class OrdersFragment : Fragment() {
     val orderGateway : OrderGateway = OrderGateway()
     private lateinit var binding: FragmentOrdersBinding
     val ownerFragment: LifecycleOwner = this@OrdersFragment
+    lateinit var orderResponse: OrderResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentOrdersBinding.inflate(layoutInflater)
-
         orderGateway.getOrders()
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         orderGateway.fasTugaResponse.observe(ownerFragment, Observer {
             val orderResponse = it ?: return@Observer
 
@@ -59,16 +59,36 @@ class OrdersFragment : Fragment() {
                     recycleView.setHasFixedSize(true)
                     adapter = CustomAdapter(data)
                     recycleView.adapter = adapter
+                    binding.ordersPageIndex.text = orderResponse.meta?.current_page.toString()
+
+                    this.orderResponse = orderResponse
                 }
             }
         })
+
+        binding.ordersNextBtn.setOnClickListener {
+
+            orderResponse.meta?.last_page.let {
+            if (it != null && orderResponse.meta?.current_page?.compareTo(it)!! < 0) {
+                    orderGateway.getOrders(orderResponse.meta?.current_page?.plus(1))
+                }
+            }
+
+        }
+
+        binding.ordersPrevBtn.setOnClickListener {
+            if(orderResponse.meta?.current_page!! > 1){
+                orderGateway.getOrders(orderResponse.meta?.current_page?.minus(1))
+            }
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_orders, container, false)
+        binding = FragmentOrdersBinding.inflate(inflater, container, false)
+        return binding.root
     }
 }
