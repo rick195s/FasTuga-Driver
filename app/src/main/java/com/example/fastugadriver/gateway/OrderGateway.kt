@@ -15,9 +15,9 @@ class OrderGateway {
     val orderBody: OrderResponse? = _orderBody*/
 
 
-    fun getOrders (page:Int? = 0) {
+    fun getOrders (filter:String, page:Int? = 0) {
         // calling the method from API to get the Driver logged in
-        val call: Call<OrderResponse> = FasTugaAPI.getInterface().getOrders(page)
+        val call: Call<OrderResponse> = FasTugaAPI.getInterface().getOrders(filter,page)
         val orderBody = null
 
         // on below line we are executing our method.
@@ -33,12 +33,6 @@ class OrderGateway {
                         FormErrorResponse::class.java) as FormErrorResponse
                     return
                 }
-                //Test data returned
-                /*print(response.body()?.current_page)
-                print(" order[0]->id: ")
-                print(response.body()?.data?.get(0)?.id)
-                print(" order[0]->delivered_by: ")
-                print(response.body()?.data?.get(0)?.delivered_by)*/
                 /** Represented Structure
                  *{
                 "current_page": 1,
@@ -57,7 +51,6 @@ class OrderGateway {
                 }*/
 
                 _fasTugaResponse.value = response.body()
-                //_orderBody = response.body()!!
             }
 
             override fun onFailure(call: Call<OrderResponse?>, t: Throwable) {
@@ -65,34 +58,6 @@ class OrderGateway {
             }
         })
     }
-
-    /*fun getOrder(){
-
-        // calling the method from API to get the Driver logged in
-        val call: Call<ResponseBody> = FasTugaAPI.getInterface().getDriver()
-
-        // on below line we are executing our method.
-        call.enqueue(object : Callback<ResponseBody?> {
-            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
-
-                if (!response.isSuccessful){
-                    _fasTugaResponse.value = FasTugaAPI.convertToClass( response.errorBody()!!.charStream(),
-                        FormErrorResponse::class.java) as FormErrorResponse
-                    return
-                }
-
-                // Storing logged in driver inside repository
-                LoginRepository.driver = FasTugaAPI.convertToClass(response.body()!!.charStream(),
-                    LoggedInDriver::class.java) as LoggedInDriver?
-
-                _fasTugaResponse.value = LoginSuccessResponse()
-            }
-
-            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
-    }*/
 
 
 }
