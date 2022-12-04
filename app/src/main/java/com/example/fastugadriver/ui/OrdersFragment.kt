@@ -14,11 +14,11 @@ import com.example.fastugadriver.data.pojos.*
 import com.example.fastugadriver.data.pojos.orders.OrderResponse
 import com.example.fastugadriver.databinding.FragmentOrdersBinding
 import com.example.fastugadriver.gateway.OrderGateway
-import com.example.fastugadriver.ui.list.CustomAdapter
+import com.example.fastugadriver.ui.list.OrderAdapter
 import com.example.fastugadriver.ui.list.ItemsViewModel
 
 class OrdersFragment : Fragment() {
-    private lateinit var adapter : CustomAdapter
+    private lateinit var adapter : OrderAdapter
     private lateinit var recycleView: RecyclerView
     private lateinit var data : ArrayList<ItemsViewModel>
 
@@ -57,7 +57,7 @@ class OrdersFragment : Fragment() {
                     recycleView = view.findViewById(R.id.orders_list)
                     recycleView.layoutManager = layoutManager
                     recycleView.setHasFixedSize(true)
-                    adapter = CustomAdapter(data)
+                    adapter = OrderAdapter(data,this)
                     recycleView.adapter = adapter
                     binding.ordersPageIndex.text = orderResponse.meta?.current_page.toString()
 

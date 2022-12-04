@@ -1,16 +1,18 @@
 package com.example.fastugadriver.ui.list
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
+import com.example.fastugadriver.ui.OrdersFragment
 
-class CustomAdapter(private val mList: ArrayList<ItemsViewModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class OrderAdapter(private val mList: ArrayList<ItemsViewModel>, val fragment : OrdersFragment) : RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
 
-    //var selectedItem: View? = null
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -21,7 +23,9 @@ class CustomAdapter(private val mList: ArrayList<ItemsViewModel>) : RecyclerView
         return ViewHolder(view)
     }
 
-    // binds the list items to a view
+
+
+    // binds the list items to view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val ItemsViewModel = mList[position]
@@ -29,9 +33,9 @@ class CustomAdapter(private val mList: ArrayList<ItemsViewModel>) : RecyclerView
         holder.itemView.setOnClickListener {
 
             LoginRepository.setOrder(ItemsViewModel.order)
-            /*selectedItem?.setBackgroundColor(Color.WHITE)
-            holder.itemView.setBackgroundColor(Color.parseColor("#8BC34A"))
-            selectedItem = holder.itemView*/
+            //Start Main activity
+            val intent = Intent(fragment.context, MainActivity::class.java)
+            fragment.startActivity(intent)
         }
         // sets the image to the imageview from our itemHolder class
         holder.imageView.setImageResource(ItemsViewModel.image)
