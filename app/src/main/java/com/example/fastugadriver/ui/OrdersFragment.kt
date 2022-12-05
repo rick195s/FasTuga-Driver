@@ -96,7 +96,10 @@ class OrdersFragment : Fragment() {
         binding = FragmentOrdersBinding.inflate(inflater, container, false)
         val spinner = binding.filters
         val arraySpinner = arrayOf(
-            "All","max.5km", "max.10km", "max.15km"
+            "All","max.5km", "max.10km", "max.15km"," "
+        )
+        val arrayValues = arrayOf(
+            "All","5", "10", "15","All"
         )
         var adapter = ArrayAdapter<String> (layoutInflater.context, android.R.layout.simple_spinner_item, arraySpinner)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -108,7 +111,7 @@ class OrdersFragment : Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                orderGateway.getOrders(arraySpinner.get(spinner.selectedItemPosition),1)
+                orderGateway.getOrders(arrayValues.get(spinner.selectedItemPosition),1)
                 setList(orderGateway)
             }
 
