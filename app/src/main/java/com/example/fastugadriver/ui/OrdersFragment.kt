@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,13 +34,32 @@ class OrdersFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        orderGateway.getOrders()
-
+        orderGateway.getOrders("All",1)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.ordersNextBtn.setOnClickListener {
+
+            orderResponse.meta?.last_page.let {
+            if (it != null && orderResponse.meta?.current_page?.compareTo(it)!! < 0) {
+                    orderGateway.getOrders("All",orderResponse.meta?.current_page?.plus(1))
+                }
+            }
+
+        }
+
+        setList(orderGateway)
+
+        binding.ordersPrevBtn.setOnClickListener {
+            if(orderResponse.meta?.current_page!! > 1){
+                orderGateway.getOrders("All", orderResponse.meta?.current_page?.minus(1))
+            }
+        }
+    }
+
+    fun setList(orderGateway: OrderGateway){
         orderGateway.fasTugaResponse.observe(ownerFragment, Observer {
             val orderResponse = it ?: return@Observer
 
@@ -54,7 +76,7 @@ class OrdersFragment : Fragment() {
                         data.add(item)
                     }
                     val layoutManager = LinearLayoutManager(context)
-                    recycleView = view.findViewById(R.id.orders_list)
+                    recycleView = binding.root.findViewById(R.id.orders_list)
                     recycleView.layoutManager = layoutManager
                     recycleView.setHasFixedSize(true)
                     adapter = OrderAdapter(data,this)
@@ -65,30 +87,35 @@ class OrdersFragment : Fragment() {
                 }
             }
         })
-
-        binding.ordersNextBtn.setOnClickListener {
-
-            orderResponse.meta?.last_page.let {
-            if (it != null && orderResponse.meta?.current_page?.compareTo(it)!! < 0) {
-                    orderGateway.getOrders(orderResponse.meta?.current_page?.plus(1))
-                }
-            }
-
-        }
-
-        binding.ordersPrevBtn.setOnClickListener {
-            if(orderResponse.meta?.current_page!! > 1){
-                orderGateway.getOrders(orderResponse.meta?.current_page?.minus(1))
-            }
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentOrdersBinding.inflate(inflater, container, false)
+        val spinner = binding.filters
+        val arraySpinner = arrayOf(
+            "All","max.5km", "max.10km", "max.15km"," "
+        )
+        val arrayValues = arrayOf(
+            "All","5", "10", "15","All"
+        )
+        var adapter = ArrayAdapter<String> (layoutInflater.context, android.R.layout.simple_spinner_item, arraySpinner)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter)
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                orderGateway.getOrders("All",1)
+                setList(orderGateway)
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                orderGateway.getOrders(arrayValues.get(spinner.selectedItemPosition),1)
+                setList(orderGateway)
+            }
+
+        }
         return binding.root
     }
 }
