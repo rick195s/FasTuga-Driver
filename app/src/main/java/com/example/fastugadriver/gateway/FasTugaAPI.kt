@@ -1,6 +1,7 @@
 package com.example.fastugadriver.gateway
 
 import com.example.fastugadriver.data.LoginRepository
+import com.example.fastugadriver.data.pojos.FormErrorResponse
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -63,7 +64,7 @@ class FasTugaAPI {
             }catch (e: Throwable){
                 println(e.message)
             }
-            return null
+            return FormErrorResponse()
         }
     }
 

@@ -32,8 +32,6 @@ class DriverGateway {
         // on below line we are executing our method.
         call.enqueue(object : Callback<Token> {
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
-
-
                 if (!response.isSuccessful){
                     _fasTugaResponse.value = FasTugaAPI.convertToClass( response.errorBody()!!.charStream(),
                         FormErrorResponse::class.java) as FormErrorResponse
