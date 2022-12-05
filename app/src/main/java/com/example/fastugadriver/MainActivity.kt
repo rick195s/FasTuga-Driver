@@ -1,25 +1,41 @@
 package com.example.fastugadriver
 
-import android.content.Intent
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.databinding.ActivityMainBinding
 import com.example.fastugadriver.ui.*
 import com.example.fastugadriver.ui.login.LoginActivity
-import com.example.fastugadriver.ui.SelectedOrderDetailsActivity
+import io.socket.client.IO
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
+import java.net.URISyntaxException
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    private var mSocket: Socket? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        try {
+            mSocket = IO.socket("http://10.0.2.2:8080")
+        } catch ( e: URISyntaxException) {
+        }
+
+        mSocket?.on(Socket.EVENT_CONNECT_ERROR, onSocketConnectError);
+        mSocket?.on(Socket.EVENT_CONNECT, onSocketConnect);
+        mSocket?.connect();
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -51,9 +67,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.bottom_navbar_map -> replaceFragment(MapsFragment())
                 R.id.bottom_navbar_orders -> replaceFragment(OrdersFragment())
                 R.id.bottom_navbar_profile -> replaceFragment(ProfileFragment())
-                else -> {
-
-                }
             }
             true
 
@@ -74,4 +87,12 @@ class MainActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
     }
+    private val onSocketConnectError = Emitter.Listener { args: Array<Any> ->
+        println("erro")
+    }
+
+    private val onSocketConnect = Emitter.Listener { args: Array<Any> ->
+        println("connected")
+    }
+
 }
