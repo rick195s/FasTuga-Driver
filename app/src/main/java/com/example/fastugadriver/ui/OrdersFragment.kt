@@ -96,10 +96,10 @@ class OrdersFragment : Fragment() {
         binding = FragmentOrdersBinding.inflate(inflater, container, false)
         val spinner = binding.filters
         val arraySpinner = arrayOf(
-            "All","max.5km", "max.10km", "max.15km"," "
+            "All","Farthest orders", "Nearest orders"
         )
         val arrayValues = arrayOf(
-            "All","5", "10", "15","All"
+            "All","DESC", "ASC"
         )
         var adapter = ArrayAdapter<String> (layoutInflater.context, android.R.layout.simple_spinner_item, arraySpinner)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
