@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.example.fastugadriver.R
+import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.orders.Order
 
 class NotificationsManager (private val context: Context){
@@ -26,15 +27,17 @@ class NotificationsManager (private val context: Context){
         val notification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_baseline_cancel_24)
             .setContentTitle("Order ${order.ticket_number} cancelled")
-            .setContentText("Order  ${order.ticket_number} cancelled. Tax fee: ${order.tax_fee}. Location : ${order.delivery_location} ")
+            .setContentText("Tax fee: ${order.tax_fee} €.\nLocation : ${order.delivery_location} ")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
-        notificationManager.notify(
-            1, notification
-        )
-
-        saveNotification(notification)
+        if (order.id == LoginRepository.selectedOrder?.id){
+            notificationManager.notify(
+                order.id!!, notification
+            )
+            LoginRepository.setOrder(null)
+            saveNotification(notification)
+        }
     }
 
     private fun createNotificationChannel() {

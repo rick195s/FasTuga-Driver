@@ -4,42 +4,43 @@ import com.example.fastugadriver.data.pojos.FasTugaResponse
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Order: FasTugaResponse {
+class Order : FasTugaResponse {
+
     @SerializedName("order_driver_delivery_id")
     @Expose
-    val order_driver_delivery_id: Int? = null
+    var order_driver_delivery_id: Int? = null
 
     @SerializedName("delivery_location")
     @Expose
-    val delivery_location: String? = null
+    var delivery_location: String? = null
 
     @SerializedName("tax_fee")
     @Expose
-    val tax_fee: Int? = null
+    var tax_fee: Int? = null
 
     @SerializedName("delivery_started_at")
     @Expose
-    val delivery_started_at: String? = null
+    var delivery_started_at: String? = null
 
     @SerializedName("delivery_ended_at")
     @Expose
-    val delivery_ended_at: String? = null
+    var delivery_ended_at: String? = null
 
     @SerializedName("delivered_by")
     @Expose
-    val delivered_by: Int? = null
+    var delivered_by: Int? = null
 
     @SerializedName("id")
     @Expose
-    val id: Int? = null
+    var id: Int? = null
 
     @SerializedName("payment_type")
     @Expose
-    val payment_type: String? = null
+    var payment_type: String? = null
 
     @SerializedName("ticket_number")
     @Expose
-    val ticket_number: Int? = null
+    var ticket_number: Int? = null
 
    /* @SerializedName("products")
     @Expose

@@ -12,10 +12,8 @@ import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.databinding.ActivityMainBinding
 import com.example.fastugadriver.ui.*
 import com.example.fastugadriver.ui.login.LoginActivity
-import io.socket.client.IO
+import com.example.fastugadriver.websockets.SocketIOManager
 import io.socket.client.Socket
-import io.socket.emitter.Emitter
-import java.net.URISyntaxException
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,21 +25,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        try {
-            mSocket = IO.socket("http://10.0.2.2:8080")
-        } catch ( e: URISyntaxException) {
-        }
-
-        mSocket?.on(Socket.EVENT_CONNECT_ERROR, onSocketConnectError);
-        mSocket?.on(Socket.EVENT_CONNECT, onSocketConnect);
-        mSocket?.connect();
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // initiate LoginRepository
         LoginRepository.init(this)
+
+        // initiate socket io
+        SocketIOManager(this)
 
         if (!LoginRepository.isLoggedIn){
             val intent = Intent(this, LoginActivity::class.java)
@@ -87,12 +78,4 @@ class MainActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
     }
-    private val onSocketConnectError = Emitter.Listener { args: Array<Any> ->
-        println("erro")
-    }
-
-    private val onSocketConnect = Emitter.Listener { args: Array<Any> ->
-        println("connected")
-    }
-
 }
