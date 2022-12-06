@@ -40,6 +40,24 @@ class NotificationsManager (private val context: Context){
         }
     }
 
+    fun orderReadyNotification(order: Order) {
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        createNotificationChannel()
+        val notification = NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(R.drawable.ic_baseline_delivery_dining_24)
+            .setContentTitle("Order ${order.ticket_number} ready")
+            .setContentText("Tax fee: ${order.tax_fee} €.\nLocation : ${order.delivery_location} ")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        notificationManager.notify(
+            order.id!!, notification
+        )
+        LoginRepository.setOrder(null)
+        saveNotification(notification)
+    }
+
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
