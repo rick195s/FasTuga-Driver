@@ -1,6 +1,7 @@
 package com.example.fastugadriver.websockets
 
 import android.content.Context
+import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.orders.Order
 import com.example.fastugadriver.notifications.NotificationsManager
 import com.google.gson.Gson
@@ -29,7 +30,21 @@ class SocketIOManager(private val context: Context) {
         val  order: Order = Gson().fromJson(args[0].toString(), Order::class.java)
         println(args[0].toString())
         val notificationManager = NotificationsManager(context)
-        notificationManager.orderCancelledNotification(order)
+
+        if (order.id == LoginRepository.selectedOrder?.id){
+            notificationManager.orderCancelledNotification(order)
+            LoginRepository.setOrder(null)
+        }
+    }
+
+    private val onOrderReady = Emitter.Listener { args: Array<Any> ->
+        println("order ready")
+        println(args[0].toString())
+
+        val notificationManager = NotificationsManager(context)
+        if (args[0].toString() == LoginRepository.selectedOrder?.id.toString()){
+            LoginRepository.selectedOrder?.let { notificationManager.orderReadyNotification(it) }
+        }
     }
 
     init{
@@ -41,6 +56,7 @@ class SocketIOManager(private val context: Context) {
         mSocket?.on(Socket.EVENT_CONNECT_ERROR, onSocketConnectError);
         mSocket?.on(Socket.EVENT_CONNECT, onSocketConnect);
         mSocket?.on("order-cancelled",onOrderCancelled)
+        mSocket?.on("order-ready", onOrderReady)
         mSocket?.connect();
     }
 }
