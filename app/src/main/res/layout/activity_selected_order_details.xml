@@ -28,7 +28,7 @@
             android:id="@+id/selected_order_detail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="56dp"
             android:text="Order #"
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -97,6 +97,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -122,6 +123,28 @@
                 tools:ignore="MissingConstraints"
                 tools:text="Rua N Numero n or coordinate" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/selected_order_start_delivery_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:text="@string/selected_order_start_delivery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+        <Button
+            android:id="@+id/selected_order_cancel_order_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/selected_order_cancel_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/selected_order_start_delivery_btn"
+            app:layout_constraintVertical_bias="0.098" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

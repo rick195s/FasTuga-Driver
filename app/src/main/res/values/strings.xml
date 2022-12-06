@@ -58,4 +58,6 @@
     <string name="selected_order_title" />
     <string name="selected_order_ticket_number">Ticket Number: </string>
     <string name="selected_order_tax_fee">Tax Fee:</string>
+    <string name="selected_order_start_delivery">Start Delivery</string>
+    <string name="selected_order_cancel_btn">Cancel Order</string>
 </resources>
