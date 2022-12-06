@@ -55,4 +55,7 @@
     <string name="action_profile_history">Orders History</string>
     <string name="title_activity_orders_history">OrdersHistory</string>
     <string name="history_orders_title">Orders Completed History</string>
+    <string name="selected_order_title" />
+    <string name="selected_order_ticket_number">Ticket Number: </string>
+    <string name="selected_order_tax_fee">Tax Fee:</string>
 </resources>
