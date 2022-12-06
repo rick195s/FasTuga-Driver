@@ -19,8 +19,6 @@ import io.socket.client.Socket
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private var mSocket: Socket? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -74,8 +72,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun btnClick(view:View){
-        val intent = Intent(this,  SelectedOrderDetailsActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-        startActivity(intent)
+        if (LoginRepository.selectedOrder != null){
+            val intent = Intent(this,  SelectedOrderDetailsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+        }
     }
 }
