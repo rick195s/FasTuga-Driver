@@ -69,6 +69,22 @@ class NotificationsManager (private val context: Context){
         )
     }
 
+    fun getNotifications(): ArrayList<NotificationStored> {
+        val oldSet = sharedPreferences.getStringSet("notifications_set", HashSet<String>())
+        var newSet = HashSet<String>()
+
+        oldSet?.let {  newSet = it.toHashSet() }
+
+        val array = ArrayList<NotificationStored>()
+
+        for (notification in newSet){
+            array.add(Gson().fromJson(notification, NotificationStored::class.java))
+        }
+
+
+        return array
+    }
+
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -85,8 +101,6 @@ class NotificationsManager (private val context: Context){
     }
 
     private fun saveNotification( notification : NotificationStored){
-        //Retrieve the values
-
         val oldSet = sharedPreferences.getStringSet("notifications_set", HashSet<String>())
 
         var newSet = HashSet<String>()
