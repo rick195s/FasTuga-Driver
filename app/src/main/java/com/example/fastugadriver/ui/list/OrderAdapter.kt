@@ -39,13 +39,11 @@ class OrderAdapter(private val mList: ArrayList<ItemsViewModel>, val fragment : 
         }
         // sets the image to the imageview from our itemHolder class
         holder.imageView.setImageResource(ItemsViewModel.image)
-
-        // sets the text to the textview from our itemHolder class
         holder.textView.text = "Id: "+ItemsViewModel.order.id
-
         holder.textViewTicketNumber.text = "Ticket Number: "+ItemsViewModel.order.ticket_number
-
         holder.textViewDeliveryLocation.text = "Location: "+ItemsViewModel.order.delivery_location
+        holder.textViewDistance.text = "Km's:"+ItemsViewModel.order.distance
+
 
     }
 
@@ -60,5 +58,6 @@ class OrderAdapter(private val mList: ArrayList<ItemsViewModel>, val fragment : 
         val textView: TextView = itemView.findViewById(R.id.textView)
         val textViewTicketNumber: TextView = itemView.findViewById(R.id.textViewTicketNumber)
         val textViewDeliveryLocation: TextView = itemView.findViewById(R.id.TextViewDeliveryLocation)
+        val textViewDistance: TextView = itemView.findViewById(R.id.textViewDistance)
     }
 }
