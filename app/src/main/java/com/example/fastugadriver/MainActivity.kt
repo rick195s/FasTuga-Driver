@@ -1,18 +1,20 @@
 package com.example.fastugadriver
 
-import android.content.Intent
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.databinding.ActivityMainBinding
 import com.example.fastugadriver.ui.*
 import com.example.fastugadriver.ui.login.LoginActivity
-import com.example.fastugadriver.ui.SelectedOrderDetailsActivity
+import com.example.fastugadriver.websockets.SocketIOManager
+import io.socket.client.Socket
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -26,6 +28,9 @@ class MainActivity : AppCompatActivity() {
 
         // initiate LoginRepository
         LoginRepository.init(this)
+
+        // initiate socket io
+        SocketIOManager(this)
 
         if (!LoginRepository.isLoggedIn){
             val intent = Intent(this, LoginActivity::class.java)
@@ -51,9 +56,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.bottom_navbar_map -> replaceFragment(MapsFragment())
                 R.id.bottom_navbar_orders -> replaceFragment(OrdersFragment())
                 R.id.bottom_navbar_profile -> replaceFragment(ProfileFragment())
-                else -> {
-
-                }
             }
             true
 
@@ -70,8 +72,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun btnClick(view:View){
-        val intent = Intent(this,  SelectedOrderDetailsActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-        startActivity(intent)
+        if (LoginRepository.selectedOrder != null){
+            val intent = Intent(this,  SelectedOrderDetailsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+        }
     }
 }

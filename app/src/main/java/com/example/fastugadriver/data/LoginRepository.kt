@@ -39,7 +39,7 @@ object LoginRepository {
     var selectedOrder: Order? = null
         private set
 
-    fun setOrder(selectedOrder: Order){
+    fun setOrder(selectedOrder: Order?){
         this.selectedOrder = selectedOrder
 
         val gson = Gson()
