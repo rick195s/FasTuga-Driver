@@ -119,6 +119,13 @@
                 android:textAlignment="textStart" />
 
             <Button
+                android:id="@+id/profile_button_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/history_notifications_title"
+                android:textAlignment="textStart" />
+
+            <Button
                 android:id="@+id/profile_button_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -27,6 +27,11 @@
                 android:value="" />
         </activity>
 
+        <activity
+            android:name=".ui.NotificationsHistoryActivity"
+            android:exported="true"
+            android:label="@string/history_notifications_title"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDPg8CXKUBOT3nbd-RdLb91YFDh70GAjJE" />

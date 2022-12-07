@@ -21,10 +21,6 @@ class ProfileFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,6 +77,12 @@ class ProfileFragment : Fragment() {
 
         binding.profileButtonHistory.setOnClickListener {
             val intent = Intent(activity, OrdersHistoryActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+        }
+
+        binding.profileButtonNotifications.setOnClickListener {
+            val intent = Intent(activity, NotificationsHistoryActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
