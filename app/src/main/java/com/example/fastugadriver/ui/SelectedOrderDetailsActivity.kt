@@ -21,9 +21,9 @@ class SelectedOrderDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
         var order : Order = LoginRepository.selectedOrder as Order
 
-        binding.txTag.text = order?.ticket_number.toString()
-        binding.tvOrderId.text = order?.id.toString()
-        binding.tvCustomerLocation.text = order?.delivery_location
+        binding.selectedOrderTicketNumber.text = order.ticket_number.toString()
+        binding.selectedOrderCustomerLocation.text = order.delivery_location
+        binding.selectedOrderTaxFee.text = order.tax_fee.toString()
 
         binding.selectedOrderDetails.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

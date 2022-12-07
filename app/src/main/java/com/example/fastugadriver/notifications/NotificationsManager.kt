@@ -6,15 +6,21 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.content.edit
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
+import com.example.fastugadriver.data.pojos.NotificationStored
 import com.example.fastugadriver.data.pojos.orders.Order
+import com.google.gson.Gson
+
 
 class NotificationsManager (private val context: Context){
 
     private val channelId :String ="notification_channel"
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private val sharedPreferences = context.getSharedPreferences("notifications", Context.MODE_PRIVATE)
+
 
     init {
         createNotificationChannel()
@@ -36,7 +42,9 @@ class NotificationsManager (private val context: Context){
                 order.id!!, notification
             )
             LoginRepository.setOrder(null)
-            saveNotification(notification)
+            saveNotification(
+                NotificationStored("order_cancelled", order.delivery_location, order.ticket_number.toString())
+            )
         }
     }
 
@@ -55,7 +63,10 @@ class NotificationsManager (private val context: Context){
             order.id!!, notification
         )
         LoginRepository.setOrder(null)
-        saveNotification(notification)
+
+        saveNotification(
+            NotificationStored("order_ready", order.delivery_location, order.ticket_number.toString())
+        )
     }
 
     private fun createNotificationChannel() {
@@ -73,7 +84,21 @@ class NotificationsManager (private val context: Context){
         }
     }
 
-    private fun saveNotification(notification : Notification){
+    private fun saveNotification( notification : NotificationStored){
+        //Retrieve the values
 
+        val oldSet = sharedPreferences.getStringSet("notifications_set", HashSet<String>())
+
+        var newSet = HashSet<String>()
+
+        oldSet?.let {  newSet = it.toHashSet() }
+
+        newSet.add(Gson().toJson(notification))
+
+        sharedPreferences.edit {
+            putStringSet("notifications_set", newSet)
+            apply()
+            commit()
+        }
     }
 }

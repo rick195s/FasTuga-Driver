@@ -21,14 +21,11 @@ class SocketIOManager(private val context: Context) {
     private val onSocketConnect = Emitter.Listener { args: Array<Any> ->
         mSocket?.emit("register", "driver")
 
-        println("connected")
     }
 
     private val onOrderCancelled = Emitter.Listener { args: Array<Any> ->
-        println("order cancelled")
 
         val  order: Order = Gson().fromJson(args[0].toString(), Order::class.java)
-        println(args[0].toString())
         val notificationManager = NotificationsManager(context)
 
         if (order.id == LoginRepository.selectedOrder?.id){
@@ -38,9 +35,6 @@ class SocketIOManager(private val context: Context) {
     }
 
     private val onOrderReady = Emitter.Listener { args: Array<Any> ->
-        println("order ready")
-        println(args[0].toString())
-
         val notificationManager = NotificationsManager(context)
         if (args[0].toString() == LoginRepository.selectedOrder?.id.toString()){
             LoginRepository.selectedOrder?.let { notificationManager.orderReadyNotification(it) }

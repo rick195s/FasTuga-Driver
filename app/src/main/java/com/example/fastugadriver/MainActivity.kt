@@ -9,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.fastugadriver.data.LoginRepository
+import com.example.fastugadriver.data.pojos.NotificationStored
 import com.example.fastugadriver.databinding.ActivityMainBinding
 import com.example.fastugadriver.ui.*
 import com.example.fastugadriver.ui.login.LoginActivity
 import com.example.fastugadriver.websockets.SocketIOManager
+import com.google.gson.Gson
 import io.socket.client.Socket
 
 
