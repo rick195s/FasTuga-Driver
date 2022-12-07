@@ -13,6 +13,7 @@ import com.example.fastugadriver.databinding.ActivityMainBinding
 import com.example.fastugadriver.ui.*
 import com.example.fastugadriver.ui.login.LoginActivity
 import com.example.fastugadriver.ui.SelectedOrderDetailsActivity
+import com.mapbox.maps.MapView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
