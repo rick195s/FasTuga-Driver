@@ -42,7 +42,7 @@ class OrderAdapter(private val mList: ArrayList<ItemsViewModel>, val fragment : 
         holder.textView.text = "Id: "+ItemsViewModel.order.id
         holder.textViewTicketNumber.text = "Ticket Number: "+ItemsViewModel.order.ticket_number
         holder.textViewDeliveryLocation.text = "Location: "+ItemsViewModel.order.delivery_location
-        holder.textViewDistance.text = "Km's:"+ItemsViewModel.order.distance
+        holder.textViewDistance.text = ""+ItemsViewModel.order.distance
 
 
     }
