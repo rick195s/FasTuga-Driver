@@ -87,6 +87,12 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.profileButtonStatistics.setOnClickListener {
+            val intent = Intent(activity, StatisticsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+        }
+
         return view
     }
 
