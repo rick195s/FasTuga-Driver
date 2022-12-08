@@ -62,14 +62,14 @@ class OrderGateway {
 
     fun cancelOrder () {
         // calling the method from API to get the Driver logged in
-        val call: Call<FasTugaResponse> = FasTugaAPI.getInterface().cancelOrder()
+        val call: Call<ResponseBody> = FasTugaAPI.getInterface().cancelOrder()
 
 
         // on below line we are executing our method.
-        call.enqueue(object : Callback<FasTugaResponse?> {
+        call.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(
-                call: Call<FasTugaResponse?>,
-                response: Response<FasTugaResponse?>
+                call: Call<ResponseBody?>,
+                response: Response<ResponseBody?>
 
             ) {
                 if(response.isSuccessful){
@@ -80,8 +80,8 @@ class OrderGateway {
                 _fasTugaResponse.value = FormErrorResponse()
             }
 
-            override fun onFailure(call: Call<FasTugaResponse?>, t: Throwable) {
-                _fasTugaResponse.value = FormErrorResponse()
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                _fasTugaResponse.value = FormErrorResponse(t.message)
             }
         })
     }

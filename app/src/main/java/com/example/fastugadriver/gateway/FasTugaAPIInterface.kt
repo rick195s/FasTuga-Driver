@@ -40,9 +40,10 @@ interface FasTugaAPIInterface {
     fun updateDriver(@Path(value="driver") driver_id: Int?, @PartMap  partMap: Map<String, @JvmSuppressWildcards RequestBody>,
                      @Part photo: MultipartBody.Part?, @Part method: MultipartBody.Part): Call<LoggedInDriver>
 
+    @FormUrlEncoded
     @PUT("orders/{order}")
     fun cancelOrder(@Path(value="order") order_id: Int? = LoginRepository.selectedOrder?.id,
-                    @Body status: String = "C"): Call<FasTugaResponse>
+                    @Field("status") status: String = "C"): Call<ResponseBody>
 
     @FormUrlEncoded
     @PUT("orders/{order}")
