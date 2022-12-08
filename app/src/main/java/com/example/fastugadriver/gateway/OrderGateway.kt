@@ -59,5 +59,26 @@ class OrderGateway {
         })
     }
 
+    fun cancelOrder (order_id:Int) {
+        // calling the method from API to get the Driver logged in
+        val call: Call<FasTugaResponse> = FasTugaAPI.getInterface().cancelOrder(order_id, "C")
+
+
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<FasTugaResponse?> {
+            override fun onResponse(
+                call: Call<FasTugaResponse?>,
+                response: Response<FasTugaResponse?>
+
+            ) {
+                _fasTugaResponse.value = SuccessResponse()
+            }
+
+            override fun onFailure(call: Call<FasTugaResponse?>, t: Throwable) {
+                _fasTugaResponse.value = FormErrorResponse()
+            }
+        })
+    }
+
 
 }

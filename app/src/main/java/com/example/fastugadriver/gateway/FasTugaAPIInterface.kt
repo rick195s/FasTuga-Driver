@@ -1,6 +1,7 @@
 package com.example.fastugadriver.gateway
 
 import com.example.fastugadriver.data.pojos.Driver
+import com.example.fastugadriver.data.pojos.FasTugaResponse
 import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 import com.example.fastugadriver.data.pojos.auth.Token
 import okhttp3.MultipartBody
@@ -17,8 +18,8 @@ interface FasTugaAPIInterface {
     @GET("me")
     fun getDriver(): Call<LoggedInDriver>
 
-    @GET("orders/drivers/{filter}")
-    fun getOrders( @Path(value="filter")  filter: String?, @Query("page") page: Int?): Call<OrderResponse>
+    @GET("orders/drivers")
+    fun getOrders( @Query(value="filter")  filter: String?, @Query("page") page: Int?): Call<OrderResponse>
 
     @GET("drivers/{driver}/orders")
     fun getDriverOrders(@Path(value="driver") driver_id: Int?, @Query("page") page: Int? ): Call<OrderResponse>
@@ -37,4 +38,8 @@ interface FasTugaAPIInterface {
     @POST("drivers/{driver}")
     fun updateDriver(@Path(value="driver") driver_id: Int?, @PartMap  partMap: Map<String, @JvmSuppressWildcards RequestBody>,
                      @Part photo: MultipartBody.Part?, @Part method: MultipartBody.Part): Call<LoggedInDriver>
+
+    @PUT("orders/{order}")
+    fun cancelOrder(@Path(value="order") order_id: Int?, @Body status: String?): Call<FasTugaResponse>
+
 }
