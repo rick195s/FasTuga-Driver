@@ -79,7 +79,7 @@ class OrdersFragment : Fragment() {
                     recycleView = binding.root.findViewById(R.id.orders_list)
                     recycleView.layoutManager = layoutManager
                     recycleView.setHasFixedSize(true)
-                    adapter = OrderAdapter(data,this)
+                    adapter = OrderAdapter(data, this)
                     recycleView.adapter = adapter
                     binding.ordersPageIndex.text = orderResponse.meta?.current_page.toString()
 

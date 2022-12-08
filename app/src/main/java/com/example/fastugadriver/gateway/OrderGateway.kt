@@ -3,6 +3,7 @@ package com.example.fastugadriver.gateway
 import androidx.lifecycle.MutableLiveData
 import com.example.fastugadriver.data.pojos.*
 import com.example.fastugadriver.data.pojos.orders.OrderResponse
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -71,11 +72,43 @@ class OrderGateway {
                 response: Response<FasTugaResponse?>
 
             ) {
-                _fasTugaResponse.value = SuccessResponse()
+                if(response.isSuccessful){
+                    _fasTugaResponse.value = SuccessResponse()
+                    return
+                }
+
+                _fasTugaResponse.value = FormErrorResponse()
             }
 
             override fun onFailure(call: Call<FasTugaResponse?>, t: Throwable) {
                 _fasTugaResponse.value = FormErrorResponse()
+            }
+        })
+    }
+
+
+    fun updateOrderDeliveredBy(order_id: Int?) {
+        // calling the method from API to get the Driver logged in
+        val call: Call<ResponseBody> = FasTugaAPI.getInterface().updateOrderDeliveredBy(order_id)
+
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(
+                call: Call<ResponseBody?>,
+                response: Response<ResponseBody?>
+
+            ) {
+                if(response.isSuccessful){
+                    _fasTugaResponse.value = SuccessResponse()
+                    return
+                }
+
+                _fasTugaResponse.value = FormErrorResponse()
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                _fasTugaResponse.value = FormErrorResponse(t.message)
             }
         })
     }

@@ -44,8 +44,9 @@ interface FasTugaAPIInterface {
     fun cancelOrder(@Path(value="order") order_id: Int? = LoginRepository.selectedOrder?.id,
                     @Body status: String = "C"): Call<FasTugaResponse>
 
+    @FormUrlEncoded
     @PUT("orders/{order}")
-    fun updateOrderDeliveredBy(@Path(value="order") order_id: Int? =  LoginRepository.selectedOrder?.id,
-                               @Body driver_id: Int? = LoginRepository.driver?.id): Call<FasTugaResponse>
+    fun updateOrderDeliveredBy(@Path(value="order") order_id: Int?,
+                               @Field("delivered_by") delivered_by: String = LoginRepository.driver?.id.toString()): Call<ResponseBody>
 
 }
