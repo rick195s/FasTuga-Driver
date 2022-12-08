@@ -59,9 +59,9 @@ class OrderGateway {
         })
     }
 
-    fun cancelOrder (order_id:Int) {
+    fun cancelOrder () {
         // calling the method from API to get the Driver logged in
-        val call: Call<FasTugaResponse> = FasTugaAPI.getInterface().cancelOrder(order_id, "C")
+        val call: Call<FasTugaResponse> = FasTugaAPI.getInterface().cancelOrder()
 
 
         // on below line we are executing our method.

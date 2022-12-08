@@ -1,5 +1,6 @@
 package com.example.fastugadriver.gateway
 
+import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.Driver
 import com.example.fastugadriver.data.pojos.FasTugaResponse
 import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
@@ -40,6 +41,11 @@ interface FasTugaAPIInterface {
                      @Part photo: MultipartBody.Part?, @Part method: MultipartBody.Part): Call<LoggedInDriver>
 
     @PUT("orders/{order}")
-    fun cancelOrder(@Path(value="order") order_id: Int?, @Body status: String?): Call<FasTugaResponse>
+    fun cancelOrder(@Path(value="order") order_id: Int? = LoginRepository.selectedOrder?.id,
+                    @Body status: String = "C"): Call<FasTugaResponse>
+
+    @PUT("orders/{order}")
+    fun updateOrderDeliveredBy(@Path(value="order") order_id: Int? =  LoginRepository.selectedOrder?.id,
+                               @Body driver_id: Int? = LoginRepository.driver?.id): Call<FasTugaResponse>
 
 }

@@ -34,7 +34,7 @@ class OrdersFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        orderGateway.getOrders("All",1)
+        orderGateway.getOrders("ASC",1)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
