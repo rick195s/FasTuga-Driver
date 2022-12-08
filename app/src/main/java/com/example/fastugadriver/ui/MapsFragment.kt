@@ -9,15 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
-import com.example.fastugadriver.data.pojos.FormErrorResponse
-import com.example.fastugadriver.data.pojos.SuccessResponse
 import com.example.fastugadriver.databinding.FragmentMapsBinding
 import com.example.fastugadriver.gateway.MapBoxGateway
-import com.mapbox.api.directions.v5.DirectionsCriteria
-import com.mapbox.api.directions.v5.MapboxDirections
-import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.api.directions.v5.models.DirectionsRoute
-import com.mapbox.api.directions.v5.models.RouteOptions
 import com.mapbox.core.constants.Constants.PRECISION_6
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -36,10 +30,6 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory.*
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import com.mapbox.mapboxsdk.utils.BitmapUtils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.*
 
 
 
@@ -105,7 +95,9 @@ class MapsFragment : Fragment(){
             mapboxMap.setStyle(Style.MAPBOX_STREETS
             ) { style -> // Set the origin location to the restaurant (ESTG)
 
-                showStaticPath(style)
+                if (LoginRepository.selectedOrder != null){
+                    showStaticPath(style)
+                }
             }
         }
 
@@ -115,17 +107,36 @@ class MapsFragment : Fragment(){
 
     // region Show Path
     private fun showStaticPath(style: Style) {
+        // ESTG coordinates
         origin = Point.fromLngLat(-8.820920, 39.734866)
-
-        // Set the destination location to the client
-        destination = Point.fromLngLat(-8.824283, 39.658306 )
-
-        initSource(style)
-        initLayers(style)
-
 
         val mapBoxGateway = MapBoxGateway()
 
+        LoginRepository.selectedOrder?.delivery_location?.let {
+            mapBoxGateway.getCoordinates(it, getString(R.string.mapbox_access_token))
+
+            mapBoxGateway.responseGecode.observe(viewLifecycleOwner, Observer {
+                val response = it ?: return@Observer
+
+                val results = response.body()!!.features()
+
+                if (results.size > 0 ){
+                    // Set the destination location to the client
+                    destination = results[0].center() as Point
+
+                    initSource(style)
+                    initLayers(style)
+
+                    findRoute(mapBoxGateway)
+                }
+
+                }
+            )
+
+        }
+    }
+
+    private fun findRoute(mapBoxGateway: MapBoxGateway){
         mapBoxGateway.responseDirections.observe(viewLifecycleOwner, Observer {
             val response = it ?: return@Observer
 
@@ -136,7 +147,6 @@ class MapsFragment : Fragment(){
         })
 
         mapBoxGateway.getRoute(origin, destination, getString(R.string.mapbox_access_token))
-
     }
 
     private fun setMapStyle(){
