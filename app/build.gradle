@@ -55,9 +55,9 @@ dependencies {
     // MapBox
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.7.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-sdk-core:6.9.0'
-    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:5.5.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:6.9.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-sdk-geojson:6.9.0'
-    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:5.5.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:6.9.0'
 
     testImplementation 'junit:junit:4.13.2'
 
