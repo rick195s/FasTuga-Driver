@@ -44,7 +44,7 @@ class OrdersFragment : Fragment() {
 
             orderResponse.meta?.last_page.let {
             if (it != null && orderResponse.meta?.current_page?.compareTo(it)!! < 0) {
-                    orderGateway.getOrders("All",orderResponse.meta?.current_page?.plus(1))
+                    orderGateway.getOrders("ASC",orderResponse.meta?.current_page?.plus(1))
                 }
             }
 
@@ -54,7 +54,7 @@ class OrdersFragment : Fragment() {
 
         binding.ordersPrevBtn.setOnClickListener {
             if(orderResponse.meta?.current_page!! > 1){
-                orderGateway.getOrders("All", orderResponse.meta?.current_page?.minus(1))
+                orderGateway.getOrders("ASC", orderResponse.meta?.current_page?.minus(1))
             }
         }
     }
@@ -96,17 +96,17 @@ class OrdersFragment : Fragment() {
         binding = FragmentOrdersBinding.inflate(inflater, container, false)
         val spinner = binding.filters
         val arraySpinner = arrayOf(
-            "All","max.5km", "max.10km", "max.15km"," "
+            "Nearest orders", "Farthest orders"
         )
         val arrayValues = arrayOf(
-            "All","5", "10", "15","All"
+            "ASC", "DESC"
         )
         var adapter = ArrayAdapter<String> (layoutInflater.context, android.R.layout.simple_spinner_item, arraySpinner)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter)
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                orderGateway.getOrders("All",1)
+                orderGateway.getOrders("ASC",1)
                 setList(orderGateway)
             }
 

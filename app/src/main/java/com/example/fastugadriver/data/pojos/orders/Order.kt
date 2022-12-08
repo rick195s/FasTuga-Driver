@@ -42,6 +42,10 @@ class Order : FasTugaResponse {
     @Expose
     var ticket_number: Int? = null
 
+    @SerializedName("distance")
+    @Expose
+    val distance: Float? = null
+
    /* @SerializedName("products")
     @Expose
     val products: Array<Product>? = null*/

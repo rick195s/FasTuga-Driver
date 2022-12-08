@@ -25,7 +25,6 @@ class OrdersHistoryAdapter(private val mList: ArrayList<ItemsViewModel>) : Recyc
 
         val ItemsViewModel = mList[position]
 
-
         holder.taxView.text = "Tax Fee: " + ItemsViewModel.order.tax_fee
         holder.textViewTicketNumber.text = "Ticket Number: "+ItemsViewModel.order.ticket_number
         holder.textViewDeliveryLocation.text = ItemsViewModel.order.delivery_location
