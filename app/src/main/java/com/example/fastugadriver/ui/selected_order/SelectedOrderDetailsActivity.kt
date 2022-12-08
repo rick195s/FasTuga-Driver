@@ -1,4 +1,4 @@
-package com.example.fastugadriver.ui
+package com.example.fastugadriver.ui.selected_order
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
