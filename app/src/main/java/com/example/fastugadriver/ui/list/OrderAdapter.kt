@@ -39,12 +39,9 @@ class OrderAdapter(private val mList: ArrayList<ItemsViewModel>, val fragment : 
         }
         // sets the image to the imageview from our itemHolder class
         holder.imageView.setImageResource(ItemsViewModel.image)
-        holder.textView.text = "Id: "+ItemsViewModel.order.id
         holder.textViewTicketNumber.text = "Ticket Number: "+ItemsViewModel.order.ticket_number
         holder.textViewDeliveryLocation.text = "Location: "+ItemsViewModel.order.delivery_location
-        holder.textViewDistance.text = ""+ItemsViewModel.order.distance
-
-
+        holder.textViewDistance.text = ItemsViewModel.order.distance.toString() + "Km"
     }
 
     // return the number of the items in the list
@@ -55,7 +52,7 @@ class OrderAdapter(private val mList: ArrayList<ItemsViewModel>, val fragment : 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageview)
-        val textView: TextView = itemView.findViewById(R.id.textView)
+
         val textViewTicketNumber: TextView = itemView.findViewById(R.id.textViewTicketNumber)
         val textViewDeliveryLocation: TextView = itemView.findViewById(R.id.TextViewDeliveryLocation)
         val textViewDistance: TextView = itemView.findViewById(R.id.textViewDistance)
