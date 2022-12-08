@@ -10,6 +10,16 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                username = "mapbox"
+                password = "sk.eyJ1IjoiYnJ1bm9zaWx2YTAwIiwiYSI6ImNsYmFvcThlYTE3MHMzcHFocnRjamlhOWQifQ.abpLjdIwjeRG2t2oLOfEJg"
+            }
+        }
     }
 }
 rootProject.name = "FasTugaDriver"
