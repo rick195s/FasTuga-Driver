@@ -60,7 +60,12 @@ class SelectedOrderDetailsActivity : AppCompatActivity() {
         })
 
         binding.selectedOrderCancelOrderBtn.setOnClickListener {
-            orderGateway.cancelOrder()
+            if (binding.selectedOrderReasonCancel.text.isEmpty()){
+                binding.selectedOrderErrors.text = getString(R.string.selected_order_cancel_reason_empty)
+            }else{
+                orderGateway.cancelOrder()
+
+            }
         }
     }
 }
