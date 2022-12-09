@@ -9,8 +9,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.example.fastugadriver.R
+import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.databinding.ActivityTurnByTurnBinding
+import com.example.fastugadriver.gateway.MapBoxGateway
 import com.mapbox.api.directions.v5.models.Bearing
 import com.mapbox.api.directions.v5.models.RouteOptions
 import com.mapbox.bindgen.Expected
