@@ -5,13 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
+import com.example.fastugadriver.data.pojos.FormErrorResponse
+import com.example.fastugadriver.data.pojos.SuccessResponse
+import com.example.fastugadriver.gateway.OrderGateway
 import com.example.fastugadriver.ui.OrdersFragment
 
-class OrderAdapter(private val mList: ArrayList<ItemsViewModel>, val fragment : OrdersFragment) : RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
+class OrderAdapter(private val mList: ArrayList<ItemsViewModel>, private val fragment : OrdersFragment) : RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,13 +35,22 @@ class OrderAdapter(private val mList: ArrayList<ItemsViewModel>, val fragment : 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val ItemsViewModel = mList[position]
+        val orderGateway = OrderGateway()
+        orderGateway.fasTugaResponse.observe(fragment.viewLifecycleOwner, Observer {
+            val orderResponse = it ?: return@Observer
+
+            when (orderResponse) {
+                is SuccessResponse -> {
+                    LoginRepository.setOrder(ItemsViewModel.order)
+                    //Start Main activity
+                    val intent = Intent(fragment.context, MainActivity::class.java)
+                    fragment.startActivity(intent)
+                }
+            }
+        })
 
         holder.itemView.setOnClickListener {
-
-            LoginRepository.setOrder(ItemsViewModel.order)
-            //Start Main activity
-            val intent = Intent(fragment.context, MainActivity::class.java)
-            fragment.startActivity(intent)
+            orderGateway.updateOrderDeliveredBy(ItemsViewModel.order.id)
         }
         // sets the image to the imageview from our itemHolder class
         holder.imageView.setImageResource(ItemsViewModel.image)

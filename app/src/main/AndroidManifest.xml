@@ -45,7 +45,7 @@
             android:exported="true"
             android:label="@string/title_activity_edit_profile" />
         <activity
-            android:name=".ui.SelectedOrderDetailsActivity"
+            android:name=".ui.selected_order.SelectedOrderDetailsActivity"
             android:exported="true"
             android:label="@string/title_activity_selected_order_details" />
         <activity

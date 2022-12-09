@@ -12,6 +12,7 @@ import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.databinding.ActivityMainBinding
 import com.example.fastugadriver.ui.*
 import com.example.fastugadriver.ui.login.LoginActivity
+import com.example.fastugadriver.ui.selected_order.SelectedOrderDetailsActivity
 import com.example.fastugadriver.websockets.SocketIOManager
 
 
