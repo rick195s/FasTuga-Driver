@@ -62,4 +62,5 @@
     <string name="selected_order_cancel_btn">Cancel Order</string>
     <string name="history_notifications_title">Notifications</string>
     <string name="selected_order_cancel_reason_empty">Cancellation reason empty</string>
+    <string name="title_activity_turn_by_turn">TurnByTurnActivity</string>
 </resources>
