@@ -214,5 +214,35 @@ class MapsFragment : Fragment(){
     }
 
     // endregion
-    
+
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+     override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+     override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
 }
