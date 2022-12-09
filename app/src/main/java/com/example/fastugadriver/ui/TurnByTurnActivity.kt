@@ -76,7 +76,6 @@ import com.mapbox.navigation.ui.voice.model.SpeechAnnouncement
 import com.mapbox.navigation.ui.voice.model.SpeechError
 import com.mapbox.navigation.ui.voice.model.SpeechValue
 import com.mapbox.navigation.ui.voice.model.SpeechVolume
-import java.util.Date
 import java.util.Locale
 
 /**
@@ -523,16 +522,22 @@ class TurnByTurnActivity : AppCompatActivity() {
 
         // load map style
         binding.mapView.getMapboxMap().loadStyleUri(NavigationStyles.NAVIGATION_DAY_STYLE) {
-            // add long click listener that search for a route to the clicked destination
-            binding.mapView.gestures.addOnMapLongClickListener { point ->
-                findRoute(point)
-                true
-            }
+        
+            val mapBoxGateway = MapBoxGateway()
+            
+            mapBoxGateway.responseRoutes.observe(this, Observer { 
+                val response = it ?: return@Observer
+
+                setRouteAndStartNavigation(response)
+            })
+
+            mapBoxGateway.findRoute(this, navigationLocationProvider, mapboxNavigation)
         }
 
         // initialize view interactions
         binding.stop.setOnClickListener {
             clearRouteAndStopNavigation()
+            onBackPressed()
         }
         binding.recenter.setOnClickListener {
             navigationCamera.requestNavigationCameraToFollowing()
@@ -566,7 +571,7 @@ class TurnByTurnActivity : AppCompatActivity() {
             NavigationOptions.Builder(this)
                 .accessToken(getString(R.string.mapbox_access_token))
                 // comment out the location engine setting block to disable simulation
-                .locationEngine(replayLocationEngine)
+                //.locationEngine(replayLocationEngine)
                 .build()
         )
 
@@ -582,68 +587,6 @@ class TurnByTurnActivity : AppCompatActivity() {
             enabled = true
         }
 
-        replayOriginLocation()
-    }
-
-    private fun replayOriginLocation() {
-        mapboxReplayer.pushEvents(
-            listOf(
-                ReplayRouteMapper.mapToUpdateLocation(
-                    Date().time.toDouble(),
-                    Point.fromLngLat(-122.39726512303575, 37.785128345296805)
-                )
-            )
-        )
-        mapboxReplayer.playFirstLocation()
-        mapboxReplayer.playbackSpeed(3.0)
-    }
-
-    private fun findRoute(destination: Point) {
-        val originLocation = navigationLocationProvider.lastLocation
-        val originPoint = originLocation?.let {
-            Point.fromLngLat(it.longitude, it.latitude)
-        } ?: return
-
-        // execute a route request
-        // it's recommended to use the
-        // applyDefaultNavigationOptions and applyLanguageAndVoiceUnitOptions
-        // that make sure the route request is optimized
-        // to allow for support of all of the Navigation SDK features
-        mapboxNavigation.requestRoutes(
-            RouteOptions.builder()
-                .applyDefaultNavigationOptions()
-                .applyLanguageAndVoiceUnitOptions(this)
-                .coordinatesList(listOf(originPoint, destination))
-                // provide the bearing for the origin of the request to ensure
-                // that the returned route faces in the direction of the current user movement
-                .bearingsList(
-                    listOf(
-                        Bearing.builder()
-                            .angle(originLocation.bearing.toDouble())
-                            .degrees(45.0)
-                            .build(),
-                        null
-                    )
-                )
-                .layersList(listOf(mapboxNavigation.getZLevel(), null))
-                .build(),
-            object : NavigationRouterCallback {
-                override fun onCanceled(routeOptions: RouteOptions, routerOrigin: RouterOrigin) {
-                    // no impl
-                }
-
-                override fun onFailure(reasons: List<RouterFailure>, routeOptions: RouteOptions) {
-                    // no impl
-                }
-
-                override fun onRoutesReady(
-                    routes: List<NavigationRoute>,
-                    routerOrigin: RouterOrigin
-                ) {
-                    setRouteAndStartNavigation(routes)
-                }
-            }
-        )
     }
 
     private fun setRouteAndStartNavigation(routes: List<NavigationRoute>) {
