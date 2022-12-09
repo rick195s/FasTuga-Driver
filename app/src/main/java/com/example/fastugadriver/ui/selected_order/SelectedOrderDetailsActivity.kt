@@ -13,6 +13,7 @@ import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import com.example.fastugadriver.data.pojos.orders.Order
 import com.example.fastugadriver.databinding.ActivitySelectedOrderDetailsBinding
 import com.example.fastugadriver.gateway.OrderGateway
+import com.example.fastugadriver.ui.TurnByTurnActivity
 import com.example.fastugadriver.ui.login.LoginActivity
 
 class SelectedOrderDetailsActivity : AppCompatActivity() {
@@ -64,8 +65,14 @@ class SelectedOrderDetailsActivity : AppCompatActivity() {
                 binding.selectedOrderErrors.text = getString(R.string.selected_order_cancel_reason_empty)
             }else{
                 orderGateway.cancelOrder()
-
             }
+        }
+
+        binding.selectedOrderStartDeliveryBtn.setOnClickListener {
+            val intent = Intent(this, TurnByTurnActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+            finish()
         }
     }
 }
