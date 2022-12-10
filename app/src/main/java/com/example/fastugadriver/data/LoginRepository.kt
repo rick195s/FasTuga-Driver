@@ -6,6 +6,7 @@ import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 import com.example.fastugadriver.data.pojos.auth.Token
 import com.example.fastugadriver.data.pojos.orders.Order
 import com.google.gson.Gson
+import com.mapbox.geojson.Point
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -39,20 +40,23 @@ object LoginRepository {
     var selectedOrder: Order? = null
         private set
 
+    var destinationCoordinates: Point? = null
+
     fun setOrder(selectedOrder: Order?){
+        destinationCoordinates = null
         this.selectedOrder = selectedOrder
 
         val gson = Gson()
         val json:String = gson.toJson(this.selectedOrder)
 
-        with (LoginRepository.sp.edit()) {
+        with (sp.edit()) {
             putString("order", json)
             apply()
         }
     }
 
     private fun loadOrder(gson: Gson){
-        val orderJSON = LoginRepository.sp.getString("order", null)
+        val orderJSON = sp.getString("order", null)
         if (orderJSON != null){
             selectedOrder =  gson.fromJson(orderJSON, Order::class.java)
         }

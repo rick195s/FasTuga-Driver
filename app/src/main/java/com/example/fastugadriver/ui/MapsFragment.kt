@@ -123,11 +123,11 @@ class MapsFragment : Fragment(){
                 if (results.size > 0 ){
                     // Set the destination location to the client
                     destination = results[0].center() as Point
-
+                    LoginRepository.destinationCoordinates = destination
                     initSource(style)
                     initLayers(style)
 
-                    findRoute(mapBoxGateway)
+                    findStaticPath(mapBoxGateway)
                 }
 
                 }
@@ -136,7 +136,7 @@ class MapsFragment : Fragment(){
         }
     }
 
-    private fun findRoute(mapBoxGateway: MapBoxGateway){
+    private fun findStaticPath(mapBoxGateway: MapBoxGateway){
         mapBoxGateway.responseDirections.observe(viewLifecycleOwner, Observer {
             val response = it ?: return@Observer
 
@@ -146,7 +146,7 @@ class MapsFragment : Fragment(){
 
         })
 
-        mapBoxGateway.getRoute(origin, destination, getString(R.string.mapbox_access_token))
+        mapBoxGateway.getStaticPath(origin, destination, getString(R.string.mapbox_access_token))
     }
 
     private fun setMapStyle(){
@@ -214,5 +214,35 @@ class MapsFragment : Fragment(){
     }
 
     // endregion
-    
+
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+     override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+     override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
 }

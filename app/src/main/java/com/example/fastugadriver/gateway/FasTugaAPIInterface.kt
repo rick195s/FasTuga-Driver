@@ -50,4 +50,7 @@ interface FasTugaAPIInterface {
     fun updateOrderDeliveredBy(@Path(value="order") order_id: Int?,
                                @Field("delivered_by") delivered_by: String = LoginRepository.driver?.id.toString()): Call<ResponseBody>
 
+    @PUT("orders/drivers/{order}/start_delivery")
+    fun startDeliveryOrder(@Path(value="order") order_driver_delivery_id: Int = LoginRepository.selectedOrder?.order_driver_delivery_id!!): Call<ResponseBody>
+
 }
