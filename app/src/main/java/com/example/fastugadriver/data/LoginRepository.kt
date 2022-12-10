@@ -2,6 +2,7 @@ package com.example.fastugadriver.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.fastugadriver.data.pojos.Statistics
 import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 import com.example.fastugadriver.data.pojos.auth.Token
 import com.example.fastugadriver.data.pojos.orders.Order
@@ -40,6 +41,9 @@ object LoginRepository {
     var selectedOrder: Order? = null
         private set
 
+    var selectedStats: Statistics? = null
+        private set
+
     var destinationCoordinates: Point? = null
 
     fun setOrder(selectedOrder: Order?){
@@ -59,6 +63,13 @@ object LoginRepository {
         val orderJSON = sp.getString("order", null)
         if (orderJSON != null){
             selectedOrder =  gson.fromJson(orderJSON, Order::class.java)
+        }
+    }
+
+    private fun loadStats(gson: Gson){
+        val statsJSON = sp.getString("stat", null)
+        if (statsJSON != null){
+            selectedStats =  gson.fromJson(statsJSON, Statistics::class.java)
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.fastugadriver.gateway
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.Driver
 import com.example.fastugadriver.data.pojos.FasTugaResponse
+import com.example.fastugadriver.data.pojos.Statistics
 import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 import com.example.fastugadriver.data.pojos.auth.Token
 import okhttp3.MultipartBody
@@ -24,6 +25,9 @@ interface FasTugaAPIInterface {
 
     @GET("drivers/{driver}/orders")
     fun getDriverOrders(@Path(value="driver") driver_id: Int?, @Query("page") page: Int? ): Call<OrderResponse>
+
+    @GET("drivers/{driver}/statistics")
+    fun getDriverStats(@Path(value="driver") driver_id: Int?): Call<Statistics>
 
     @POST("login/driver")
     fun loginDriver(@Body driver: Driver?): Call<Token>

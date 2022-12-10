@@ -63,4 +63,9 @@
     <string name="history_notifications_title">Notifications</string>
     <string name="selected_order_cancel_reason_empty">Cancellation reason empty</string>
     <string name="title_activity_turn_by_turn">TurnByTurnActivity</string>
+    <string name="profile_statistics">Statistics</string>
+    <string name="statistics_conducted">Deliveries Conducted:</string>
+    <string name="statistics_avg_time">Average time to deliver:</string>
+    <string name="statistics_total_time">Total time to deliver:</string>
+    <string name="statistics_distinct_costumers">Number of distinct costumers:</string>
 </resources>
