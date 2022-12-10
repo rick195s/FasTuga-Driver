@@ -40,11 +40,11 @@
     <string name="action_profile_edit">Edit Profile</string>
     <string name="title_activity_edit_profile">Edit Profile</string>
     <!-- Strings used for fragments for navigation -->
+    <string name="mapbox_access_token">pk.eyJ1IjoiYnJ1bm9zaWx2YTAwIiwiYSI6ImNsYmFvN3F0aDBhcm8zdXBkaXp1eDBtZGEifQ.0djWh5zBBWNcDN9EoNc2sw</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="action_edit_profile_select_photo">Select Photo</string>
@@ -61,5 +61,6 @@
     <string name="selected_order_start_delivery">Start Delivery</string>
     <string name="selected_order_cancel_btn">Cancel Order</string>
     <string name="history_notifications_title">Notifications</string>
-    <string name="profile_statistics">Statistics</string>
+    <string name="selected_order_cancel_reason_empty">Cancellation reason empty</string>
+    <string name="title_activity_turn_by_turn">TurnByTurnActivity</string>
 </resources>

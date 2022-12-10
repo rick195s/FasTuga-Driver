@@ -1,47 +1,248 @@
 package com.example.fastugadriver.ui
 
-import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import android.view.*
+import androidx.lifecycle.Observer
 import com.example.fastugadriver.R
+import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.databinding.FragmentMapsBinding
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.example.fastugadriver.gateway.MapBoxGateway
+import com.mapbox.api.directions.v5.models.DirectionsRoute
+import com.mapbox.core.constants.Constants.PRECISION_6
+import com.mapbox.geojson.Feature
+import com.mapbox.geojson.FeatureCollection
+import com.mapbox.geojson.LineString
+import com.mapbox.geojson.Point
+import com.mapbox.mapboxsdk.Mapbox
+import com.mapbox.mapboxsdk.camera.CameraPosition
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
+import com.mapbox.mapboxsdk.geometry.LatLng
+import com.mapbox.mapboxsdk.maps.MapView
+import com.mapbox.mapboxsdk.maps.MapboxMap
+import com.mapbox.mapboxsdk.maps.Style
+import com.mapbox.mapboxsdk.style.layers.LineLayer
+import com.mapbox.mapboxsdk.style.layers.Property
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory.*
+import com.mapbox.mapboxsdk.style.layers.SymbolLayer
+import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import com.mapbox.mapboxsdk.utils.BitmapUtils
 
-@Suppress("UNREACHABLE_CODE")
-class MapsFragment : Fragment() {
+
+
+class MapsFragment : Fragment(){
 
     private lateinit var binding: FragmentMapsBinding
+    private lateinit var mapView: MapView
+    private lateinit var mapboxMap: MapboxMap
+    private lateinit var currentRoute: DirectionsRoute
+    private lateinit var origin: Point
+    private lateinit var destination: Point
+    private val ROUTE_LAYER_ID = "route-layer-id"
+    private val ROUTE_SOURCE_ID = "route-source-id"
+    private val ICON_LAYER_ID = "icon-layer-id"
+    private val ICON_SOURCE_ID = "icon-source-id"
+    private val RED_PIN_ICON_ID = "red-pin-icon-id"
 
-    @SuppressLint("MissingPermission")
-    private val callback = OnMapReadyCallback { googleMap ->
-        googleMap.isMyLocationEnabled = true
-
-        val staticOrder = LatLng(39.73462959799744, -8.82104894637871)
-        googleMap.addMarker(MarkerOptions().position(staticOrder).title("Marker Order"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(staticOrder))
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo( 11.0f ))
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        context?.let {  Mapbox.getInstance(it, getString(R.string.mapbox_access_token)) }
+
         binding = FragmentMapsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
+
+
+        mapView = view.findViewById(R.id.map) as MapView
+        mapView.onCreate(savedInstanceState)
+
+        val mapBoxGateway = MapBoxGateway()
+
+        mapBoxGateway.responseDirections.observe(viewLifecycleOwner, Observer {
+            val response = it ?: return@Observer
+
+            currentRoute = response.body()!!.routes()[0]
+            setCameraPosition()
+            setMapStyle()
+
+            val mapBoxGateway = MapBoxGateway()
+
+            mapBoxGateway.responseDirections.observe(viewLifecycleOwner, Observer {
+                val response = it ?: return@Observer
+
+                currentRoute = response.body()!!.routes()[0]
+                setCameraPosition()
+                setMapStyle()
+
+            })
+
+
+        })
+
+        mapView.getMapAsync { mapboxMap ->
+            this.mapboxMap = mapboxMap
+
+            mapboxMap.setStyle(Style.MAPBOX_STREETS
+            ) { style -> // Set the origin location to the restaurant (ESTG)
+
+                if (LoginRepository.selectedOrder != null){
+                    showStaticPath(style)
+                }
+            }
+        }
+
+    }
+
+
+
+    // region Show Path
+    private fun showStaticPath(style: Style) {
+        // ESTG coordinates
+        origin = Point.fromLngLat(-8.820920, 39.734866)
+
+        val mapBoxGateway = MapBoxGateway()
+
+        LoginRepository.selectedOrder?.delivery_location?.let {
+            mapBoxGateway.getCoordinates(it, getString(R.string.mapbox_access_token))
+
+            mapBoxGateway.responseGecode.observe(viewLifecycleOwner, Observer {
+                val response = it ?: return@Observer
+
+                val results = response.body()!!.features()
+
+                if (results.size > 0 ){
+                    // Set the destination location to the client
+                    destination = results[0].center() as Point
+                    LoginRepository.destinationCoordinates = destination
+                    initSource(style)
+                    initLayers(style)
+
+                    findStaticPath(mapBoxGateway)
+                }
+
+                }
+            )
+
+        }
+    }
+
+    private fun findStaticPath(mapBoxGateway: MapBoxGateway){
+        mapBoxGateway.responseDirections.observe(viewLifecycleOwner, Observer {
+            val response = it ?: return@Observer
+
+            currentRoute = response.body()!!.routes()[0]
+            setCameraPosition()
+            setMapStyle()
+
+        })
+
+        mapBoxGateway.getStaticPath(origin, destination, getString(R.string.mapbox_access_token))
+    }
+
+    private fun setMapStyle(){
+        mapboxMap.getStyle { style ->
+            // Retrieve and update the source designated for showing the directions route
+            val source: GeoJsonSource? = style.getSourceAs(ROUTE_SOURCE_ID)
+
+            // Create a LineString with the directions route's geometry and
+            // reset the GeoJSON source for the route LineLayer source
+            source?.setGeoJson(currentRoute.geometry()?.let {
+                LineString.fromPolyline(it,
+                    PRECISION_6)
+            })
+        }
+    }
+
+    private fun setCameraPosition(){
+        val position = CameraPosition.Builder()
+            .target(LatLng(destination.latitude(), destination.longitude()))
+            .zoom(10.5)
+            .build()
+
+        mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 1)
+
+    }
+
+    /**
+     * Add the route and marker sources to the map
+     */
+    private fun initSource(loadedMapStyle: Style) {
+        loadedMapStyle.addSource(GeoJsonSource(ROUTE_SOURCE_ID))
+        val iconGeoJsonSource =
+            GeoJsonSource(ICON_SOURCE_ID, FeatureCollection.fromFeatures(arrayOf<Feature>(
+                Feature.fromGeometry(Point.fromLngLat(origin.longitude(), origin.latitude())),
+                Feature.fromGeometry(Point.fromLngLat(destination.longitude(),
+                    destination.latitude())))))
+        loadedMapStyle.addSource(iconGeoJsonSource)
+    }
+
+    /**
+     * Add the route and marker icon layers to the map
+     */
+    private fun initLayers(loadedMapStyle: Style) {
+        val routeLayer = LineLayer(ROUTE_LAYER_ID, ROUTE_SOURCE_ID)
+
+        // Add the LineLayer to the map. This layer will display the directions route.
+        routeLayer.setProperties(
+            lineCap(Property.LINE_CAP_ROUND),
+            lineJoin(Property.LINE_JOIN_ROUND),
+            lineWidth(5f),
+            lineColor(Color.parseColor("#009688"))
+        )
+        loadedMapStyle.addLayer(routeLayer)
+
+        // Add the red marker icon image to the map
+        loadedMapStyle.addImage(RED_PIN_ICON_ID, BitmapUtils.getBitmapFromDrawable(
+            resources.getDrawable(R.drawable.mapbox_marker_icon_red))!!)
+
+        // Add the red marker icon SymbolLayer to the map
+        loadedMapStyle.addLayer(SymbolLayer(ICON_LAYER_ID, ICON_SOURCE_ID).withProperties(
+            iconImage(RED_PIN_ICON_ID),
+            iconIgnorePlacement(true),
+            iconAllowOverlap(true),
+            iconOffset(arrayOf(0f, -9f))))
+    }
+
+    // endregion
+
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+     override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+     override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
     }
 }
