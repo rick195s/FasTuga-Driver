@@ -73,7 +73,7 @@ class OrderGateway {
 
             ) {
                 if(response.isSuccessful){
-                    _fasTugaResponse.value = SuccessResponse()
+                    _fasTugaResponse.value = CancelOrderSuccessResponse()
                     return
                 }
 
@@ -105,6 +105,32 @@ class OrderGateway {
 
                 _fasTugaResponse.value = FormErrorResponse()
 
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                _fasTugaResponse.value = FormErrorResponse(t.message)
+            }
+        })
+    }
+
+    fun startDeliveryOrder () {
+        // calling the method from API to get the Driver logged in
+        val call: Call<ResponseBody> = FasTugaAPI.getInterface().startDeliveryOrder()
+
+
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(
+                call: Call<ResponseBody?>,
+                response: Response<ResponseBody?>
+
+            ) {
+                if(response.isSuccessful){
+                    _fasTugaResponse.value = StartDeliveryOrderSuccessResponse()
+                    return
+                }
+
+                _fasTugaResponse.value = FormErrorResponse()
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {

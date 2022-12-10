@@ -7,7 +7,9 @@ import androidx.lifecycle.Observer
 import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
+import com.example.fastugadriver.data.pojos.CancelOrderSuccessResponse
 import com.example.fastugadriver.data.pojos.FormErrorResponse
+import com.example.fastugadriver.data.pojos.StartDeliveryOrderSuccessResponse
 import com.example.fastugadriver.data.pojos.SuccessResponse
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import com.example.fastugadriver.data.pojos.orders.Order
@@ -45,14 +47,15 @@ class SelectedOrderDetailsActivity : AppCompatActivity() {
 
             // handling API response
             when (fasTugaResponse){
-                is SuccessResponse -> {
-                    println("entrou")
-
+                is CancelOrderSuccessResponse -> {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                     startActivity(intent)
                     LoginRepository.setOrder(null)
                     finish()
+                }
+                is StartDeliveryOrderSuccessResponse ->{
+                   startTurnByTurnActivity()
                 }
                 is FormErrorResponse -> {
                     println(fasTugaResponse.message)
@@ -69,10 +72,15 @@ class SelectedOrderDetailsActivity : AppCompatActivity() {
         }
 
         binding.selectedOrderStartDeliveryBtn.setOnClickListener {
-            val intent = Intent(this, TurnByTurnActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            startActivity(intent)
-            finish()
+            orderGateway.startDeliveryOrder()
+
         }
+    }
+
+    private fun startTurnByTurnActivity(){
+        val intent = Intent(this, TurnByTurnActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(intent)
+        finish()
     }
 }
