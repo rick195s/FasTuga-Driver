@@ -71,6 +71,15 @@ class SelectedOrderDetailsActivity : AppCompatActivity() {
             }
         }
 
+        binding.selectedOrderEndDelivery.setOnClickListener{
+            orderGateway.endDelivery()
+            LoginRepository.setOrder(null)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+            finish()
+        }
+
         binding.selectedOrderStartDeliveryBtn.setOnClickListener {
             orderGateway.startDeliveryOrder()
 
