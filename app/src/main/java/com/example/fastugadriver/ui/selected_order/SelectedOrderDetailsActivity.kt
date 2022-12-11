@@ -8,12 +8,13 @@ import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.*
-import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
+import com.example.fastugadriver.data.pojos.orders.CancelOrderSuccessResponse
+import com.example.fastugadriver.data.pojos.orders.EndDeliverySuccessResponse
 import com.example.fastugadriver.data.pojos.orders.Order
+import com.example.fastugadriver.data.pojos.orders.StartDeliveryOrderSuccessResponse
 import com.example.fastugadriver.databinding.ActivitySelectedOrderDetailsBinding
 import com.example.fastugadriver.gateway.OrderGateway
 import com.example.fastugadriver.ui.TurnByTurnActivity
-import com.example.fastugadriver.ui.login.LoginActivity
 
 class SelectedOrderDetailsActivity : AppCompatActivity() {
 
