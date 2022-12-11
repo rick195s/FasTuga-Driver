@@ -2,6 +2,7 @@ package com.example.fastugadriver.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.fastugadriver.data.pojos.Statistics
 import com.example.fastugadriver.data.pojos.auth.LoggedInDriver
 import com.example.fastugadriver.data.pojos.auth.Token
 import com.example.fastugadriver.data.pojos.orders.Order
@@ -61,6 +62,7 @@ object LoginRepository {
             selectedOrder =  gson.fromJson(orderJSON, Order::class.java)
         }
     }
+
 
     fun logout() {
         driver = null

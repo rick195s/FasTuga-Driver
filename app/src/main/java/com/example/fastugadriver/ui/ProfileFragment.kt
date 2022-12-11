@@ -10,9 +10,12 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
+import com.example.fastugadriver.data.pojos.FormErrorResponse
+import com.example.fastugadriver.data.pojos.Statistics
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import com.example.fastugadriver.databinding.FragmentProfileBinding
 import com.example.fastugadriver.gateway.DriverGateway
+import com.example.fastugadriver.gateway.StatisticsGateway
 import com.example.fastugadriver.ui.edit_profile.EditProfileActivity
 import com.example.fastugadriver.ui.login.LoginActivity
 
@@ -21,13 +24,15 @@ class ProfileFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    private val statisticsGateway : StatisticsGateway = StatisticsGateway()
+    private lateinit var statistics: Statistics
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val view = binding.root
-
 
         val nameDetail = binding.profileDetailName
         val emailDetail = binding.profileDetailEmail
@@ -41,6 +46,11 @@ class ProfileFragment : Fragment() {
         phoneDetail.text = LoginRepository.driver?.phone ?: ""
         licensePlateDetail.text = LoginRepository.driver?.licensePlate ?: ""
 
+
+        setBalance(statisticsGateway)
+        statisticsGateway.getStats(LoginRepository.driver?.driverId)
+
+
         Glide
             .with(this)
             .load(LoginRepository.driver?.photoUrl)
@@ -48,7 +58,7 @@ class ProfileFragment : Fragment() {
             .placeholder(R.drawable.account_circle)
             .into(binding.profileUserImage)
 
-        val driverGateway : DriverGateway = DriverGateway()
+        val driverGateway = DriverGateway()
 
         driverGateway.fasTugaResponse.observe(viewLifecycleOwner, Observer {
             val fasTugaResponse = it ?: return@Observer
@@ -87,8 +97,36 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.profileButtonStatistics.setOnClickListener {
+            val intent = Intent(activity, StatisticsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+        }
+
         return view
     }
+
+    private fun setBalance(statisticsGateway: StatisticsGateway){
+        statisticsGateway.fasTugaResponse.observe(viewLifecycleOwner, Observer {
+            val statsResponse = it ?: return@Observer
+
+            // handling API response
+            when (statsResponse){
+                is FormErrorResponse -> {
+                    println("- is not possible to get balance.")
+                }
+
+                is Statistics -> {
+                    binding.profileDetailBalance.text = "${statsResponse.balance}€ (Balance)"
+                    binding.profileDetailBalance.append(" + ${ LoginRepository.selectedOrder?.tax_fee}€ (Tax fee)")
+
+                    this.statistics = statsResponse
+                }
+            }
+        })
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -126,6 +126,13 @@
                 android:textAlignment="textStart" />
 
             <Button
+                android:id="@+id/profile_button_statistics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_statistics"
+                android:textAlignment="textStart" />
+
+            <Button
                 android:id="@+id/profile_button_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
