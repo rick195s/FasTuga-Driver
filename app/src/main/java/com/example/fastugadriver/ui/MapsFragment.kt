@@ -36,7 +36,7 @@ import com.mapbox.mapboxsdk.utils.BitmapUtils
 class MapsFragment : Fragment(){
 
     private lateinit var binding: FragmentMapsBinding
-    private lateinit var mapView: MapView
+    private var mapView: MapView? = null
     private lateinit var mapboxMap: MapboxMap
     private lateinit var currentRoute: DirectionsRoute
     private lateinit var origin: Point
@@ -64,7 +64,7 @@ class MapsFragment : Fragment(){
 
 
         mapView = view.findViewById(R.id.map) as MapView
-        mapView.onCreate(savedInstanceState)
+        mapView?.onCreate(savedInstanceState)
 
         val mapBoxGateway = MapBoxGateway()
 
@@ -89,7 +89,7 @@ class MapsFragment : Fragment(){
 
         })
 
-        mapView.getMapAsync { mapboxMap ->
+        mapView?.getMapAsync { mapboxMap ->
             this.mapboxMap = mapboxMap
 
             mapboxMap.setStyle(Style.MAPBOX_STREETS
@@ -218,32 +218,32 @@ class MapsFragment : Fragment(){
 
     override fun onResume() {
         super.onResume()
-        mapView.onResume()
+        mapView?.onResume()
     }
 
      override fun onStart() {
         super.onStart()
-        mapView.onStart()
+         mapView?.onStart()
     }
 
     override fun onStop() {
         super.onStop()
-        mapView.onStop()
+        mapView?.onStop()
     }
 
     override fun onPause() {
         super.onPause()
-        mapView.onPause()
+        mapView?.onPause()
     }
 
      override fun onDestroy() {
         super.onDestroy()
-        mapView.onDestroy()
+        mapView?.onDestroy()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        mapView.onLowMemory()
+        mapView?.onLowMemory()
     }
 
 }
