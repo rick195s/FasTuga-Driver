@@ -32,7 +32,9 @@ class SocketIOManager(private val context: Context) {
     }
     init{
         try {
-            mSocket = IO.socket("http://10.0.2.2:8080")
+            //mSocket = IO.socket("http://10.0.2.2:8080")
+            mSocket = IO.socket("http://172.22.21.109:8081")
+
         } catch ( e: URISyntaxException) {
         }
         mSocket?.on(Socket.EVENT_CONNECT_ERROR, onSocketConnectError);

@@ -118,7 +118,11 @@ class ProfileFragment : Fragment() {
 
                 is Statistics -> {
                     binding.profileDetailBalance.text = "${statsResponse.balance}€ (Balance)"
-                    binding.profileDetailBalance.append(" + ${ LoginRepository.selectedOrder?.tax_fee}€ (Tax fee)")
+                    var tax = 0
+                    if ( LoginRepository.selectedOrder?.tax_fee != null){
+                        tax = LoginRepository.selectedOrder?.tax_fee!!
+                    }
+                    binding.profileDetailBalance.append(" + ${tax }€ (Tax fee)")
 
                     this.statistics = statsResponse
                 }

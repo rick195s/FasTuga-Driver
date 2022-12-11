@@ -14,7 +14,7 @@ class Statistics : FasTugaResponse {
 
     @SerializedName("total_time_delivering")
     @Expose
-    var total_time_delivering: Int? = null
+    var total_time_delivering: String? = null
 
     @SerializedName("distinct_costumers")
     @Expose
