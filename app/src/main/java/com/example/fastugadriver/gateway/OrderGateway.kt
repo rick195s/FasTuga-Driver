@@ -152,7 +152,7 @@ class OrderGateway {
 
             ) {
                 if(response.isSuccessful){
-                    _fasTugaResponse.value = SuccessResponse()
+                    _fasTugaResponse.value = EndDeliverySuccessResponse()
                     return
                 }
 
