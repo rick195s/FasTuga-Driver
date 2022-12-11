@@ -128,9 +128,10 @@
             android:id="@+id/selected_order_start_delivery_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="40dp"
             android:text="@string/selected_order_start_delivery"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.535"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
@@ -141,10 +142,22 @@
             android:text="@string/selected_order_cancel_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.517"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selected_order_start_delivery_btn"
-            app:layout_constraintVertical_bias="0.098" />
+            app:layout_constraintVertical_bias="0.074" />
+
+        <Button
+            android:id="@+id/selected_order_end_delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Delivery"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.525"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/selected_order_start_delivery_btn"
+            app:layout_constraintVertical_bias="0.334" />
 
         <TextView
             android:id="@+id/selected_order_errors"
@@ -160,7 +173,7 @@
             android:id="@+id/selected_order_reason_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="104dp"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

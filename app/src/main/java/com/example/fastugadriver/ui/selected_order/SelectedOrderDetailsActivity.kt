@@ -7,10 +7,7 @@ import androidx.lifecycle.Observer
 import com.example.fastugadriver.MainActivity
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
-import com.example.fastugadriver.data.pojos.CancelOrderSuccessResponse
-import com.example.fastugadriver.data.pojos.FormErrorResponse
-import com.example.fastugadriver.data.pojos.StartDeliveryOrderSuccessResponse
-import com.example.fastugadriver.data.pojos.SuccessResponse
+import com.example.fastugadriver.data.pojos.*
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
 import com.example.fastugadriver.data.pojos.orders.Order
 import com.example.fastugadriver.databinding.ActivitySelectedOrderDetailsBinding
@@ -57,6 +54,13 @@ class SelectedOrderDetailsActivity : AppCompatActivity() {
                 is StartDeliveryOrderSuccessResponse ->{
                    startTurnByTurnActivity()
                 }
+                is EndDeliverySuccessResponse -> {
+                    LoginRepository.setOrder(null)
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    startActivity(intent)
+                    finish()
+                }
                 is FormErrorResponse -> {
                     println(fasTugaResponse.message)
                 }
@@ -69,6 +73,10 @@ class SelectedOrderDetailsActivity : AppCompatActivity() {
             }else{
                 orderGateway.cancelOrder()
             }
+        }
+
+        binding.selectedOrderEndDelivery.setOnClickListener{
+            orderGateway.endDelivery()
         }
 
         binding.selectedOrderStartDeliveryBtn.setOnClickListener {

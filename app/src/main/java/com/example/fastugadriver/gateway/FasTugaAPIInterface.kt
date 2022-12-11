@@ -53,4 +53,7 @@ interface FasTugaAPIInterface {
     @PUT("orders/drivers/{order}/start_delivery")
     fun startDeliveryOrder(@Path(value="order") order_driver_delivery_id: Int = LoginRepository.selectedOrder?.order_driver_delivery_id!!): Call<ResponseBody>
 
+    @PUT("orders/drivers/{order}/end_delivery")
+    fun endDeliveryOrder(@Path(value="order") order_driver_delivery_id: Int = LoginRepository.selectedOrder?.order_driver_delivery_id!!): Call<ResponseBody>
+
 }

@@ -139,5 +139,31 @@ class OrderGateway {
         })
     }
 
+    fun endDelivery () {
+        // calling the method from API to get the Driver logged in
+        val call: Call<ResponseBody> = FasTugaAPI.getInterface().endDeliveryOrder()
+
+
+        // on below line we are executing our method.
+        call.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(
+                call: Call<ResponseBody?>,
+                response: Response<ResponseBody?>
+
+            ) {
+                if(response.isSuccessful){
+                    _fasTugaResponse.value = EndDeliverySuccessResponse()
+                    return
+                }
+
+                _fasTugaResponse.value = FormErrorResponse()
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                _fasTugaResponse.value = FormErrorResponse(t.message)
+            }
+        })
+    }
+
 
 }
