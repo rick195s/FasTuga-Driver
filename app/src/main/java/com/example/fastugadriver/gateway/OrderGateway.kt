@@ -2,7 +2,10 @@ package com.example.fastugadriver.gateway
 
 import androidx.lifecycle.MutableLiveData
 import com.example.fastugadriver.data.pojos.*
+import com.example.fastugadriver.data.pojos.orders.CancelOrderSuccessResponse
+import com.example.fastugadriver.data.pojos.orders.EndDeliverySuccessResponse
 import com.example.fastugadriver.data.pojos.orders.OrderResponse
+import com.example.fastugadriver.data.pojos.orders.StartDeliveryOrderSuccessResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
