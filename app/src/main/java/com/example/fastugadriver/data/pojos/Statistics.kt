@@ -20,4 +20,8 @@ class Statistics : FasTugaResponse {
     @Expose
     var distinct_costumers: String? = null
 
+    @SerializedName("balance")
+    @Expose
+    var balance: Int? = null
+
 }

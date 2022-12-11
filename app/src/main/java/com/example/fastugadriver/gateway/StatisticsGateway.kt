@@ -2,8 +2,6 @@ package com.example.fastugadriver.gateway
 
 import androidx.lifecycle.MutableLiveData
 import com.example.fastugadriver.data.pojos.*
-import com.example.fastugadriver.data.pojos.orders.OrderResponse
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,9 +30,7 @@ class StatisticsGateway {
                     return
                 }
 
-
                 _fasTugaResponse.value = response.body()
-                //_orderBody = response.body()!!
             }
 
             override fun onFailure(call: Call<Statistics?>, t: Throwable) {

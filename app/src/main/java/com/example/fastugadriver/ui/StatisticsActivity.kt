@@ -40,8 +40,6 @@ class StatisticsActivity: AppCompatActivity() {
                     binding.statisticsTotalTime.append(" ${statsResponse.total_time_delivering} hours")
                     binding.statisticsDistinctCostumers.append(" ${statsResponse.distinct_costumers}")
 
-                    System.out.println(binding.statisticsDistinctCostumers.text)
-
                     this.statistics = statsResponse
                 }
             }
