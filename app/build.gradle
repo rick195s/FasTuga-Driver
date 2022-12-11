@@ -80,10 +80,10 @@ dependencies {
     // for adding cardview
     implementation 'androidx.cardview:cardview:1.0.0'
 
+
     // for sockt.io websocket
     implementation ('io.socket:socket.io-client:2.0.0') {
         exclude group: 'org.json', module: 'json'
     }
-
 
 }

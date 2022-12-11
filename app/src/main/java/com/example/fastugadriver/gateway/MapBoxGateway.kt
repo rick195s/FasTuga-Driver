@@ -64,6 +64,7 @@ class MapBoxGateway {
         })
     }
 
+
     private fun getClientStaticPathRequest(origin: Point, destination: Point, accessToken: String) : MapboxDirections{
         return MapboxDirections.builder()
             .routeOptions(
