@@ -16,7 +16,8 @@ class FasTugaAPI {
 
     companion object{
 
-         val BASE_URI = "http://10.0.2.2/api/"
+         // val BASE_URI = "http://10.0.2.2/api/"
+         val BASE_URI = "http://172.22.21.109/api/"
 
         fun getInterface(): FasTugaAPIInterface {
             val clientBuilder : OkHttpClient.Builder= OkHttpClient.Builder()

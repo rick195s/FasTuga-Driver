@@ -36,8 +36,8 @@ class StatisticsActivity: AppCompatActivity() {
 
                 is Statistics -> {
                     binding.statisticsConducted.append(" ${statsResponse.orders_delivered}")
-                    binding.statisticsAvgTime.append(" ${statsResponse.average_time_to_deliver} minutes")
-                    binding.statisticsTotalTime.append(" ${statsResponse.total_time_delivering} hours")
+                    binding.statisticsAvgTime.append(" ${statsResponse.average_time_to_deliver}")
+                    binding.statisticsTotalTime.append(" ${statsResponse.total_time_delivering}")
                     binding.statisticsDistinctCostumers.append(" ${statsResponse.distinct_costumers}")
 
                     this.statistics = statsResponse
