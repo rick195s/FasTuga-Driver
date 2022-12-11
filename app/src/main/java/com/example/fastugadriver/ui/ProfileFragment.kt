@@ -13,7 +13,6 @@ import com.example.fastugadriver.data.LoginRepository
 import com.example.fastugadriver.data.pojos.FormErrorResponse
 import com.example.fastugadriver.data.pojos.Statistics
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
-import com.example.fastugadriver.data.pojos.orders.Order
 import com.example.fastugadriver.databinding.FragmentProfileBinding
 import com.example.fastugadriver.gateway.DriverGateway
 import com.example.fastugadriver.gateway.StatisticsGateway
@@ -25,9 +24,8 @@ class ProfileFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    val statisticsGateway : StatisticsGateway = StatisticsGateway()
-    lateinit var statistics: Statistics
-    var order : Order? = LoginRepository.selectedOrder as? Order
+    private val statisticsGateway : StatisticsGateway = StatisticsGateway()
+    private lateinit var statistics: Statistics
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,10 +51,6 @@ class ProfileFragment : Fragment() {
         statisticsGateway.getStats(LoginRepository.driver?.driverId)
 
 
-
-
-
-
         Glide
             .with(this)
             .load(LoginRepository.driver?.photoUrl)
@@ -64,7 +58,7 @@ class ProfileFragment : Fragment() {
             .placeholder(R.drawable.account_circle)
             .into(binding.profileUserImage)
 
-        val driverGateway : DriverGateway = DriverGateway()
+        val driverGateway = DriverGateway()
 
         driverGateway.fasTugaResponse.observe(viewLifecycleOwner, Observer {
             val fasTugaResponse = it ?: return@Observer
@@ -112,7 +106,7 @@ class ProfileFragment : Fragment() {
         return view
     }
 
-    fun setBalance(statisticsGateway: StatisticsGateway){
+    private fun setBalance(statisticsGateway: StatisticsGateway){
         statisticsGateway.fasTugaResponse.observe(viewLifecycleOwner, Observer {
             val statsResponse = it ?: return@Observer
 
@@ -124,11 +118,8 @@ class ProfileFragment : Fragment() {
 
                 is Statistics -> {
                     binding.profileDetailBalance.text = "${statsResponse.balance}€ (Balance)"
-                    if(order != null){
-                        binding.profileDetailBalance.append(" + ${order?.tax_fee}€ (Tax fee)")
-                    }else{
-                        binding.profileDetailBalance.text = "${statsResponse.balance}€ (Balance)"
-                    }
+                    binding.profileDetailBalance.append(" + ${ LoginRepository.selectedOrder?.tax_fee}€ (Tax fee)")
+
                     this.statistics = statsResponse
                 }
             }

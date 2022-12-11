@@ -26,7 +26,6 @@ object LoginRepository {
         loadToken(gson)
         loadDriver(gson)
         loadOrder(gson)
-        loadStats(gson)
     }
 
     // in-memory cache of the loggedInUser object
@@ -40,9 +39,6 @@ object LoginRepository {
         get() = driver != null && token != null
 
     var selectedOrder: Order? = null
-        private set
-
-    var stats: Statistics? = null
         private set
 
     var destinationCoordinates: Point? = null
@@ -67,12 +63,6 @@ object LoginRepository {
         }
     }
 
-    private fun loadStats(gson: Gson){
-        val statsJSON = sp.getString("stat", null)
-        if (statsJSON != null){
-            stats =  gson.fromJson(statsJSON, Statistics::class.java)
-        }
-    }
 
     fun logout() {
         driver = null
