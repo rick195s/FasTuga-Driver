@@ -10,9 +10,13 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.fastugadriver.R
 import com.example.fastugadriver.data.LoginRepository
+import com.example.fastugadriver.data.pojos.FormErrorResponse
+import com.example.fastugadriver.data.pojos.Statistics
 import com.example.fastugadriver.data.pojos.auth.LogoutSuccessResponse
+import com.example.fastugadriver.data.pojos.orders.Order
 import com.example.fastugadriver.databinding.FragmentProfileBinding
 import com.example.fastugadriver.gateway.DriverGateway
+import com.example.fastugadriver.gateway.StatisticsGateway
 import com.example.fastugadriver.ui.edit_profile.EditProfileActivity
 import com.example.fastugadriver.ui.login.LoginActivity
 
@@ -21,13 +25,16 @@ class ProfileFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    val statisticsGateway : StatisticsGateway = StatisticsGateway()
+    lateinit var statistics: Statistics
+    var order : Order? = LoginRepository.selectedOrder as? Order
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val view = binding.root
-
 
         val nameDetail = binding.profileDetailName
         val emailDetail = binding.profileDetailEmail
@@ -40,6 +47,15 @@ class ProfileFragment : Fragment() {
         emailDetail.text = LoginRepository.driver?.email ?: ""
         phoneDetail.text = LoginRepository.driver?.phone ?: ""
         licensePlateDetail.text = LoginRepository.driver?.licensePlate ?: ""
+
+
+        setBalance(statisticsGateway)
+        statisticsGateway.getStats(LoginRepository.driver?.driverId)
+
+
+
+
+
 
         Glide
             .with(this)
@@ -95,6 +111,31 @@ class ProfileFragment : Fragment() {
 
         return view
     }
+
+    fun setBalance(statisticsGateway: StatisticsGateway){
+        statisticsGateway.fasTugaResponse.observe(viewLifecycleOwner, Observer {
+            val statsResponse = it ?: return@Observer
+
+            // handling API response
+            when (statsResponse){
+                is FormErrorResponse -> {
+                    println("- is not possible to get balance.")
+                }
+
+                is Statistics -> {
+                    binding.profileDetailBalance.text = "${statsResponse.balance}€ (Balance)"
+                    if(order != null){
+                        binding.profileDetailBalance.append(" + ${order?.tax_fee}€ (Tax fee)")
+                    }else{
+                        binding.profileDetailBalance.text = "${statsResponse.balance}€ (Balance)"
+                    }
+                    this.statistics = statsResponse
+                }
+            }
+        })
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
