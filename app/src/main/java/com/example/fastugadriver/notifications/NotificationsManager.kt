@@ -61,7 +61,7 @@ class NotificationsManager (private val context: Context){
         notificationManager.notify(
             order.id!!, notification
         )
-        LoginRepository.setOrder(null)
+
         saveNotification(
             NotificationStored("order_ready", order.delivery_location, order.ticket_number.toString())
         )

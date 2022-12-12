@@ -15,14 +15,15 @@ class SocketIOManager(private val context: Context) {
     }
     private val onSocketConnect = Emitter.Listener { args: Array<Any> ->
         mSocket?.emit("register", "driver")
+        println("connected socket")
     }
     private val onOrderCancelled = Emitter.Listener { args: Array<Any> ->
-        val  order: Order = Gson().fromJson(args[0].toString(), Order::class.java)
         val notificationManager = NotificationsManager(context)
-        if (order.id == LoginRepository.selectedOrder?.id){
-            notificationManager.orderCancelledNotification(order)
+        if (args[0].toString() == LoginRepository.selectedOrder?.id.toString()){
+            LoginRepository.selectedOrder?.let { notificationManager.orderCancelledNotification(it) }
             LoginRepository.setOrder(null)
         }
+
     }
     private val onOrderReady = Emitter.Listener { args: Array<Any> ->
         val notificationManager = NotificationsManager(context)
@@ -33,7 +34,7 @@ class SocketIOManager(private val context: Context) {
     init{
         try {
             //mSocket = IO.socket("http://10.0.2.2:8080")
-            mSocket = IO.socket("http://172.22.21.109:8081")
+            mSocket = IO.socket("http://172.22.21.109:8080")
 
         } catch ( e: URISyntaxException) {
         }

@@ -28,7 +28,7 @@ class SelectedOrderDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
         var order : Order = LoginRepository.selectedOrder as Order
 
-        binding.selectedOrderTicketNumber.text = order.ticket_number.toString()
+        binding.selectedOrderTicketNumber.text = order.ticket_number.toString() +", id: " + order.id.toString()
         binding.selectedOrderCustomerLocation.text = order.delivery_location
         binding.selectedOrderTaxFee.text = order.tax_fee.toString()
 
